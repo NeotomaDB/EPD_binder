@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup}
+options(warn = -1)
 library(neotoma2)
 library(sf)
 library(geojsonsf)
