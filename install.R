@@ -1,0 +1,6 @@
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("geojsonsf")
+install.packages("analogue")
+install.packages("remotes")
+remotes::install_github('NeotomaDB/neotoma2@production')

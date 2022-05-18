@@ -1,0 +1,181 @@
+---
+title: "A Simple Workflow"
+author: "Socorro Dominguez"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup}
+library(neotoma2)
+library(sf)
+library(geojsonsf)
+library(dplyr)
+library(ggplot2)
+```
+
+## Site Searches
+
+### `get_sites()`
+
+Looking for sites using name
+
+Site names: sitename=’Alexa%’
+
+```{r sitename}
+spo_sites <- neotoma2::get_sites(sitename = "Spo%")
+spo_sites
+```
+Location: loc=c()
+
+Looking for sites using a location:
+```{r boundingBox}
+cz <-'{"type": "Polygon",
+        "coordinates": [[
+            [12.40, 50.14],
+            [14.10, 48.64],
+            [16.95, 48.66],
+            [18.91, 49.61],
+            [15.24, 50.99],
+            [12.40, 50.14]]]}'
+
+# We can make the geojson a spatial object if we want to use the
+# functionality of the `sf` package.
+cz_sf <- geojsonsf::geojson_sf(cz)
+
+cz_sites <- neotoma2::get_sites(loc = cz[[1]])
+cz_sites
+```
+```{r plotL}
+neotoma2::plotLeaflet(cz_sites)
+```
+We can see the different elements that are contained within this sites object:
+
+```{r summary_sites}
+neotoma2::summary(cz_sites)
+```
+
+Other arguments that can be used:
+
+- SiteId: most raw element
+```{r siteid}
+neotoma2::get_sites(3173)
+```
+
+Altitude: altmin, altmax
+
+
+
+#### Searching for datasets:
+
+```{r datasettype}
+pollen_ds <- neotoma2::get_datasets(datasettype='pollen surface sample', limit=1000)
+pollen_ds
+```
+
+
+```{r summary_ds}
+neotoma2::summary(pollen_ds)
+```
+```{r downloads}
+cz_dl <- neotoma2::get_downloads(cz_sites)
+neotoma2::summary(cz_dl)
+```
+
+
+Let's say we only want to keep pollen datsets
+```{r filtering}
+cz_pollen <- cz_dl %>% neotoma2::filter(datasettype == 'pollen')
+neotoma2::summary(cz_pollen)
+```
+
+Getting taxa:
+
+```{r taxa}
+neotoma2::taxa(cz_pollen)
+```
+
+We can do also for one element:
+```{r taxa2}
+neotoma2::taxa(cz_pollen[[1]])
+```
+
+### Doing a Basic Analysis
+
+1. Getting all pollen
+
+```{r pollen}
+all_pollen <- neotoma2::get_datasets(datasettype="pollen", limit = 100)
+# all_pollen <- get_datasets(datasettype="pollen", all_data = TRUE) # Takes about 20+ minutes
+```
+_
+
+```{r}
+neotoma2::plot(all_pollen)
+```
+2. Getting the data
+```{r dl}
+pollen_dl <- neotoma2::get_downloads(all_pollen) # Takes a couple of minutes 
+```
+
+3. Get the samples
+
+```{r samp}
+pollen_samp <- neotoma2::samples(pollen_dl)
+pollen_samp
+```
+
+Using Spatial-based Data (July max temperature)
+
+```{r}
+spatial <- sf::st_as_sf(pollen_samp, 
+                        coords = c("long", "lat"),
+                        crs = "+proj=longlat +datum=WGS84")
+spatial
+```
+
+```{r worldTmax}
+worldTmax <- raster::getData('worldclim', var = 'tmax', res = 10)
+worldTmax
+```
+
+```{r raster}
+pollen_samp$tmax7 <- raster::extract(worldTmax, spatial)[,7]
+pollen_samp
+```
+
+#### Choosing Taxa
+
+```{r maxsamp}
+maxsamp <- pollen_samp %>% dplyr::distinct(siteid, .keep_all = TRUE) %>% 
+  dplyr::select(tmax7)
+maxsamp
+```
+
+Top 10
+```{r topten}
+
+
+topten <- pollen_samp %>% 
+  dplyr::group_by(variablename) %>% 
+  dplyr::summarise(n = dplyr::n()) %>% 
+  dplyr::arrange(desc(n))
+topten
+```
+
+```{r po_subsamp}
+pollen_subsamp <- pollen_samp %>% 
+  dplyr::filter(variablename %in% topten$variablename[1:10])
+pollen_subsamp
+```
+
+Plot your results!
+
+```{r ggplot}
+ggplot() +
+  geom_density(data = pollen_subsamp,
+               aes(x = round(tmax7 / 10, 0)), col = 2) +
+  facet_wrap(~variablename) +
+  geom_density(data = maxsamp, aes(x = tmax7 / 10)) +
+  xlab("Maximum July Temperature") +
+  ylab("Kernel Density")
+```
