@@ -1,0 +1,70 @@
+---
+title: "A Not so Simple Workflow"
+author: "Simon Goring, Socorro Dominguez Vidana"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup}
+options(warn = -1)
+suppressMessages(library(neotoma2))
+suppressMessages(library(sf))
+suppressMessages(library(geojsonsf))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+```
+
+
+
+```{r args}
+ds <- get_datasets(loc=c(-100, 35, 60, 70), ageold = 1000)
+```
+Location: loc=c()
+
+Looking for sites using a location:
+```{r sitename_meer}
+meer <- neotoma2::get_sites(sitename = "meerfeld%")
+datasets(meer)
+```
+
+```{r dl}
+meer.dat <- neotoma2::get_downloads(meer)
+```
+We can see there are 3 datasets here:
+
+```{r summary_sites}
+neotoma2::datasets(meer.dat)
+```
+
+Let's filter to obtain only datasetid **42510**
+
+- SiteId: most raw element
+```{r siteid}
+meer.l <- meer.dat %>% neotoma2::filter(datasetid == 42510)
+```
+
+See the structure
+
+```{r structure}
+# Uncomment below to see
+# str(meer.l)
+```
+
+
+## Look at the chronologies
+
+```{r datasettype}
+meer_chron <- chronologies(meer.l)
+```
+
+## Look at the chron controls
+
+```{r datasettype}
+meer_chroncontrols <- neotoma2::chroncontrols(meer.l)
+```
+
+```{r summary_ds}
+meer_samples <- neotoma2::samples(meer.dat)
+meer.counts = tidyr::pivot_wider(meer_samples, names_from = variablename, values_from = value, values_fill = NA, id_cols=age)
+meer.counts
+```
