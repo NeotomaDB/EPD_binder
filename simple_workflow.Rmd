@@ -12,61 +12,80 @@ suppressMessages(library(sf))
 suppressMessages(library(geojsonsf))
 suppressMessages(library(dplyr))
 suppressMessages(library(ggplot2))
+suppressMessages(library(leaflet))
 ```
 
 ## Site Searches
 
 ### `get_sites()`
 
-Looking for sites using name
+There are several ways to find sites in `neotoma2`, but we think of `sites` as being spatial objects primarily. They have names, locations, and are found within the context of geopolitical units, but within the API and the package, the site itself does not have associated information about taxa, dataset types or ages.  It is simply the container into which we add that information.  So, when we search for sites we can search by:
 
-Site names: sitename=’Alexa%’
+  * siteid
+  * sitename
+  * location
+  * altitude (maximum and minimum)
+  * geopolitical unit
+
+#### Site names: `sitename="%Lait%"`
+
+We may know exactly what site we're looking for ("Lac Mouton"), or have an approximate guess for the site name (for example, we know it's something like "Lait Lake", or "Lac du Lait", but we're not sure how it was entered specifically).
+
+We use the general format: `get_sites(sitename="XXXXX")` for searching by name.
+
+PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Lait%"` would pick up ["Lac du Lait"](https://data.neotomadb.org/4180) for us (and would pick up "Lake Lait" and "This Old **Lait**y Hei-dee-ho Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%lait%"`.
 
 ```{r sitename}
-spo_sites <- neotoma2::get_sites(sitename = "Spo%")
+spo_sites <- neotoma2::get_sites(sitename = "%Lait%")
 spo_sites
+plotLeaflet(spo_sites)
 ```
-Location: loc=c()
+
+#### Location: `loc=c()`
+
+The `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, xmax, ymin, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.  **Note however** that the `neotoma2` package is a wrapper for a simple API call using a URL ([api.neotomadb.org](https://api.neotomadb.org)), and URL strings can only be 1028 characters long, so the API cannot accept very long/complex spatial objects.
 
 Looking for sites using a location:
+
 ```{r boundingBox}
-cz <-'{"type": "Polygon",
+cz <- list(geoJSON = '{"type": "Polygon",
         "coordinates": [[
             [12.40, 50.14],
             [14.10, 48.64],
             [16.95, 48.66],
             [18.91, 49.61],
             [15.24, 50.99],
-            [12.40, 50.14]]]}'
+            [12.40, 50.14]]]}',
+        WKT = 'POLYGON ((12.4 50.14, 
+                         14.1 48.64, 
+                         16.95 48.66, 
+                         18.91 49.61,
+                         15.24 50.99,
+                         12.4 50.14))',
+        bbox = c(48.64, 50.99, 12.4, 18.91))
 
-# We can make the geojson a spatial object if we want to use the
-# functionality of the `sf` package.
-cz_sf <- geojsonsf::geojson_sf(cz)
+cz$sf <- geojsonsf::geojson_sf(cz$geoJSON)
 
 cz_sites <- neotoma2::get_sites(loc = cz[[1]])
-head(as.data.frame(cz_sites))
 ```
+
+You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon):
+
 ```{r plotL}
-neotoma2::plotLeaflet(cz_sites)
+neotoma2::plotLeaflet(cz_sites) %>% 
+  leaflet::addPolygons(data = cz$sf, color = "green")
 ```
+
+#### Site Helpers
+
+
 We can see the different elements that are contained within this sites object:
 
 ```{r summary_sites}
 head(as.data.frame(neotoma2::summary(cz_sites)))
 ```
 
-Other arguments that can be used:
-
-- SiteId: most raw element
-```{r siteid}
-neotoma2::get_sites(3173)
-```
-
-Altitude: altmin, altmax
-
-
-
-#### Searching for datasets:
+### Searching for datasets:
 
 ```{r datasettype}
 pollen_ds <- neotoma2::get_datasets(datasettype='pollen surface sample', limit=1000)
