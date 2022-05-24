@@ -43,7 +43,7 @@ plotLeaflet(spo_sites)
 
 #### Location: `loc=c()`
 
-The `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, xmax, ymin, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.  **Note however** that the `neotoma2` package is a wrapper for a simple API call using a URL ([api.neotomadb.org](https://api.neotomadb.org)), and URL strings can only be 1028 characters long, so the API cannot accept very long/complex spatial objects.
+The `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, ymin, xmax, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.  **Note however** that the `neotoma2` package is a wrapper for a simple API call using a URL ([api.neotomadb.org](https://api.neotomadb.org)), and URL strings can only be 1028 characters long, so the API cannot accept very long/complex spatial objects.
 
 Looking for sites using a location:
 
@@ -62,7 +62,7 @@ cz <- list(geoJSON = '{"type": "Polygon",
                          18.91 49.61,
                          15.24 50.99,
                          12.4 50.14))',
-        bbox = c(48.64, 50.99, 12.4, 18.91))
+        bbox = c(12.4, 48.64, 18.91, 50.99))
 
 cz$sf <- geojsonsf::geojson_sf(cz$geoJSON)
 
@@ -82,10 +82,12 @@ neotoma2::plotLeaflet(cz_sites) %>%
 
 If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_Language) for the objects in the `neotoma2` R package we can see that there are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions. As it is, we can take advantage of sunctions like `summary()` to get a more complete sense of the types of data we have as part of this set of sites.  The following code gives the summary table. We do some R magic here to change the way the data is displayed (turning it into a `datatable()` object), but the main piece is the `summary()` call.
 
-```{r summary_sites, eval=FALSE}
+```{r summary_sites, eval=TRUE}
 neotoma2::summary(cz_sites) %>%
-  DT::datatable()
+  DT::datatable(data = ., rownames = FALSE)
 ```
+
+We can see here that there are no chronologies associated with the `site` objects. This is because, at present, we have not pulled in the `dataset` information we need.  All we know from `get_sites()` is what kind of datasets we have.
 
 ### Searching for datasets:
 
@@ -122,51 +124,198 @@ it's likely that the wrong package is trying to run `filter()`.
 
 ### Pulling in the `sample()` data.
 
-Because sample data adds a lot of overhead (for the Czech pollen data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` after we've done our preliminary filtering. The following call can take some time, but we've frozen the object as an RDS data file. You can run this command on your own, and let it run for a bit, or you can just load the object in.
+Because sample data adds a lot of overhead (for the Czech pollen data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` after we've done our preliminary filtering. After `get_datasets()` you have enough information to filter based on location, time bounds and dataset type.  When we move to `get_download()` we can do more fine-tuned filtering at the analysis unit or taxon level.
+
+The following call can take some time, but we've frozen the object as an RDS data file. You can run this command on your own, and let it run for a bit, or you can just load the object in.
 
 ```{r taxa}
-# cz_dl <- cz_pollen %>% get_downloads(all_data = TRUE)
-cz_dl <- readRDS('czDownload.RDS')
+## This line is commented out because we've already run it for you.
+## cz_dl <- cz_pollen %>% get_downloads(all_data = TRUE)
+cz_dl <- readRDS('data/czDownload.RDS')
 ```
 
+Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets.  To extract all the samples we can call:
 
-We can do also for one element:
+```{r allSamples}
+allSamp <- samples(cz_dl)
+```
+
+When we've done this, we get a `data.frame` that is `r nrow(allSamp)` rows long and `r ncol(allSamp)` columns wide.  The reason the table is so wide is that we are returning data in a **long** format.  Each row contains all the information you should need to properly interpret it:
+
+```{r colNamesAllSamp, echo = FALSE}
+colnames(allSamp)
+```
+
+For some dataset types, or analyses some of these columns may not be needed, however, for other dataset types they may be critically important.  To allow the `neotoma2` package to be as useful as possible for the community we've included as many as we can.
+
+If you want to know what taxa we have in the record you can use the helper function `taxa()` on the sites object:
+
 ```{r taxa2}
-head(as.data.frame(neotoma2::taxa(cz_pollen[[1]])))
+neotomatx <- neotoma2::taxa(cz_dl) %>% 
+  unique()
+
+DT::datatable(data = head(neotomatx, n = 20), rownames = FALSE)
 ```
 
-### Doing a Basic Analysis
+You'll see that the taxonids here can be linked to the taxonid column in the samples.  This allows us to build translation tables if we choose to.  You may also note that the `taxonname` is in the field `variablename`.  This is because of the way that individual samples are reported in Neotoma.
 
-1. Getting all pollen
+#### Simple Translation
 
-```{r pollen}
-all_pollen <- neotoma2::get_datasets(datasettype = "pollen",
-                                     limit = 100)
+Lets say we want all *Plantago* taxa to be grouped together into one pseudo-taxon.  There are several ways of doing this, either directly, or by creating an external "translation" table (which we did in the prior `neotoma` package).
 
-# all_pollen <- get_datasets(datasettype="pollen", all_data = TRUE) # Takes about 20+ minutes
-```
-_
+Here we'll do a simple transformation.  We're using `dplyr` type coding here to `mutate()` the column `variablename` so that any time we detect (`str_detect()`) a `variablename` that starts with `Plantago` (the `.*` represents a wildcard for any character [`.`], zero or more times [`*`]) we `replace()` it with the character string `"Plantago"`.  Note that this changes *Plantago* in the `allSamp` object, but if we were to call `samples()` again, the taxonomy would return to its original form.
 
-```{r}
-neotoma2::plot(all_pollen)
-```
+```{r simpleTaxonChange}
 
-2. Getting the data
-```{r dl}
-pollen_dl <- neotoma2::get_downloads(all_pollen) # Takes a couple of minutes 
+allSamp <- allSamp %>% 
+  mutate(variablename = replace(variablename, 
+                                stringr::str_detect(variablename, "Plantago.*"), 
+                                "Plantago"))
 ```
 
-3. Get the samples
+We can use a similar pattern to work from a table.  For example, a table of pairs (what we want changed, and the name we want it replaced with) can be generated:
 
-```{r samp}
-pollen_samp <- neotoma2::samples(pollen_dl)
-head(pollen_samp)
+| original | replacement |
+| -------- | ----------- |
+| Abies.*  | Abies |
+| Vaccinium.* | Ericaceae |
+| Typha.* | Aquatic |
+
+We can get the list of original names directly from the `taxa()` call, or we can create one from `allSamp` in a way that gives us a sense of the number of times those taxa appear, either across sites, or samples:
+
+```{countbySitesSamples}
+taxaSites <- allSamp %>%
+  group_by(variablename, siteid) %>% 
+  group_by(variablename) %>% 
+  summarise(sites = length(unique(siteid)))
+
+taxaSamples <- allSamp %>%
+  group_by(variablename) %>% 
+  summarise(samples = n())
+
+taxaplots <- taxaSites %>% inner_join(taxaSamples, by = "variablename")
+
+ggplot(data = taxaplots, aes(x = sites, y = samples)) +
+  geom_point() +
+  stat_smooth(method = 'glm', 
+              method.args = list(family = 'poisson')) +
+  xlab("Number of Sites") +
+  ylab("Number of Samples") +
+  theme_bw()
 ```
+
+This is mostly for illustration, but we can see, as a sanity check, that the relationship is as we'd expect.
+
+You can then export either one of these tables and add a column with the counts, you could also add extra contextual information, such as the `ecologicalgroup` or `taxongroup` to help you out. Once you've cleaned up the translation table you can load it in, and then apply the transformation:
+
+```{r translationTable}
+translation <- readr::read_csv("data/taxontable.csv")
+DT::datatable(translation, rownames = FALSE)
+
+```
+
+So you can see we've changed some of the taxon names in the taxon table (don't look too far, I just did this as an example).  To replace the names in the `samples()` output, we'll join the two tables using an `inner_join()` (meaning the `variablename` must appear in both tables for the result to be included), and then we're going to select only those elements of the sample tables that are relevant to our later analysis:
+
+```{r joinTranslation}
+allSamp <- samples(cz_dl)
+
+allSamp <- allSamp %>%
+  inner_join(translation, by = c("variablename" = "variablename")) %>% 
+  select(!c("variablename", "sites", "samples")) %>% 
+  group_by(siteid, sitename, replacement,
+           sampleid, units, age,
+           agetype, depth, datasetid,
+           long, lat) %>%
+  summarise(value = sum(value))
+
+DT::datatable(head(allSamp, n = 50), rownames = FALSE)
+```
+
+### Doing Basic Analysis
+
+We now have site information across the Czech Republic, with samples, and with taxon names.  I'm interested in looking at the distributions of taxa across time, simply their presence absence.  I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time:
+
+```{r summarizeByTime}
+taxabyage <- allSamp %>% 
+  group_by(replacement, "age" = round(age, -2)) %>% 
+  summarise(n = n())
+
+samplesbyage <- allSamp %>% 
+  group_by("age" = round(age, -2)) %>% 
+  summarise(samples = length(unique(sampleid)))
+
+taxabyage <- taxabyage %>%
+  inner_join(samplesbyage, by = "age") %>% 
+  mutate(proportion = n / samples)
+
+toptaxa <- taxabyage %>%
+  group_by(replacement) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(n = 10)
+
+groupbyage <- taxabyage %>%
+  filter(replacement %in% toptaxa$replacement)
+
+ggplot(groupbyage, aes(x = age, y = proportion)) +
+  geom_point() +
+  geom_smooth(method = 'gam', 
+              method.args = list(family = 'binomial')) +
+  facet_wrap(~replacement) +
+  coord_cartesian(xlim = c(0, 20000), ylim = c(0, 1))
+```
+
+We've now shown how taxa have changed (across all sites) over time.  We can use packages like `rioja` to 
+do stratigraphic plotting for a single record, but first we need to do some different data management.
+
+## Stratigraphic Plotting
+
+```{r stratiplot}
+# Get a particular site:
+onesite <- samples(cz_dl[[1]]) %>% 
+  inner_join(translation, by = c("variablename" = "variablename")) %>% 
+  select(!c("variablename", "sites", "samples")) %>% 
+  group_by(siteid, sitename, replacement,
+           sampleid, units, age,
+           agetype, depth, datasetid,
+           long, lat) %>%
+  summarise(value = sum(value))
+
+onesite <- onesite %>%
+  filter(units == "NISP") %>%
+  group_by(age) %>%
+  mutate(pollencount = sum(value, na.rm = TRUE)) %>%
+  group_by(replacement) %>% 
+  mutate(prop = value / pollencount)
+
+topcounts <- onesite %>%
+  group_by(replacement) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(n = 10)
+
+widetable <- onesite %>%
+  filter(replacement %in% topcounts$replacement) %>%
+  select(age, replacement, prop) %>% 
+  mutate(prop = as.numeric(prop))
+
+counts <- tidyr::pivot_wider(widetable,
+                             id_cols = age,
+                             names_from = replacement,
+                             values_from = prop,
+                             values_fill = 0)
+
+rioja::strat.plot(counts[,-1], yvar = counts$age,
+                  title = cz_dl[[1]]$sitename)
+```
+
 
 Using Spatial-based Data (July max temperature)
 
 ```{r}
-spatial <- sf::st_as_sf(pollen_samp, 
+modern <- allSamp %>% filter(age < 50)
+
+spatial <- sf::st_as_sf(modern, 
                         coords = c("long", "lat"),
                         crs = "+proj=longlat +datum=WGS84")
 spatial
@@ -178,32 +327,31 @@ worldTmax
 ```
 
 ```{r raster}
-pollen_samp$tmax7 <- raster::extract(worldTmax, spatial)[,7]
-head(pollen_samp)
+modern$tmax7 <- raster::extract(worldTmax, spatial)[,7]
+head(modern)
 ```
 
 #### Choosing Taxa
 
 ```{r maxsamp}
-maxsamp <- pollen_samp %>% dplyr::distinct(siteid, .keep_all = TRUE) %>% 
-  dplyr::select(tmax7)
+maxsamp <- modern %>% 
+  group_by(siteid, sitename) %>% 
+  dplyr::distinct(tmax7)
 head(maxsamp)
 ```
 
 Top 10
 ```{r topten}
-
-
-topten <- pollen_samp %>% 
-  dplyr::group_by(variablename) %>% 
+topten <- allSamp %>% 
+  dplyr::group_by(replacement) %>% 
   dplyr::summarise(n = dplyr::n()) %>% 
   dplyr::arrange(desc(n))
 topten
 ```
 
 ```{r po_subsamp}
-pollen_subsamp <- pollen_samp %>% 
-  dplyr::filter(variablename %in% topten$variablename[1:10])
+pollen_subsamp <- modern %>% 
+  dplyr::filter(replacement %in% topten$replacement[1:16])
 head(pollen_subsamp)
 ```
 
@@ -213,7 +361,7 @@ Plot your results!
 ggplot() +
   geom_density(data = pollen_subsamp,
                aes(x = round(tmax7 / 10, 0)), col = 2) +
-  facet_wrap(~variablename) +
+  facet_wrap(~replacement) +
   geom_density(data = maxsamp, aes(x = tmax7 / 10)) +
   xlab("Maximum July Temperature") +
   ylab("Kernel Density")
