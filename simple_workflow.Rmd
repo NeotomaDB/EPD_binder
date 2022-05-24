@@ -66,53 +66,69 @@ cz <- list(geoJSON = '{"type": "Polygon",
 
 cz$sf <- geojsonsf::geojson_sf(cz$geoJSON)
 
-cz_sites <- neotoma2::get_sites(loc = cz[[1]])
+cz_sites <- neotoma2::get_sites(loc = cz[[1]], all_data = TRUE)
 ```
 
 You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon):
 
 ```{r plotL}
 neotoma2::plotLeaflet(cz_sites) %>% 
-  leaflet::addPolygons(data = cz$sf, color = "green")
+  leaflet::addPolygons(map = ., 
+                       data = cz$sf, 
+                       color = "green")
 ```
 
 #### Site Helpers
 
+If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_Language) for the objects in the `neotoma2` R package we can see that there are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions. As it is, we can take advantage of sunctions like `summary()` to get a more complete sense of the types of data we have as part of this set of sites.  The following code gives the summary table. We do some R magic here to change the way the data is displayed (turning it into a `datatable()` object), but the main piece is the `summary()` call.
 
-We can see the different elements that are contained within this sites object:
-
-```{r summary_sites}
-head(as.data.frame(neotoma2::summary(cz_sites)))
+```{r summary_sites, eval=FALSE}
+neotoma2::summary(cz_sites) %>%
+  DT::datatable()
 ```
 
 ### Searching for datasets:
 
-```{r datasettype}
-pollen_ds <- neotoma2::get_datasets(datasettype='pollen surface sample', limit=1000)
-head(as.data.frame(pollen_ds))
+We know that collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain pollen records. That said, we only have the `sites`, it's just that (for convenience) the `sites` API returns some information about datasets so to make it easier to navigate the records.
+
+With a `sites` object we can directly call `get_datasets()`, to pull in more metadata about the datasets.  At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(cz_sites)` to the output of a similar call using the following:
+
+```{r datasetsFromSites}
+cz_datasets <- neotoma2::get_datasets(cz_sites, all_data = TRUE)
+datasets(cz_datasets) %>% 
+  as.data.frame() %>% 
+  DT::datatable(data = .)
 ```
 
+If we choose to pull in information about only a single dataset type, or if there is additional filtering we want to do before we download the data, we can use the `filter()` function.  For example, if we only want pollen records, we can filter:
 
-```{r summary_ds}
-head(as.data.frame(neotoma2::summary(pollen_ds)))
-```
 ```{r downloads}
-cz_dl <- neotoma2::get_downloads(cz_sites)
-head(as.data.frame(neotoma2::summary(cz_dl)))
+cz_pollen <- cz_datasets %>% 
+  neotoma2::filter(datasettype == "pollen")
+
+neotoma2::summary(cz_pollen) %>% DT::datatable(data = .)
 ```
 
+We can see now that the data table looks different, and there are fewer total sites.
 
-Let's say we only want to keep pollen datsets
-```{r filtering}
-cz_pollen <- cz_dl %>% neotoma2::filter(datasettype == 'pollen')
-head(as.data.frame(neotoma2::summary(cz_pollen)))
+Note that R is sensitive to the order in which packages are loaded.  Using `neotoma2::` tells R explicitly that you want to use the `neotoma2` package to fun the `filter()` operation.  `filter()` exists in other packages as well, such as `dplyr`, so if you see an error that looks like:
+
+```bash
+Error in UseMethod("filter") : 
+  no applicable method for 'filter' applied to an object of class "sites"
 ```
 
-Getting taxa:
+it's likely that the wrong package is trying to run `filter()`.
+
+### Pulling in the `sample()` data.
+
+Because sample data adds a lot of overhead (for the Czech pollen data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` after we've done our preliminary filtering. The following call can take some time, but we've frozen the object as an RDS data file. You can run this command on your own, and let it run for a bit, or you can just load the object in.
 
 ```{r taxa}
-head(as.data.frame(neotoma2::taxa(cz_pollen)))
+# cz_dl <- cz_pollen %>% get_downloads(all_data = TRUE)
+cz_dl <- readRDS('czDownload.RDS')
 ```
+
 
 We can do also for one element:
 ```{r taxa2}
@@ -124,7 +140,9 @@ head(as.data.frame(neotoma2::taxa(cz_pollen[[1]])))
 1. Getting all pollen
 
 ```{r pollen}
-all_pollen <- neotoma2::get_datasets(datasettype="pollen", limit = 100)
+all_pollen <- neotoma2::get_datasets(datasettype = "pollen",
+                                     limit = 100)
+
 # all_pollen <- get_datasets(datasettype="pollen", all_data = TRUE) # Takes about 20+ minutes
 ```
 _
@@ -132,6 +150,7 @@ _
 ```{r}
 neotoma2::plot(all_pollen)
 ```
+
 2. Getting the data
 ```{r dl}
 pollen_dl <- neotoma2::get_downloads(all_pollen) # Takes a couple of minutes 
