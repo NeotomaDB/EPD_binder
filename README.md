@@ -3,9 +3,9 @@
 # EPD  Workflows and Sample Binder
 
 Repository Template to create a Binder with the Neotoma2 package.
-RStudio here:
+RStudio here:  
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/EPD_binder/main?urlpath=rstudio)
-
+  
 Slides here:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/EPD_binder/main)
 ## Contributors
