@@ -49,7 +49,8 @@ stara <- get_downloads(24238)
 stara_chron <- chronologies(stara)
 
 stara_chron %>% as.data.frame() %>% 
-  DT::datatable(data = .)
+  DT::datatable(data = ., 
+                options = list(scrollX = "100%"))
 ```
 
 There are three chronologies here, but for whatever reason we've decided not to use any of them.  We want to build a new one with the function `Bchronology()` from the [`Bchron` package](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html). First we want to see what chroncontrols we have for the prior chronologies. We're going to select the chronologies used for chronology `14591` as our template.  
@@ -61,7 +62,8 @@ controls <- chroncontrols(stara) %>%
   dplyr::filter(chronologyid == 14591) %>% 
   arrange(depth)
 
-controls %>% DT::datatable(data = .)
+controls %>% DT::datatable(data = ., 
+                options = list(scrollX = "100%"))
 ```
 
 We can look at other tools to decided how we want to manage the chroncontrols, for example, saving them and editing them using Excel or another spreadsheet program.  We could add a new date by adding a new row. In this example we're just going to modify the existing ages to provide better constraints at the core top. We are setting the core top to *0 calibrated years BP*, and assuming an uncertainty of 2 years, and a thickness of 1cm.

@@ -95,7 +95,8 @@ If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_L
 
 ```{r summary_sites, eval=TRUE}
 neotoma2::summary(cz_sites) %>%
-  DT::datatable(data = ., rownames = FALSE)
+  DT::datatable(data = ., rownames = FALSE, 
+                options = list(scrollX = "100%"))
 ```
 
 We can see here that there are no chronologies associated with the `site` objects. This is because, at present, we have not pulled in the `dataset` information we need.  All we know from `get_sites()` is what kind of datasets we have.
@@ -110,7 +111,8 @@ With a `sites` object we can directly call `get_datasets()`, to pull in more met
 cz_datasets <- neotoma2::get_datasets(cz_sites, all_data = TRUE)
 datasets(cz_datasets) %>% 
   as.data.frame() %>% 
-  DT::datatable(data = .)
+  DT::datatable(data = ., 
+                options = list(scrollX = "100%"))
 ```
 
 If we choose to pull in information about only a single dataset type, or if there is additional filtering we want to do before we download the data, we can use the `filter()` function.  For example, if we only want pollen records, we can filter:
@@ -119,7 +121,8 @@ If we choose to pull in information about only a single dataset type, or if ther
 cz_pollen <- cz_datasets %>% 
   neotoma2::filter(datasettype == "pollen")
 
-neotoma2::summary(cz_pollen) %>% DT::datatable(data = .)
+neotoma2::summary(cz_pollen) %>% DT::datatable(data = ., 
+                options = list(scrollX = "100%"))
 ```
 
 We can see now that the data table looks different, and there are fewer total sites.
@@ -165,7 +168,8 @@ If you want to know what taxa we have in the record you can use the helper funct
 neotomatx <- neotoma2::taxa(cz_dl) %>% 
   unique()
 
-DT::datatable(data = head(neotomatx, n = 20), rownames = FALSE)
+DT::datatable(data = head(neotomatx, n = 20), rownames = FALSE, 
+                options = list(scrollX = "100%"))
 ```
 
 You'll see that the taxonids here can be linked to the taxonid column in the samples.  This allows us to build translation tables if we choose to.  You may also note that the `taxonname` is in the field `variablename`.  This is because of the way that individual samples are reported in Neotoma.
@@ -221,7 +225,8 @@ You can then export either one of these tables and add a column with the counts,
 
 ```{r translationTable}
 translation <- readr::read_csv("data/taxontable.csv")
-DT::datatable(translation, rownames = FALSE)
+DT::datatable(translation, rownames = FALSE, 
+                options = list(scrollX = "100%"))
 
 ```
 
@@ -239,7 +244,8 @@ allSamp <- allSamp %>%
            long, lat) %>%
   summarise(value = sum(value))
 
-DT::datatable(head(allSamp, n = 50), rownames = FALSE)
+DT::datatable(head(allSamp, n = 50), rownames = FALSE,
+                options = list(scrollX = "100%"))
 ```
 
 ## Simple Analytics
@@ -260,7 +266,7 @@ onesite <- samples(cz_dl[[1]]) %>%
   summarise(value = sum(value))
 
 onesite <- onesite %>%
-  filter(units == "NISP") %>%
+  dplyr::filter(units == "NISP") %>%
   group_by(age) %>%
   mutate(pollencount = sum(value, na.rm = TRUE)) %>%
   group_by(replacement) %>% 
