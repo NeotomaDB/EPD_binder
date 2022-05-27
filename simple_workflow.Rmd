@@ -1,8 +1,19 @@
 ---
 title: "A Simple Workflow"
-author: "Simon Goring, Socorro Dominguez Vidana"
+author: "Simon Goring, Socorro Dominguez Vidaña"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document:
+    code_folding: show
+    fig_caption: yes
+    keep_md: yes
+    self_contained: yes
+    theme: readable
+    toc: yes
+    toc_float: yes
+    css: "text.css"
+  pdf_document:
+    pandoc_args: "-V geometry:vmargin=1in -V geometry:hmargin=1in"
 ---
 
 ```{r setup}
@@ -231,44 +242,11 @@ allSamp <- allSamp %>%
 DT::datatable(head(allSamp, n = 50), rownames = FALSE)
 ```
 
-### Doing Basic Analysis
+## Simple Analytics
 
-We now have site information across the Czech Republic, with samples, and with taxon names.  I'm interested in looking at the distributions of taxa across time, simply their presence absence.  I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time:
+### Stratigraphic Plotting
 
-```{r summarizeByTime}
-taxabyage <- allSamp %>% 
-  group_by(replacement, "age" = round(age, -2)) %>% 
-  summarise(n = n())
-
-samplesbyage <- allSamp %>% 
-  group_by("age" = round(age, -2)) %>% 
-  summarise(samples = length(unique(sampleid)))
-
-taxabyage <- taxabyage %>%
-  inner_join(samplesbyage, by = "age") %>% 
-  mutate(proportion = n / samples)
-
-toptaxa <- taxabyage %>%
-  group_by(replacement) %>%
-  summarise(n = n()) %>%
-  arrange(desc(n)) %>%
-  head(n = 10)
-
-groupbyage <- taxabyage %>%
-  filter(replacement %in% toptaxa$replacement)
-
-ggplot(groupbyage, aes(x = age, y = proportion)) +
-  geom_point() +
-  geom_smooth(method = 'gam', 
-              method.args = list(family = 'binomial')) +
-  facet_wrap(~replacement) +
-  coord_cartesian(xlim = c(0, 20000), ylim = c(0, 1))
-```
-
-We've now shown how taxa have changed (across all sites) over time.  We can use packages like `rioja` to 
-do stratigraphic plotting for a single record, but first we need to do some different data management.
-
-## Stratigraphic Plotting
+We can use packages like `rioja` to do stratigraphic plotting for a single record, but first we need to do some different data management.
 
 ```{r stratiplot}
 # Get a particular site:
@@ -309,8 +287,43 @@ rioja::strat.plot(counts[,-1], yvar = counts$age,
                   title = cz_dl[[1]]$sitename)
 ```
 
+### Change in Time Across Sites
 
-Using Spatial-based Data (July max temperature)
+We now have site information across the Czech Republic, with samples, and with taxon names. I'm interested in looking at the distributions of taxa across time, their presence/absence. I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time:
+
+```{r summarizeByTime}
+taxabyage <- allSamp %>% 
+  group_by(replacement, "age" = round(age, -2)) %>% 
+  summarise(n = n())
+
+samplesbyage <- allSamp %>% 
+  group_by("age" = round(age, -2)) %>% 
+  summarise(samples = length(unique(sampleid)))
+
+taxabyage <- taxabyage %>%
+  inner_join(samplesbyage, by = "age") %>% 
+  mutate(proportion = n / samples)
+
+toptaxa <- taxabyage %>%
+  group_by(replacement) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(n = 10)
+
+groupbyage <- taxabyage %>%
+  filter(replacement %in% toptaxa$replacement)
+
+ggplot(groupbyage, aes(x = age, y = proportion)) +
+  geom_point() +
+  geom_smooth(method = 'gam', 
+              method.args = list(family = 'binomial')) +
+  facet_wrap(~replacement) +
+  coord_cartesian(xlim = c(0, 20000), ylim = c(0, 1))
+```
+
+We've now shown how taxa have changed (across all sites) over time.
+
+### Distributions in Climate (July max temperature) from Rasters
 
 ```{r}
 modern <- allSamp %>% filter(age < 50)

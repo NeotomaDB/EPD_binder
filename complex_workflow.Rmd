@@ -1,6 +1,6 @@
 ---
 title: "A Not so Simple Workflow"
-author: "Simon Goring, Socorro Dominguez Vidana"
+author: "Simon Goring, Socorro Dominguez Vidaña"
 date: "`r Sys.Date()`"
 output:
   html_document:
