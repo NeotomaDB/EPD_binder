@@ -16,6 +16,9 @@ output:
     pandoc_args: "-V geometry:vmargin=1in -V geometry:hmargin=1in"
 ---
 
+## Accessing and Manipulating Data with `neotoma2`
+
+
 ```{r setup}
 options(warn = -1)
 suppressMessages(library(neotoma2))
@@ -266,7 +269,7 @@ onesite <- samples(cz_dl[[1]]) %>%
   summarise(value = sum(value))
 
 onesite <- onesite %>%
-  dplyr::filter(units == "NISP") %>%
+  filter(units == "NISP") %>%
   group_by(age) %>%
   mutate(pollencount = sum(value, na.rm = TRUE)) %>%
   group_by(replacement) %>% 

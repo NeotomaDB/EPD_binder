@@ -76,7 +76,8 @@ controls$agelimityounger[1] <- -2
 controls$agelimitolder[1] <- 2
 controls$thickness[1] <- 1
 
-controls %>% DT::datatable(data = .)
+controls %>% DT::datatable(data = ., 
+                options = list(scrollX = "100%"))
 ```
 
 ### Extract Depth & Analysis Unit IDs
@@ -170,7 +171,9 @@ newSampleAges <- data.frame(predictDepths,
                               apply(newpredictions, 2, sd),
                             agetype = "Calibrated radiocarbon years")
 
-stara[[1]]$collunits[[1]] <- add_chronology(stara[[1]]$collunits[[1]], newChronStara, newSampleAges)
+stara[[1]]$collunits[[1]] <- add_chronology(stara[[1]]$collunits[[1]], 
+                                            newChronStara, 
+                                            newSampleAges)
 ```
 
 With this, we now have the updated collectionunit. Lets take a look at how this affects the age model overal. To pull the ages from the prior chronologies, we use the `set_default()` function to change the default chronology, and then extract ages, depths & analysisunits:
@@ -184,7 +187,7 @@ newages <- samples(stara) %>%
   mutate(agecat = "new")
 
 stara[[1]]$collunits[[1]]$chronologies <- set_default(stara[[1]]$collunits[[1]]$chronologies,
-                                                      14591)  
+                                                      14591)
 plotforages <- samples(stara) %>%
   select(depth, analysisunitid, age) %>% 
   unique() %>% 
