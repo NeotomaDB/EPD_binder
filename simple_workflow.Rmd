@@ -455,7 +455,9 @@ We are often interested in the interaction between taxa and climate, assuming th
 The first step is taking our sample data and turning it into a spatial object using the `sf` package in R:
 
 ```{r makeSamplesSpatial}
-modern <- samples(cz_dl) %>% filter(age < 50)
+modern <- samples(cz_dl) %>% 
+  filter(age < 50) %>% 
+  filter(ecologicalgroup == "TRSH" & elementtype == "pollen" & units == "NISP")
 
 spatial <- sf::st_as_sf(modern, 
                         coords = c("long", "lat"),
@@ -473,40 +475,40 @@ worldTmax <- raster::getData('worldclim', var = 'tmax', res = 10)
 spatial$tmax7 <- raster::extract(worldTmax, spatial)[,7]
 ```
 
-This adds a column to the `data.frame` `spatial`, that contains the maximum July temperature for each taxon at each site (all taxa at a site will share the same value).
+This adds a column to the `data.frame` `spatial`, that contains the maximum July temperature for each taxon at each site (all taxa at a site will share the same value).  We've already filtered to all UPHE taxa, but that still leaves us with `r length(length(unique(spatial$variablename)))` distinct names for the taxa.  We're going to use `dplyr`'s `mutate()` function to extract just the genus:
 
-#### Choosing Taxa
-
-```{r maxsamp}
-maxsamp <- modern %>% 
-  group_by(siteid, sitename) %>% 
-  dplyr::distinct(tmax7)
-head(maxsamp)
+```{r toGenus}
+spatial <- spatial %>%
+  mutate(variablename = stringr::str_replace(variablename, "[[:punct:]]", " ")) %>% 
+  mutate(variablename = stringr::word(variablename, 1)) %>% 
+  group_by(variablename, siteid) %>% 
+  summarise(tmax7 = max(tmax7), .groups = "keep") %>%
+  group_by(variablename) %>% 
+  filter(n() > 3)
 ```
 
-Top 10
+#### Setting the Background
+
+We want to get the background distribution of July temperatures in the Czech Republic, to plot our taxon distributions against by taking the maximum value of the temperature, however, since all values at the site are the same (because we used a spatial overlay) the maximum is the same as the actual July temperature at the site.
+
 ```{r topten}
-topten <- allSamp %>% 
-  dplyr::group_by(replacement) %>% 
-  dplyr::summarise(n = dplyr::n(), .groups='keep') %>% 
-  dplyr::arrange(desc(n))
-topten
+maxsamp <- spatial %>% 
+  dplyr::group_by(siteid) %>% 
+  dplyr::summarise(tmax7 = max(tmax7), .groups = 'keep')
 ```
 
-```{r po_subsamp}
-pollen_subsamp <- modern %>% 
-  dplyr::filter(replacement %in% topten$replacement[1:16])
-head(pollen_subsamp)
-```
-
-Plot your results!
+Now we're going to plot it out, using `facet_wrap()` to plot each taxon in its own panel:
 
 ```{r ggplot}
 ggplot() +
-  geom_density(data = pollen_subsamp,
+  geom_density(data = spatial,
                aes(x = round(tmax7 / 10, 0)), col = 2) +
-  facet_wrap(~replacement) +
+  facet_wrap(~variablename) +
   geom_density(data = maxsamp, aes(x = tmax7 / 10)) +
   xlab("Maximum July Temperature") +
   ylab("Kernel Density")
 ```
+
+## Conclusion
+
+So, we've done a lot in this example.  We've (1) searched for sites using site names and geographic parameters, (2) filtered results using temporal and spatial parameters, (3) obtained sample information for the selected datasets and (4) performed basic analysis including the use of climate data from rasters.  Hopefully you can use these examples as templates for your own future work, or as a building block for something new and cool!
