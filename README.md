@@ -5,9 +5,6 @@
 Repository Template to create a Binder with the Neotoma2 package.  
 RStudio here:  
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/EPD_binder/main?urlpath=rstudio)
-  
-Slides here:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/EPD_binder/main)
 ## Contributors
 
 This project is an open project, and contributions are welcome from any individual.  All contributors to this project are bound by a [code of conduct](CODE_OF_CONDUCT.md).  Please review and follow this code of conduct as part of your contribution.
