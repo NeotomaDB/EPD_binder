@@ -94,73 +94,26 @@ The `neotoma` package used a bounding box for locations, structured as a vector 
 
 Looking for sites using a location. We're putting three representations of the Czech Republic here as part of a list with three elements, a geoJSON, WKT and bounding box representation.  We've also transformed the `cz$geoJSON` element to an object for the `sf` package.  Any of these four spatial representations work with the `neotoma2` package.
 
-```{r}
-wi_sitepipe <-'{
-        "type": "Polygon",
-        "coordinates": [
-          [[-90.74, 47.17],
-            [-92.02, 46.95],
-            [-92.96, 46.22],
-            [-93.07, 44.66],
-            [-91.91, 43.88],
-            [-90.70, 42.22],
-            [-87.40, 42.35],
-            [-87.23, 43.77],
-            [-87.14, 45.70],
-            [-89.49, 46.49],
-            [-90.74,47.17]]
-        ]
-      }' %>%
-  geojsonsf::geojson_sf() %>%
-  neotoma2::get_sites(loc = ., limit= 1000)
-
-wiWKT = 'POLYGON ((-90.74 47.17,
-                  -92.02 46.95,
-                  -92.96 46.22,
-                  -93.07 44.66,
-                  -91.91 43.88,
-                  -90.70 42.22,
-                  -87.40 42.35,
-                  -87.23 43.77,
-                  -87.14 45.70,
-                  -89.49 46.49,
-                  -90.74 47.17))'
-
-wiBB = c(-93.07,  42.22,-87.14, 47.17)
-
-
-
-
-
-
-
-
-
-
-```
-
-
 ```{r boundingBox}
-wi <- list(geoJSON = '{"type": "Polygon",
+cz <- list(geoJSON = '{"type": "Polygon",
         "coordinates": [[
-            [-89.50, 43.09],
-            [-89.37, 43.04],
-            [-89.31, 43.05],
-            [-89.32, 43.10],
-            [-89.40, 43.15],
-            [-89.50, 43.09]
-          ]]}',
-        WKT = 'POLYGON ((-89.50 43.09, 
-                         -89.37 43.04, 
-                         -89.31 43.05,
-                         -89.32 43.10,
-                         -89.40 43.15,
-                         -89.50 43.09))',
-        bbox = c(-89.31, 43.04, -89.50, 43.15))
+            [12.40, 50.14],
+            [14.10, 48.64],
+            [16.95, 48.66],
+            [18.91, 49.61],
+            [15.24, 50.99],
+            [12.40, 50.14]]]}',
+        WKT = 'POLYGON ((12.4 50.14, 
+                         14.1 48.64, 
+                         16.95 48.66, 
+                         18.91 49.61,
+                         15.24 50.99,
+                         12.4 50.14))',
+        bbox = c(12.4, 48.64, 18.91, 50.99))
 
-wi$sf <- geojsonsf::geojson_sf(wi$geoJSON)[[1]]
+cz$sf <- geojsonsf::geojson_sf(cz$geoJSON)[[1]]
 
-wi_sites <- neotoma2::get_sites(loc = wi$geoJSON, all_data = TRUE)
+cz_sites <- neotoma2::get_sites(loc = cz$geoJSON, all_data = TRUE)
 ```
 
 You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon, `cz$sf`, which works directly with the R `leaflet` package):
@@ -168,9 +121,9 @@ You can always simply `plot()` the `sites` objects, but you will lose some of th
 ##### Code
 
 ```{r plotL, eval=FALSE}
-neotoma2::plotLeaflet(wi_sites) %>% 
+neotoma2::plotLeaflet(cz_sites) %>% 
   leaflet::addPolygons(map = ., 
-                       data = wi$sf, 
+                       data = cz$sf, 
                        color = "green")
 ```
 
