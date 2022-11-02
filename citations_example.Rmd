@@ -1,0 +1,150 @@
+---
+title: "A Simple Workflow"
+author: "Simon Goring, Socorro Dominguez Vidaña"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: show
+    fig_caption: yes
+    keep_md: yes
+    self_contained: yes
+    theme: readable
+    toc: yes
+    toc_float: yes
+    css: "text.css"
+  pdf_document:
+    pandoc_args: "-V geometry:vmargin=1in -V geometry:hmargin=1in"
+---
+
+## Introduction
+
+This document is intended to act as a primer for the use of the new Neotoma R package, `neotoma2`.  [The `neotoma2` package](https://github.com/NeotomaDB/neotoma2) is available from GitHub and can be installed in R using the `devtools` package by using:
+
+```r
+devtools::install_github('NeotomaDB/neotoma2')
+library(neotoma2)
+```
+
+In this tutorial you will learn how to:
+
+* Search for sites using site names and geographic parameters
+* Filter results using temporal and spatial parameters
+* Obtain sample information for the selected datasets
+* Perform basic analysis including the use of climate data from rasters
+
+### Accessing and Manipulating Data with `neotoma2`
+
+For this workbook we use several packages, including `leaflet`, `sf` and others. We load the packages using the `pacman` package, which will automatically install the packages if they do not currently exist in your set of packages.
+
+```{r setup}
+options(warn = -1)
+pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, raster, DT)
+```
+
+Note that R is sensitive to the order in which packages are loaded.  Using `neotoma2::` tells R explicitly that you want to use the `neotoma2` package to run a particular function. So, for a function like `filter()`, which exists in other packages such as `dplyr`, you may see an error that looks like:
+
+```bash
+Error in UseMethod("filter") : 
+  no applicable method for 'filter' applied to an object of class "sites"
+```
+
+In that case it's likely that the wrong package is trying to run `filter()`, and so explicitly adding `dplyr::` or `neotoma2::` in front of the function name (i.e., `neotoma2::filter()`)is good practice.
+
+### Getting Help with Neotoma
+
+If you're planning on working with Neotoma, please join us on [Slack](https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ) where we manage a channel specifically for questions about the R package. You may also wish to join our Google Groups mailing list, please [contact us](mailto:neotoma-contact@googlegroups.com) to be added.
+
+## Site Searches
+
+### `get_sites()`
+
+There are several ways to find sites in `neotoma2`, but we think of `sites` as being spatial objects primarily. They have names, locations, and are found within the context of geopolitical units, but within the API and the package, the site itself does not have associated information about taxa, dataset types or ages.  It is simply the container into which we add that information.  So, when we search for sites we can search by:
+
+  * siteid
+  * sitename
+  * location
+  * altitude (maximum and minimum)
+  * geopolitical unit
+
+#### Site names: `sitename="%Lait%"` {.tabset}
+
+We may know exactly what site we're looking for ("Lac Mouton"), or have an approximate guess for the site name (for example, we know it's something like "Lait Lake", or "Lac du Lait", but we're not sure how it was entered specifically).
+
+We use the general format: `get_sites(sitename="XXXXX")` for searching by name.
+
+PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Lait%"` would pick up ["Lac du Lait"](https://data.neotomadb.org/4180) for us (and would pick up "Lake Lait" and "This Old **Lait**y Hei-dee-ho Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%lait%"`.
+
+##### Code
+
+```{r sitename, eval=FALSE}
+spo_sites <- neotoma2::get_sites(sitename = "%Lait%")
+plotLeaflet(spo_sites)
+```
+
+##### Result
+
+```{r sitenamePlot, echo=FALSE}
+spo_sites <- neotoma2::get_sites(sitename = "%Lait%")
+plotLeaflet(spo_sites)
+```
+
+#### Location: `loc=c()` {.tabset}
+
+The `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, ymin, xmax, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.  **Note however** that the `neotoma2` package is a wrapper for a simple API call using a URL ([api.neotomadb.org](https://api.neotomadb.org)), and URL strings can only be 1028 characters long, so the API cannot accept very long/complex spatial objects.
+
+Looking for sites using a location. We're putting three representations of the Czech Republic here as part of a list with three elements, a geoJSON, WKT and bounding box representation.  We've also transformed the `cz$geoJSON` element to an object for the `sf` package.  Any of these four spatial representations work with the `neotoma2` package.
+
+```{r boundingBox}
+cz <- list(geoJSON = '{"type": "Polygon",
+        "coordinates": [[
+            [12.40, 50.14],
+            [14.10, 48.64],
+            [16.95, 48.66],
+            [18.91, 49.61],
+            [15.24, 50.99],
+            [12.40, 50.14]]]}',
+        WKT = 'POLYGON ((12.4 50.14, 
+                         14.1 48.64, 
+                         16.95 48.66, 
+                         18.91 49.61,
+                         15.24 50.99,
+                         12.4 50.14))',
+        bbox = c(12.4, 48.64, 18.91, 50.99))
+
+cz$sf <- geojsonsf::geojson_sf(cz$geoJSON)[[1]]
+
+cz_sites <- neotoma2::get_sites(loc = cz$geoJSON, all_data = TRUE)
+```
+
+You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon, `cz$sf`, which works directly with the R `leaflet` package):
+
+##### Code
+
+```{r plotL, eval=FALSE}
+neotoma2::plotLeaflet(cz_sites) %>% 
+  leaflet::addPolygons(map = ., 
+                       data = cz$sf, 
+                       color = "green")
+```
+
+##### Result
+
+```{r plotLeaf, echo=FALSE}
+neotoma2::plotLeaflet(cz_sites) %>% 
+  leaflet::addPolygons(map = ., 
+                       data = cz$sf, 
+                       color = "green")
+```
+
+#### Site Helpers {.tabset}
+
+![Neotoma R Package UML diagram.](images/neotomaUML_as.svg)
+
+#### Getting Citations
+
+```{r citations}
+canadaSites <- get_sites(gpid="Canada", datasettype="diatom") %>%
+  get_datasets()
+
+cite_data(canadaSites)
+```
