@@ -3,8 +3,8 @@ title: "Flujo de Trabajo Simple"
 author: "Simon Goring, Socorro Dominguez Vidaña"
 date: "`r Sys.Date()`"
 output:
-  html_document:\
-    Código_folding: show
+  html_document:
+    code_folding: show
     fig_caption: yes
     keep_md: yes
     self_contained: yes
