@@ -9,9 +9,6 @@ This repository hosts the most updated neotoma2 R workshop available.
 Currently, this repo hosts the Workshop to be delivered at IAL-IPA Bariloche 2022.
 The Simple and Not So Simple Workflow Files are available in both, English and Spanish.
 
-Run the RStudio Binder here:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/EPD_binder/main?urlpath=rstudio)
-
 Bitly Link to provide to participants:
 []()
 
