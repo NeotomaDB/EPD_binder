@@ -1,4 +1,4 @@
-# EPD Neotoma 2.0 R Workshop - Praha
+# EPD Neotoma 2.0 R Workshop - Bariloche
 
 ## Socorro Dominguez Vidaña, Simon Goring
 
@@ -15,9 +15,11 @@ At the end of this workshop, users will understand the following concepts:
 
 Online resources for users include links embedded within the agenda, as well as:
 
-* Online, interactive slides (open the “Slides” folder): [https://bit.ly/EPDSlides](https://bit.ly/EPDSlides)
-* An online version of RStudio built for this workshop: [https://bit.ly/EPDRstudio](https://bit.ly/EPDRstudio)
-* The code repository for the workshop: [https://github.com/NeotomaDB/EPD_binder](https://github.com/NeotomaDB/EPD_binder)
+* Online, interactive slides: [Google Slides](https://docs.google.com/presentation/d/1avF0o_eW_cCj-mel1-JkVqlLChbPzRSQ20I_3vxBoi0/edit#slide=id.g17acfe75105_0_14)
+
+* An online version of RStudio built for this workshop: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
+
+* The code repository for the workshop: [https://github.com/NeotomaDB/Current_Workshop](https://github.com/NeotomaDB/Current_Workshop)
 
 Install the R package:
 
@@ -37,7 +39,7 @@ This allows us to better help you during the workshop and in the future.
 
 # Agenda
 
-4 Hours (1pm - 4:50pm)
+4 Hours (11am - 3:00pm)
 
 <table>
   <tr>
@@ -51,17 +53,17 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:00 - 1:15pm
+   <td>11:00 - 11:15am
    </td>
    <td>Introductions
    </td>
    <td>Run through each individual’s profile quickly, say hi & introduce ourselves.
    </td>
-   <td><a href="https://bit.ly/EPDIntros">https://bit.ly/EPDIntros</a>
+   <td><a href=""></a>
    </td>
   </tr>
   <tr>
-   <td>1:15 - 1:20pm
+   <td>11:15 - 11:20am
    </td>
    <td>Why neotoma2
    </td>
@@ -71,7 +73,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td><strong>1:20 - 2:00pm</strong>
+   <td><strong>11:20 - 12:00pm</strong>
    </td>
    <td><strong>A simple workflow</strong>
    </td>
@@ -79,7 +81,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:20 - 1:30
+   <td>11:20 - 11:30
    </td>
    <td>Simple Site Search
    </td>
@@ -89,7 +91,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:30 - 1:35
+   <td>11:30 - 11:35
    </td>
    <td>Independent Searching
    </td>
@@ -99,7 +101,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:35 - 1:40
+   <td>11:35 - 11:40
    </td>
    <td>Quick Debrief
    </td>
@@ -109,7 +111,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:40 - 1:50
+   <td>11:40 - 11:50
    </td>
    <td>Searching for Datasets and Filtering
    </td>
@@ -119,7 +121,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:50 - 2:00pm
+   <td>11:50 - 12:00pm
    </td>
    <td>Independent filtering
    </td>
@@ -129,7 +131,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>2:05 - 2:10pm
+   <td>12:05 - 12:10pm
    </td>
    <td>Quick debrief
    </td>
@@ -139,7 +141,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>2:10 - 2:30pm
+   <td>12:10 - 12:30pm
    </td>
    <td>Samples & Stratigraphic plotting
    </td>
@@ -149,7 +151,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>2:30 - 3:00pm
+   <td>12:30 - 1:00pm
    </td>
    <td>Break
    </td>
@@ -159,7 +161,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>3:00 - 3:20
+   <td>1:00 - 1:20
    </td>
    <td>Spatial Analysis
    </td>
@@ -169,7 +171,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>3:20 - 3:30
+   <td>1:20 - 1:30
    </td>
    <td>Independent Breakout 1
    </td>
@@ -179,7 +181,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td><strong>3:30 - 4:50</strong>
+   <td><strong>1:30 - 2:50</strong>
    </td>
    <td><strong>Working with chronologies</strong>
    </td>
@@ -187,7 +189,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>3:30 - 3:40
+   <td>1:30 - 1:40
    </td>
    <td>Welcome back & looking at chronologies/chroncontrols
    </td>
@@ -197,7 +199,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>3:40 - 3:50
+   <td>1:40 - 1:50
    </td>
    <td>Independent time
    </td>
@@ -207,7 +209,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>3:50 - 4:00
+   <td>1:50 - 2:00
    </td>
    <td>Building the Chronology
    </td>
@@ -217,7 +219,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>4:00 - 4:10
+   <td>2:00 - 2:10
    </td>
    <td>Adding the Chronology
    </td>
@@ -227,7 +229,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>4:10 - 4:30
+   <td>2:10 - 2:30
    </td>
    <td>Independent Breakout 2
    </td>
@@ -237,7 +239,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>4:30 - 4:50
+   <td>2:30 - 2:50
    </td>
    <td>Debrief
    </td>
