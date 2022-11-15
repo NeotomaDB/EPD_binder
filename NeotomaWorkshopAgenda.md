@@ -59,7 +59,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
    <td>Run through each individual’s profile quickly, say hi & introduce ourselves.
    </td>
-   <td><a href=""></a>
+   <td><a href="https://docs.google.com/presentation/d/1AWBcEZj_kM4IOWDLT2JBSXhEQd-xOYlF7h1i_oL018w/edit?usp=sharing"></a>
    </td>
   </tr>
   <tr>
