@@ -2,6 +2,8 @@
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 # Current R Workshop
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
+
 This repository hosts the most updated neotoma2 R workshop available.
 
 Currently, this repo hosts the Workshop to be delivered at IAL-IPA Bariloche 2022.
