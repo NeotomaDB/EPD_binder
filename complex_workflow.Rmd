@@ -44,11 +44,11 @@ pacman::p_load(neotoma2, dplyr, ggplot2, Bchron)
 
 We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/EPD_binder/simple_workflow.html). Assuming we found a record that we were interested in, we can go back and pull a single record using its `datasetid`. In this case, the dataset is for [Stará Boleslav](https://data.neotomadb.org/24238). Let's start by pulling in the record and using the `chronologies()` helper function to look at the chronologies associated with the record:
 
-```{r getMaule, message = FALSE}
-maule <- get_downloads(19818)
-maule_chron <- chronologies(maule)
+```{r getStara, message = FALSE}
+stara <- get_downloads(24238)
+stara_chron <- chronologies(stara)
 
-maule_chron %>% as.data.frame() %>% 
+stara_chron %>% as.data.frame() %>% 
   DT::datatable(data = ., 
                 options = list(scrollX = "100%"))
 ```
@@ -58,8 +58,8 @@ There are three chronologies here, but for whatever reason we've decided not to 
 ### Extract `chroncontrols`
 
 ```{r buildChronControl, message = FALSE}
-controls <- chroncontrols(maule) %>% 
-  dplyr::filter(chronologyid == 11463) %>% 
+controls <- chroncontrols(stara) %>% 
+  dplyr::filter(chronologyid == 14591) %>% 
   arrange(depth)
 
 controls %>% DT::datatable(data = ., 
@@ -87,8 +87,8 @@ Once our `chroncontrols` table is updated, we extract the `depth`s and `analysis
 ```{r predictDepths, message = FALSE, results="hide"}
 # Get a two column data.frame with columns depth and analysisunitid.
 # Sort the table by depth from top to bottom for "Bchronology"
-predictDepths <- samples(maule) %>%
-  dplyr::select(depth, analysisunitid) %>% 
+predictDepths <- samples(stara) %>%
+  select(depth, analysisunitid) %>% 
   unique() %>% 
   arrange(depth)
 
@@ -129,7 +129,7 @@ creators <- c(set_contact(givennames = "Simon James",
                           familyname = "Dominguez Vidaña",
                           ORCID = "0000-0002-7926-4935"))
 
-newChronMaule <- set_chronology(agemodel = "Bchron model",
+newChronStara <- set_chronology(agemodel = "Bchron model",
                                 contact = creators,
                                 isdefault = 1,
                                 ageboundolder = max(newpredictions),
@@ -139,7 +139,7 @@ newChronMaule <- set_chronology(agemodel = "Bchron model",
                                 chronologyname = "Simon's example chronology",
                                 chroncontrols = controls)
 
-newChronMaule$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
+newChronStara$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
                                 ageSds = abs(controls$agelimityounger - 
                                                controls$chroncontrolage),
                                 calCurves = c("normal", rep("intcal20", 4)),
@@ -156,7 +156,7 @@ Once we've created the chronology we need to apply it back to the collectionunit
 
 So: 
 
-1. we have a collectionunit in `maule` that is accessible at `maule[[1]]$collunits`.
+1. we have a collectionunit in `stara` that is accessible at `stara[[1]]$collunits`.
 2. We can use the function `add_chronology()`, which takes the chronology object and a `data.frame()` of sample ages.
 3. The predicted dates associated with the new chronology need to be transferred to each `samples` object within the `collectionunit`.
 
@@ -171,8 +171,8 @@ newSampleAges <- data.frame(predictDepths,
                               apply(newpredictions, 2, sd),
                             agetype = "Calibrated radiocarbon years")
 
-maule[[1]]$collunits[[1]] <- add_chronology(maule[[1]]$collunits[[1]], 
-                                            newChronMaule, 
+stara[[1]]$collunits[[1]] <- add_chronology(stara[[1]]$collunits[[1]], 
+                                            newChronStara, 
                                             newSampleAges)
 ```
 
@@ -180,16 +180,16 @@ With this, we now have the updated collectionunit. Lets take a look at how this 
 
 ```{r getAgesfromChronologies}
 # The new chronology is currently the default chronology.
-newages <- samples(maule) %>%
-  dplyr::select(depth, analysisunitid, age) %>% 
+newages <- samples(stara) %>%
+  select(depth, analysisunitid, age) %>% 
   unique() %>% 
   arrange(depth) %>% 
   mutate(agecat = "new")
 
-maule[[1]]$collunits[[1]]$chronologies <- set_default(maule[[1]]$collunits[[1]]$chronologies,
-                                                      11463)
-plotforages <- samples(maule) %>%
-  dplyr::select(depth, analysisunitid, age) %>% 
+stara[[1]]$collunits[[1]]$chronologies <- set_default(stara[[1]]$collunits[[1]]$chronologies,
+                                                      14591)
+plotforages <- samples(stara) %>%
+  select(depth, analysisunitid, age) %>% 
   unique() %>% 
   arrange(depth) %>% 
   mutate(agecat = "old") %>% 
@@ -213,7 +213,7 @@ So we can see the impact of the new chronology on the age model for the record, 
 
 From this notebook we have learned how to:
 
-1. Download a single record (the Maule record using `get_downloads()`)
+1. Download a single record (the Stara record using `get_downloads()`)
 2. Examining the chronologies for the record (using `chronologies()` and associated chronological controls (using `chroncontrols()`)
 3. Creating a new chronology for the record (using `set_chronology()`)
 4. Adding the chronology to the record (using `add_chronology()`)
