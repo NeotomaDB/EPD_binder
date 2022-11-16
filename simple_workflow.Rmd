@@ -60,31 +60,41 @@ If you're planning on working with Neotoma, please join us on [Slack](https://jo
 
 There are several ways to find sites in `neotoma2`, but we think of `sites` as being spatial objects primarily. They have names, locations, and are found within the context of geopolitical units, but within the API and the package, the site itself does not have associated information about taxa, dataset types or ages.  It is simply the container into which we add that information.  So, when we search for sites we can search by:
 
-  * siteid
-  * sitename
-  * location
-  * altitude (maximum and minimum)
-  * geopolitical unit
+| Parameter | Description |
+| --------- | ----------- |
+| sitename | A valid site name (case insensitive) using `%` as a wildcard. |
+| siteid | A unique numeric site id from the Neotoma Database |
+| loc | A bounding box vector, geoJSON or WKT string. |
+| altmin | Lower altitude bound for sites. |
+| altmax | Upper altitude bound for site locations. |
+| database | The constituent database from which the records are pulled. |
+| datasettype | The kind of dataset (see `get_tables(datasettypes)`) |
+| datasetid | Unique numeric dataset identifier in Neotoma |
+| doi | A valid dataset DOI in Neotoma |
+| gpid | A unique numeric identifier, or text string identifying a geopolitical unit in Neotoma |
+| keywords | Unique sample keywords for records in Neotoma. |
+| contacts | A name or numeric id for individuals associuated with sites. |
+| taxa | Unique numeric identifiers or taxon names associated with sites. |
 
-#### Site names: `sitename="%Lait%"` {.tabset}
+#### Site names: `sitename="%Lago%"` {.tabset}
 
 We may know exactly what site we're looking for ("Lac Mouton"), or have an approximate guess for the site name (for example, we know it's something like "Lait Lake", or "Lac du Lait", but we're not sure how it was entered specifically).
 
 We use the general format: `get_sites(sitename="XXXXX")` for searching by name.
 
-PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Lait%"` would pick up ["Lac du Lait"](https://data.neotomadb.org/4180) for us (and would pick up "Lake Lait" and "This Old **Lait**y Hei-dee-ho Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%lait%"`.
+PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Lago%"` would pick up ["Lagoa das Patas"](https://data.neotomadb.org/547) for us (and would pick up "Lago El Baggo" and "This Old **Lago**y Hei-dee-ho Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%lago%"`.
 
 ##### Code
 
 ```{r sitename, eval=FALSE}
-spo_sites <- neotoma2::get_sites(sitename = "%Lait%")
+spo_sites <- neotoma2::get_sites(sitename = "%Lago%")
 plotLeaflet(spo_sites)
 ```
 
 ##### Result
 
 ```{r sitenamePlot, echo=FALSE}
-spo_sites <- neotoma2::get_sites(sitename = "%Lait%")
+spo_sites <- neotoma2::get_sites(sitename = "%Lago%")
 plotLeaflet(spo_sites)
 ```
 
@@ -216,8 +226,9 @@ The following call can take some time, but we've frozen the object as an RDS dat
 
 ```{r taxa}
 ## This line is commented out because we've already run it for you.
-## sa_dl <- sa_diatom %>% get_downloads()
-sa_dl <- readRDS('data/saDownload.RDS')
+## sa_dl <- sa_diatom %>% get_downloads(all_data = TRUE)
+## saveRDS(sa_dl, "data/saDownload.RDS")
+sa_dl <- readRDS("data/saDownload.RDS")
 ```
 
 Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets.  To extract all the samples we can call:
@@ -260,33 +271,33 @@ The `taxonid` values can be linked to the `taxonid` column in the `samples()`.  
 
 #### Simple Harmonization {.tabset}
 
-Lets say we want all samples from which *Plantago* taxa have been reported to be grouped together into one pseudo-taxon called *Plantago*. There are several ways of doing this, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).
+Lets say we want all samples from which *Achnanthes* taxa have been reported to be grouped together into one pseudo-taxon called *Achnanthes*. There are several ways of doing this, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).
 
-Programmatically, we can harmonize taxon by taxon using matching and transformation. We're using `dplyr` type coding here to `mutate()` the column `variablename` so that any time we detect (`str_detect()`) a `variablename` that starts with `Plantago` (the `.*` represents a wildcard for any character [`.`], zero or more times [`*`]) we `replace()` it with the character string `"Plantago"`.  Note that this changes *Plantago* in the `allSamp` object, but if we were to call `samples()` again, the taxonomy would return to its original form.
+Programmatically, we can harmonize taxon by taxon using matching and transformation. We're using `dplyr` type coding here to `mutate()` the column `variablename` so that any time we detect (`str_detect()`) a `variablename` that starts with `Achnanthes` (the `.*` represents a wildcard for any character [`.`], zero or more times [`*`]) we `replace()` it with the character string `"Achnanthes"`.  Note that this changes *Achnanthes* in the `allSamp` object, but if we were to call `samples()` again, the taxonomy would return to its original form.
 
-We're going to filter the ecological groups to include only *UPHE* (upleand/heath) and *TRSH* (trees and shrubs).  More information about ecological groups is available from the [Neotoma Online Manual](https://open.neotomadb.org/manual).
+We're going to filter the ecological groups to include only *DIAT* (diatom).  More information about ecological groups is available from the [Neotoma Online Manual](https://open.neotomadb.org/manual).
 
 ```{r simpleTaxonChange, eval=FALSE}
 allSamp <- allSamp %>% 
-  dplyr::filter(ecologicalgroup %in% c("UPHE", "TRSH")) %>%
+  dplyr::filter(ecologicalgroup == "DIAT") %>%
   mutate(variablename = replace(variablename, 
-                                stringr::str_detect(variablename, "Plantago.*"), 
-                                "Plantago"))
+                                stringr::str_detect(variablename, "Achnanthes.*"), 
+                                "Achnanthes"))
 ```
 
-There were originally `r sum(stringr::str_detect(neotomatx$variablename, 'Plantago.*'))` different taxa identified as being within the genus *Plantago* (including *Plantago*, *Plantago major*, and *Plantago alpina-type*). The above code reduces them all to a single taxonomic group *Plantago*.
+There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Achnanthes.*"))` different taxa identified as being within the genus *Achnanthes* (including *Achnanthes* spp., *Achnanthes cf. conspicua*, and *Achnanthes brevipes*). The above code reduces them all to a single taxonomic group *Achnanthes*.
 
 If we want to have an artifact of our choices, we can use an external table.  For example, a table of pairs (what we want changed, and the name we want it replaced with) can be generated, and it can include regular expressions (if we choose):
 
 | original | replacement |
 | -------- | ----------- |
-| Abies.*  | Abies |
-| Vaccinium.* | Ericaceae |
-| Typha.* | Aquatic |
-| Nymphaea  | Aquatic |
+| Achnanthes.*  | Achnanthes |
+| Amphora.* | Amphora |
+| Caloneis.* | Symmetric biraphid |
+| Diatomella.*  | Symmetric biraphid |
 | ... | ... |
 
-We can get the list of original names directly from the `taxa()` call, applied to a `sites` object, and then export it using `write.csv()`. 
+We can get the list of original names directly from the `taxa()` call, applied to a `sites` object, and then export it using `write.csv()`.
 
 ##### Code 
 
@@ -358,10 +369,9 @@ We're using the `arrange()` call to sort by the number of times that the taxon a
 # Get a particular site, select only taxa identified from diatom
 plottingSite <- sa_dl[[1]]
 
-#Fix for diatoms
 plottingTaxa <- taxa(plottingSite) %>%
-  filter(ecologicalgroup %in% c("TRSH")) %>%
-  filter(elementtype == "pollen") %>%
+  filter(ecologicalgroup %in% c("DIAT")) %>%
+  filter(elementtype == "valve") %>%
   arrange(desc(samples)) %>% 
   head(n = 10)
 
@@ -369,16 +379,16 @@ plottingTaxa <- taxa(plottingSite) %>%
 # We repeat the filters for pollen & ecological group on the samples
 shortSamples <- samples(plottingSite) %>% 
   filter(variablename %in% plottingTaxa$variablename) %>% 
-  filter(ecologicalgroup %in% c("TRSH")) %>%
-  filter(elementtype == "pollen") %>%
+  filter(ecologicalgroup %in% c("DIAT")) %>%
+  filter(elementtype == "valve") %>%
   filter(units == "NISP")
 
 # Transform to proportion values.
 onesite <- shortSamples %>%
   group_by(age) %>%
-  mutate(pollencount = sum(value, na.rm = TRUE)) %>%
+  mutate(count = sum(value, na.rm = TRUE)) %>%
   group_by(variablename) %>% 
-  mutate(prop = value / pollencount) %>% 
+  mutate(prop = value / count) %>% 
   arrange(desc(age))
 
 # Spread the data to a "wide" table, with taxa as column headings.
@@ -404,7 +414,7 @@ clust <- rioja::chclust(dist(sqrt(counts)),
 plot <- rioja::strat.plot(counts[,-1] * 100, yvar = counts$age,
                   title = sa_dl[[1]]$sitename,
                   ylabel = "Calibrated Years BP",
-                  xlabel = "Pollen (%)",
+                  xlabel = "Diatom (%)",
                   y.rev = TRUE,
                   clust = clust,
                   wa.order = "topleft", scale.percent = TRUE)
@@ -418,8 +428,8 @@ We now have site information across South America, with samples, and with taxon 
 
 ```{r summarizeByTime, message = FALSE}
 plottingTaxa <- taxa(plottingSite) %>%
-  filter(ecologicalgroup %in% c("TRSH")) %>%
-  filter(elementtype == "pollen") %>%
+  filter(ecologicalgroup %in% c("DIAT")) %>%
+  filter(elementtype == "valve") %>%
   arrange(desc(sites)) %>% 
   head(n = 20)
 
@@ -458,8 +468,8 @@ The first step is taking our sample data and turning it into a spatial object us
 
 ```{r makeSamplesSpatial}
 modern <- samples(sa_dl) %>% 
-  filter(age < 50) %>% 
-  filter(ecologicalgroup == "TRSH" & elementtype == "pollen" & units == "NISP")
+  filter(age < 1000) %>% 
+  filter(ecologicalgroup == "DIAT" & elementtype == "valve" & units == "NISP")
 
 spatial <- sf::st_as_sf(modern, 
                         coords = c("long", "lat"),
