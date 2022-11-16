@@ -171,7 +171,7 @@ We can see that there are no chronologies associated with the `site` objects. Th
 
 ### Searching for datasets: {.tabset}
 
-We know that collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain pollen records. That said, we only have the `sites`, it's just that (for convenience) the `sites` API returns some information about datasets so to make it easier to navigate the records.
+We know that collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain diatom records. That said, we only have the `sites`, it's just that (for convenience) the `sites` API returns some information about datasets so to make it easier to navigate the records.
 
 With a `sites` object we can directly call `get_datasets()`, to pull in more metadata about the datasets.  At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(sa_sites)` to the output of a similar call using the following:
 
@@ -375,8 +375,8 @@ plottingTaxa <- taxa(plottingSite) %>%
   arrange(desc(samples)) %>% 
   head(n = 10)
 
-# Clean up. Select only pollen measured using NISP.
-# We repeat the filters for pollen & ecological group on the samples
+# Clean up. Select only diatom measured using NISP.
+# We repeat the filters for diatom & ecological group on the samples
 shortSamples <- samples(plottingSite) %>% 
   filter(variablename %in% plottingTaxa$variablename) %>% 
   filter(ecologicalgroup %in% c("DIAT")) %>%
