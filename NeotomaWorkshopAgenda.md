@@ -1,10 +1,13 @@
-# EPD Neotoma 2.0 R Workshop - Bariloche
+# neotoma2 PNW Virtual Workshop Workshop
 
+March 1st, 2023
+
+8:30am - 11:20am Pacific Standard Time [Time Zone Converter](https://dateful.com/convert/pst-pdt-pacific-time?t=0830&d=2023-03-01)
 ## Socorro Dominguez Vidaña, Simon Goring
 
 # Overview
 
-This workshop is designed to provide users of the Neotoma Database with an overview of the new neotoma2 R package, and its use in obtaining data from the Neotoma Paleoecology Database.
+This workshop is designed to provide users of the Neotoma Database with an overview of the new [`neotoma2` R package](https://github.com/NeotomaDB/neotoma2), and its use in obtaining data from the Neotoma Paleoecology Database.
 
 At the end of this workshop, users will understand the following concepts:
 
@@ -21,25 +24,27 @@ Online resources for users include links embedded within the agenda, as well as:
 
 * The code repository for the workshop: [https://github.com/NeotomaDB/Current_Workshop](https://github.com/NeotomaDB/Current_Workshop)
 
-Install the R package:
+## Getting Started
+
+The course is designed to be run using RStudio in your browser. You will not need to install any files or packages, however, if you do want to install the R package on your computer, you can simply open your R session and type:
 
 ```
 install.packages('devtools')
 devtools::install_github('NeotomaDB/neotoma2')
 ```
 
+# Resources
+
 Neotoma maintains an online community on Slack that includes a channel for help using R and Neotoma (#it_r).  Come join our community: [https://bit.ly/3PT8zuP](https://bit.ly/3PT8zuP)
 
 This allows us to better help you during the workshop and in the future.
-
-# Resources
 
 * The Neotoma Database Manual: [https://open.neotomadb.org/manual/](https://open.neotomadb.org/manual/)
 * The `neotoma2` GitHub Repository: [https://github.com/neotomadb/neotoma2](https://github.com/neotomadb/neotoma2)
 
 # Agenda
 
-4 Hours (11am - 3:00pm)
+3 Hours (8:30am - 11:20pm)
 
 <table>
   <tr>
@@ -53,27 +58,27 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:00 - 11:15am
+   <td>8:30 - 8:45am
    </td>
    <td>Introductions
    </td>
    <td>Run through each individual’s profile quickly, say hi & introduce ourselves.
    </td>
-   <td><a href="https://docs.google.com/presentation/d/1AWBcEZj_kM4IOWDLT2JBSXhEQd-xOYlF7h1i_oL018w/edit?usp=sharing"></a>
+   <td><a href="https://docs.google.com/presentation/d/1lDZAam5zPBf0aK0zrcOgqb9f8-OPCCZk7bOiCw9QFLc/edit?usp=sharing">Participant Slides</a>
    </td>
   </tr>
   <tr>
-   <td>11:15 - 11:20am
+   <td>8:45 - 8:50am
    </td>
-   <td>Why neotoma2
+   <td>Why `neotoma2`?
    </td>
    <td>Explaining why we’ve moved to a new package, rather than updating the `neotoma` R package.
    </td>
-   <td>https://docs.google.com/presentation/d/1UhIJ3HJskE9ymmFZ109ktsKKuqzW21JZc8fiWQLkyZw/edit?usp=sharing
+   <td><a href="https://docs.google.com/presentation/d/1UhIJ3HJskE9ymmFZ109ktsKKuqzW21JZc8fiWQLkyZw/edit?usp=sharing">Why neotoma2?</a>
    </td>
   </tr>
   <tr>
-   <td><strong>11:20 - 12:00pm</strong>
+   <td><strong>8:50 - 9:00am</strong>
    </td>
    <td><strong>A simple workflow</strong>
    </td>
@@ -81,7 +86,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:20 - 11:30
+   <td>9:20 - 9:30
    </td>
    <td>Simple Site Search
    </td>
@@ -91,7 +96,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:30 - 11:35
+   <td>9:30 - 9:35
    </td>
    <td>Independent Searching
    </td>
@@ -101,7 +106,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:35 - 11:40
+   <td>9:35 - 9:40
    </td>
    <td>Quick Debrief
    </td>
@@ -111,7 +116,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:40 - 11:50
+   <td>9:40 - 9:50am
    </td>
    <td>Searching for Datasets and Filtering
    </td>
@@ -121,7 +126,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>11:50 - 12:00pm
+   <td>9:50 - 10:00am
    </td>
    <td>Independent filtering
    </td>
@@ -131,7 +136,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>12:05 - 12:10pm
+   <td>10:05 - 10:10am
    </td>
    <td>Quick debrief
    </td>
@@ -141,7 +146,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>12:10 - 12:30pm
+   <td>10:10 - 10:30am
    </td>
    <td>Samples & Stratigraphic plotting
    </td>
@@ -151,7 +156,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>12:30 - 1:00pm
+   <td>10:30 - 11:00am
    </td>
    <td>Break
    </td>
@@ -161,7 +166,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:00 - 1:20
+   <td>11:00 - 11:20am
    </td>
    <td>Spatial Analysis
    </td>
@@ -171,81 +176,13 @@ This allows us to better help you during the workshop and in the future.
    </td>
   </tr>
   <tr>
-   <td>1:20 - 1:30
+   <td>11:20am - end
    </td>
    <td>Independent Breakout 1
    </td>
    <td>See instructions in the slide
    </td>
    <td>Link removed for online version.
-   </td>
-  </tr>
-  <tr>
-   <td><strong>1:30 - 2:50</strong>
-   </td>
-   <td><strong>Working with chronologies</strong>
-   </td>
-   <td colspan="2" ><a href="https://open.neotomadb.org/EPD_binder/complex_workflow.html">https://open.neotomadb.org/EPD_binder/complex_workflow.html</a>
-   </td>
-  </tr>
-  <tr>
-   <td>1:30 - 1:40
-   </td>
-   <td>Welcome back & looking at chronologies/chroncontrols
-   </td>
-   <td>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td>1:40 - 1:50
-   </td>
-   <td>Independent time
-   </td>
-   <td>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td>1:50 - 2:00
-   </td>
-   <td>Building the Chronology
-   </td>
-   <td>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td>2:00 - 2:10
-   </td>
-   <td>Adding the Chronology
-   </td>
-   <td>
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td>2:10 - 2:30
-   </td>
-   <td>Independent Breakout 2
-   </td>
-   <td>Groups of 3 – Work through some stuff
-   </td>
-   <td>
-   </td>
-  </tr>
-  <tr>
-   <td>2:30 - 2:50
-   </td>
-   <td>Debrief
-   </td>
-   <td>
-   </td>
-   <td>
    </td>
   </tr>
 </table>
