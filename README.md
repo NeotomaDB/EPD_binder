@@ -7,11 +7,12 @@ A repository to host interactive R workshops. This repository will always be set
 
 This repository is built with the structure required to serve the content through an interactive, online RStudio session using Binder (and Docker). Clicking the Binder link will open RStudio in the user's browser.
 
-**Currently, this repo hosts the Workshop to be delivered at IAL-IPA Bariloche 2022. The Simple and Not So Simple Workflow Files are available in both, English and Spanish.**
+**Currently, this repo hosts the Workshop to be delivered for the Pacific North West Virtual Workshop.**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
 ## Contributors
+
 This is an open project and contributions are welcome from any individual.  All contributors to this project are bound by a [code of conduct](CODE_OF_CONDUCT.md).  Please review and follow this code of conduct as part of your contribution.
 
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--7926--4935-brightgreen.svg)](https://orcid.org/0000-0002-7926-4935) [Socorro Dominguez Vidana](https://sedv8808.github.io/)
