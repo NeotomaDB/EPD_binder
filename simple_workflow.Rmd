@@ -38,7 +38,7 @@ For this workbook we use several packages, including `leaflet`, `sf` and others.
 
 ```{r setup}
 options(warn = -1)
-pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, raster, DT)
+pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, terra, DT)
 ```
 
 Note that R is sensitive to the order in which packages are loaded.  Using `neotoma2::` tells R explicitly that you want to use the `neotoma2` package to run a particular function. So, for a function like `filter()`, which exists in other packages such as `dplyr`, you may see an error that looks like:
@@ -76,25 +76,27 @@ There are several ways to find sites in `neotoma2`, but we think of `sites` as b
 | contacts | A name or numeric id for individuals associuated with sites. |
 | taxa | Unique numeric identifiers or taxon names associated with sites. |
 
-#### Site names: `sitename="%Lago%"` {.tabset}
+All sites in Neotoma contain one or more datasets. It's worth noting that the results of these search parameters may be slightly unexpected. For example, searching for sites by sitename, latitude, or altitude will return all of the datasets for the particular site. Searching for terms such as datasettype, datasetid or taxa will return the site, but the only datasets returned will be those matching the dataset-specific search terms. We'll see this later.
+
+#### Site names: `sitename="%Surprise%"` {.tabset}
 
 We may know exactly what site we're looking for ("Lac Mouton"), or have an approximate guess for the site name (for example, we know it's something like "Lait Lake", or "Lac du Lait", but we're not sure how it was entered specifically).
 
 We use the general format: `get_sites(sitename="XXXXX")` for searching by name.
 
-PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Lago%"` would pick up ["Lagoa das Patas"](https://data.neotomadb.org/547) for us (and would pick up "Lago El Baggo" and "This Old **Lago**y Hei-dee-ho Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%lago%"`.
+PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%Surprise%"` would pick up ["Surprise Cave"](https://data.neotomadb.org/6498) for us (and would pick up "Lake of the Surprise" and "A Surprise in the Bog" if they existed).  Note that the search query is also case insensitive, so you could simply write `"%surprise%"`.
 
 ##### Code
 
 ```{r sitename, eval=FALSE}
-spo_sites <- neotoma2::get_sites(sitename = "%Lago%")
+spo_sites <- neotoma2::get_sites(sitename = "%Surprise%")
 plotLeaflet(spo_sites)
 ```
 
 ##### Result
 
 ```{r sitenamePlot, echo=FALSE}
-spo_sites <- neotoma2::get_sites(sitename = "%Lago%")
+spo_sites <- neotoma2::get_sites(sitename = "%Surprise%")
 plotLeaflet(spo_sites)
 ```
 
@@ -105,45 +107,38 @@ The `neotoma` package used a bounding box for locations, structured as a vector 
 Looking for sites using a location. We're putting three rough representations of South America here as part of a list with three elements, a geoJSON, WKT and bounding box representation.  We've also transformed the `sa$geoJSON` element to an object for the `sf` package.  Any of these four spatial representations work with the `neotoma2` package.
 
 ```{r boundingBox}
-sa <- list(geoJSON = '{"type": "Polygon",
+geoJSON = '{"type": "Polygon",
         "coordinates": [[
-            [-79.66, -5.97],
-            [-70.06, -19.07],
-            [-74.38, -55.59],
-            [-34.67, -6.52],
-            [-76.41, 8.37],
-            [-79.66, -5.97]
-            ]]}',
-        WKT = 'POLYGON ((-79.66, -5.97,
-                         -70.06, -19.07,
-                         -74.38, -55.59,
-                         -34.67, -6.52,
-                         -76.41, 8.37,
-                         -79.66, -5.97))',
-        bbox = c(-79.66, -55.59, -34.67, 8.37))
+            [-128.46, 51.52],
+            [-129.08, 50.24],
+            [-125.15, 42.12],
+            [-116.48, 41.93],
+            [-112.68, 51.96],
+            [-128.46, 51.52]
+            ]]}'
 
-sa$sf <- geojsonsf::geojson_sf(sa$geoJSON)
+bc_sf <- geojsonsf::geojson_sf(geoJSON)
 
-sa_sites <- neotoma2::get_sites(loc = sa$sf, all_data = TRUE)
+bc_sites <- neotoma2::get_sites(loc = bc_sf, all_data = TRUE)
 ```
 
-You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon, `sa$sf`, which works directly with the R `leaflet` package):
+You can always simply `plot()` the `sites` objects, but you will lose some of the geographic context.  The `plotLeaflet()` function returns a `leaflet()` map, and allows you to further customize it, or add additional spatial data (like our original bounding polygon, `bc_sf`, which works directly with the R `leaflet` package):
 
 ##### Code
 
 ```{r plotL, eval=FALSE}
-neotoma2::plotLeaflet(sa_sites) %>% 
+neotoma2::plotLeaflet(bc_sites) %>% 
   leaflet::addPolygons(map = ., 
-                       data = sa$sf, 
+                       data = bc_sf, 
                        color = "green")
 ```
 
 ##### Result
 
 ```{r plotLeaf, echo=FALSE}
-neotoma2::plotLeaflet(sa_sites) %>% 
+neotoma2::plotLeaflet(bc_sites) %>% 
   leaflet::addPolygons(map = ., 
-                       data = sa$sf, 
+                       data = bc_sf, 
                        color = "green")
 ```
 
@@ -156,38 +151,39 @@ If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_L
 ##### Code
 
 ```{r summary_sites, eval=FALSE}
-neotoma2::summary(sa_sites)
+neotoma2::summary(bc_sites)
+neotoma2::getids(bc_sites)
 ```
 
 ##### Result
 
 ```{r summarySitesTable, eval=TRUE, echo=FALSE}
-neotoma2::summary(sa_sites) %>%
+neotoma2::summary(bc_sites) %>%
   DT::datatable(data = ., rownames = FALSE, 
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-We can see that there are no chronologies associated with the `site` objects. This is because, at present, we have not pulled in the `dataset` information we need. All we know from `get_sites()` are the kinds of datasets we have.
+We can see that there are no chronologies associated with the `site` objects. This is because, at present, we have not pulled in the `dataset` information we need. In Neotoma, a chronology is associated with a collection unit (and that metadata is pulled by `get_datasets()` or `get_downloads()`). All we know from `get_sites()` are the kinds of datasets we have.
 
 ### Searching for datasets: {.tabset}
 
-We know that collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain diatom records. That said, we only have the `sites`, it's just that (for convenience) the `sites` API returns some information about datasets so to make it easier to navigate the records.
+We know that within Neotoma, collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain pollen records, some contain geochronologic data and some contain pollen surface sample datasets. That said, we only have the `sites`, it's just that (for convenience) the `sites` API returns some information about datasets so to make it easier to navigate the records.
 
-With a `sites` object we can directly call `get_datasets()`, to pull in more metadata about the datasets.  At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(sa_sites)` to the output of a similar call using the following:
+With a `sites` object we can directly call `get_datasets()`, to pull in more metadata about the datasets.  At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(bc_sites)` to the output of a similar call using the following:
 
 #### Code
 
 ```{r datasetsFromSites, eval=FALSE}
-sa_datasets <- neotoma2::get_datasets(sa_sites, all_data = TRUE)
+bc_datasets <- neotoma2::get_datasets(bc_sites, all_data = TRUE)
 
-datasets(sa_datasets)
+datasets(bc_datasets)
 ```
 
 #### Result
 
 ```{r datasetsFromSitesResult, echo=FALSE, message=FALSE}
-sa_datasets <- neotoma2::get_datasets(sa_sites, all_data = TRUE)
-datasets(sa_datasets) %>% 
+bc_datasets <- neotoma2::get_datasets(bc_sites, all_data = TRUE)
+datasets(bc_datasets) %>% 
   as.data.frame() %>% 
   DT::datatable(data = ., 
                 options = list(scrollX = "100%", dom = 't'))
@@ -195,30 +191,30 @@ datasets(sa_datasets) %>%
 
 ### Filter Records {.tabset}
   
-If we choose to pull in information about only a single dataset type, or if there is additional filtering we want to do before we download the data, we can use the `filter()` function.  For example, if we only want diatom records, and want records with known chronologies, we can filter:
+If we choose to pull in information about only a single dataset type, or if there is additional filtering we want to do before we download the data, we can use the `filter()` function.  For example, if we only want sedimentary pollen records (as opposed to pollen surface samples), and want records with known chronologies, we can filter:
 
 #### Code
 
 ```{r downloads, eval=FALSE}
-sa_diatom <- sa_datasets %>% 
-  neotoma2::filter(datasettype == "diatom" & !is.na(age_range_young))
+bc_records <- bc_datasets %>% 
+  neotoma2::filter(datasettype == "pollen" & !is.na(age_range_young))
 
-neotoma2::summary(sa_diatom)
+neotoma2::summary(bc_records)
 ```
 
 #### Result
 
 ```{r downloadsCode, echo = FALSE}
-sa_diatom <- sa_datasets %>% 
-  neotoma2::filter(datasettype == "diatom" & !is.na(age_range_young))
+bc_records <- bc_datasets %>% 
+  neotoma2::filter(datasettype == "pollen" & !is.na(age_range_young))
 
-neotoma2::summary(sa_diatom) %>% DT::datatable(data = ., 
+neotoma2::summary(bc_records) %>% DT::datatable(data = ., 
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
 We can see now that the data table looks different, and there are fewer total sites.
 
-### Pulling in `sample()` data.
+### Pulling in `sample()` data
 
 Because sample data adds a lot of overhead (for the South America diatom data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` after we've done our preliminary filtering. After `get_datasets()` you have enough information to filter based on location, time bounds and dataset type.  When we move to `get_download()` we can do more fine-tuned filtering at the analysis unit or taxon level.
 
@@ -226,15 +222,15 @@ The following call can take some time, but we've frozen the object as an RDS dat
 
 ```{r taxa}
 ## This line is commented out because we've already run it for you.
-## sa_dl <- sa_diatom %>% get_downloads(all_data = TRUE)
-## saveRDS(sa_dl, "data/saDownload.RDS")
-sa_dl <- readRDS("data/saDownload.RDS")
+## bc_dl <- bc_records %>% get_downloads(all_data = TRUE)
+## saveRDS(bc_dl, "data/bcDownload.RDS")
+bc_dl <- readRDS("data/bcDownload.RDS")
 ```
 
 Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets.  To extract all the samples we can call:
 
 ```{r allSamples}
-allSamp <- samples(sa_dl)
+allSamp <- samples(bc_dl)
 ```
 
 When we've done this, we get a `data.frame` that is `r nrow(allSamp)` rows long and `r ncol(allSamp)` columns wide.  The reason the table is so wide is that we are returning data in a **long** format.  Each row contains all the information you should need to properly interpret it:
@@ -252,15 +248,13 @@ If you want to know what taxa we have in the record you can use the helper funct
 ##### Code
 
 ```{r taxa2, eval=FALSE}
-neotomatx <- neotoma2::taxa(sa_dl)
+neotomatx <- neotoma2::taxa(bc_dl)
 ```
 
 ##### Results
 
 ```{r taxaprint, echo=FALSE, message=FALSE}
-neotomatx <- neotoma2::taxa(sa_dl)
-
-neotoma2::taxa(sa_dl) %>% 
+neotoma2::taxa(bc_dl) %>% 
   DT::datatable(data = head(neotomatx, n = 20), rownames = FALSE, 
                 options = list(scrollX = "100%", dom = 't'))
 ```
@@ -271,38 +265,38 @@ The `taxonid` values can be linked to the `taxonid` column in the `samples()`.  
 
 #### Simple Harmonization {.tabset}
 
-Lets say we want all samples from which *Achnanthes* taxa have been reported to be grouped together into one pseudo-taxon called *Achnanthes*. There are several ways of doing this, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).
+Lets say we want all samples from which *Pinus* taxa have been reported to be grouped together into one pseudo-taxon called *Pinus-undiff*. There are several ways of doing this, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).
 
-Programmatically, we can harmonize taxon by taxon using matching and transformation. We're using `dplyr` type coding here to `mutate()` the column `variablename` so that any time we detect (`str_detect()`) a `variablename` that starts with `Achnanthes` (the `.*` represents a wildcard for any character [`.`], zero or more times [`*`]) we `replace()` it with the character string `"Achnanthes"`.  Note that this changes *Achnanthes* in the `allSamp` object, but if we were to call `samples()` again, the taxonomy would return to its original form.
+Programmatically, we can harmonize taxon by taxon using matching and transformation. We're using `dplyr` type coding here to `mutate()` the column `variablename` so that any time we detect (`str_detect()`) a `variablename` that starts with `Pinus` (the `.*` represents a wildcard for any character [`.`], zero or more times [`*`]) we `replace()` it with the character string `"Pinus-undiff"`.  Note that this changes *Pinus* in the `allSamp` object, but if we were to call `samples()` again, the taxonomy would return to its original form.
 
-We're going to filter the ecological groups to include only *DIAT* (diatom).  More information about ecological groups is available from the [Neotoma Online Manual](https://open.neotomadb.org/manual).
+We're going to filter the ecological groups to include only *TRSH* (Trees & Shrubs).  More information about ecological groups is available from the [Neotoma Online Manual](https://open.neotomadb.org/manual).
 
 ```{r simpleTaxonChange, eval=FALSE}
 allSamp <- allSamp %>% 
-  dplyr::filter(ecologicalgroup == "DIAT") %>%
+  dplyr::filter(ecologicalgroup == "TRSH") %>%
   mutate(variablename = replace(variablename, 
-                                stringr::str_detect(variablename, "Achnanthes.*"), 
-                                "Achnanthes"))
+                                stringr::str_detect(variablename, "Pinus.*"), 
+                                "Pinus-undiff"))
 ```
 
-There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Achnanthes.*"))` different taxa identified as being within the genus *Achnanthes* (including *Achnanthes* spp., *Achnanthes cf. conspicua*, and *Achnanthes brevipes*). The above code reduces them all to a single taxonomic group *Achnanthes*.
+There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Achnanthes.*"))` different taxa identified as being within the genus *Pinus* (including *Pinus*., *Pinus monticola*, and *Pinus monticola/P. albicaulis*). The above code reduces them all to a single taxonomic group *Pinus-undiff*.
 
 If we want to have an artifact of our choices, we can use an external table.  For example, a table of pairs (what we want changed, and the name we want it replaced with) can be generated, and it can include regular expressions (if we choose):
 
 | original | replacement |
 | -------- | ----------- |
-| Achnanthes.*  | Achnanthes |
-| Amphora.* | Amphora |
-| Caloneis.* | Symmetric biraphid |
-| Diatomella.*  | Symmetric biraphid |
+| Pinus.*  | Pinus-undiff |
+| Picea.* | Picea-undiff |
+| Nuphar.* | Aquatic |
+| Alder.*  | Alder-undiff |
 | ... | ... |
 
-We can get the list of original names directly from the `taxa()` call, applied to a `sites` object, and then export it using `write.csv()`.
+We can get the list of original names directly from the `taxa()` call, applied to a `sites` object that contains samples, and then export it using `write.csv()`.
 
 ##### Code 
 
 ```{r countbySitesSamples, eval=FALSE}
-taxaplots <- taxa(sa_dl)
+taxaplots <- taxa(bc_dl)
 # Save the taxon list to file so we can edit it subsequently.
 readr::write_csv(taxaplots, "data/mytaxontable.csv")
 ```
@@ -310,7 +304,7 @@ readr::write_csv(taxaplots, "data/mytaxontable.csv")
 ##### Result
 
 ```{r PlotTaxonCounts, echo=FALSE, fig.cap="**Figure**. A plot of the number of sites a taxon appears in, against the number of samples a taxon appears in.", message=FALSE}
-taxaplots <- taxa(sa_dl)
+taxaplots <- taxa(bc_dl)
 ggplot(data = taxaplots, aes(x = sites, y = samples)) +
   geom_point() +
   stat_smooth(method = 'glm', 
@@ -340,11 +334,11 @@ DT::datatable(translation, rownames = FALSE,
 You can see we've changed some of the taxon names in the taxon table (don't look too far, I just did this as an example).  To replace the names in the `samples()` output, we'll join the two tables using an `inner_join()` (meaning the `variablename` must appear in both tables for the result to be included), and then we're going to select only those elements of the sample tables that are relevant to our later analysis:
 
 ```{r joinTranslation, eval = FALSE}
-allSamp <- samples(sa_dl)
+allSamp <- samples(bc_dl)
 
 allSamp <- allSamp %>%
   inner_join(translation, by = c("variablename" = "variablename")) %>% 
-  dplyr::select(!c("variablename", "sites", "samples")) %>% 
+  dplyr::select(!c("variablename")) %>% 
   group_by(siteid, sitename, replacement,
            sampleid, units, age,
            agetype, depth, datasetid,
@@ -367,40 +361,23 @@ We're using the `arrange()` call to sort by the number of times that the taxon a
 
 ```{r stratiplot, message = FALSE}
 # Get a particular site, select only taxa identified from diatom
-plottingSite <- sa_dl[[1]]
+plottingSite <- bc_dl[[1]]
 
 plottingTaxa <- taxa(plottingSite) %>%
-  filter(ecologicalgroup %in% c("DIAT")) %>%
-  filter(elementtype == "valve") %>%
+  filter(ecologicalgroup %in% c("TRSH")) %>%
+  filter(elementtype == "pollen") %>%
   arrange(desc(samples)) %>% 
   head(n = 10)
 
-# Clean up. Select only diatom measured using NISP.
-# We repeat the filters for diatom & ecological group on the samples
-shortSamples <- samples(plottingSite) %>% 
-  filter(variablename %in% plottingTaxa$variablename) %>% 
-  filter(ecologicalgroup %in% c("DIAT")) %>%
-  filter(elementtype == "valve") %>%
-  filter(units == "NISP")
-
-# Transform to proportion values.
-onesite <- shortSamples %>%
-  group_by(age) %>%
-  mutate(count = sum(value, na.rm = TRUE)) %>%
-  group_by(variablename) %>% 
-  mutate(prop = value / count) %>% 
-  arrange(desc(age))
-
-# Spread the data to a "wide" table, with taxa as column headings.
-widetable <- onesite %>%
-  dplyr::select(age, variablename, prop) %>% 
-  mutate(prop = as.numeric(prop))
-
-counts <- tidyr::pivot_wider(widetable,
-                             id_cols = age,
-                             names_from = variablename,
-                             values_from = prop,
-                             values_fill = 0)
+# Clean up. Select only pollen measured using NISP and convert to a "wide"
+# table, using proportions. The first column will be "age".
+counts <- plottingSite %>%
+  samples() %>%
+  toWide(ecologicalgroup = c("TRSH"),
+         unit = c("NISP"),
+         elementtypes = c("pollen"),
+         groupby = "age",
+         operation = "prop")
 ```
 
 This appears to be a fairly long set of commands, but the code is pretty straightforward, and it provides you with significant control over the taxa, units and other elements of your data before you get them into the wide matrix (`depth` by `taxon`) that most statistical tools such as the `vegan` package or `rioja` use.
@@ -412,7 +389,7 @@ clust <- rioja::chclust(dist(sqrt(counts)),
                         method = "coniss")
 
 plot <- rioja::strat.plot(counts[,-1] * 100, yvar = counts$age,
-                  title = sa_dl[[1]]$sitename,
+                  title = bc_dl[[1]]$sitename,
                   ylabel = "Calibrated Years BP",
                   xlabel = "Diatom (%)",
                   y.rev = TRUE,
@@ -427,18 +404,17 @@ rioja::addClustZone(plot, clust, 4, col = "red")
 We now have site information across South America, with samples, and with taxon names. I'm interested in looking at the distributions of taxa across time, their presence/absence. I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time:
 
 ```{r summarizeByTime, message = FALSE}
-plottingTaxa <- taxa(plottingSite) %>%
-  filter(ecologicalgroup %in% c("DIAT")) %>%
-  filter(elementtype == "valve") %>%
+plottingTaxa <- taxa(bc_dl) %>%
+  filter(ecologicalgroup %in% c("TRSH") & elementtype == "pollen" & units == "NISP") %>%
   arrange(desc(sites)) %>% 
   head(n = 20)
 
-taxabyage <- samples(sa_dl) %>% 
+taxabyage <- samples(bc_dl) %>% 
   filter(variablename %in% plottingTaxa$variablename) %>% 
   group_by(variablename, "age" = round(age * 2, -3) / 2) %>% 
   summarise(n = length(unique(siteid)), .groups = 'keep')
 
-samplesbyage <- samples(sa_dl) %>% 
+samplesbyage <- samples(bc_dl) %>% 
   filter(variablename %in% plottingTaxa$variablename) %>% 
   group_by("age" = round(age * 2, -3) / 2) %>% 
   summarise(samples = length(unique(siteid)), .groups = 'keep')
@@ -467,9 +443,9 @@ We are often interested in the interaction between taxa and climate, assuming th
 The first step is taking our sample data and turning it into a spatial object using the `sf` package in R:
 
 ```{r makeSamplesSpatial}
-modern <- samples(sa_dl) %>% 
+modern <- samples(bc_dl) %>% 
   filter(age < 1000) %>% 
-  filter(ecologicalgroup == "DIAT" & elementtype == "valve" & units == "NISP")
+  filter(ecologicalgroup == "TRSH" & elementtype == "pollen" & units == "NISP")
 
 spatial <- sf::st_as_sf(modern, 
                         coords = c("long", "lat"),
