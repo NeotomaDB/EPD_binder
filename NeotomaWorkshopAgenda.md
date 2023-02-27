@@ -3,6 +3,7 @@
 March 1st, 2023
 
 8:30am - 11:20am Pacific Standard Time [Time Zone Converter](https://dateful.com/convert/pst-pdt-pacific-time?t=0830&d=2023-03-01)
+
 ## Socorro Dominguez Vidaña, Simon Goring
 
 # Overview
@@ -18,10 +19,9 @@ At the end of this workshop, users will understand the following concepts:
 
 Online resources for users include links embedded within the agenda, as well as:
 
-* Online, interactive slides: [Google Slides](https://docs.google.com/presentation/d/1avF0o_eW_cCj-mel1-JkVqlLChbPzRSQ20I_3vxBoi0/edit#slide=id.g17acfe75105_0_14)
-
+* Participant slides: [Google Slides](https://docs.google.com/presentation/d/1lDZAam5zPBf0aK0zrcOgqb9f8-OPCCZk7bOiCw9QFLc/edit?usp=sharing)
+* Online slides: [Google Slides](https://docs.google.com/presentation/d/1SN308n1-3q94lV_oF7NMI04Rs-X4kutiI29eJp2B-Vg/edit?usp=sharing)
 * An online version of RStudio built for this workshop: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
-
 * The code repository for the workshop: [https://github.com/NeotomaDB/Current_Workshop](https://github.com/NeotomaDB/Current_Workshop)
 
 ## Getting Started
@@ -82,7 +82,7 @@ This allows us to better help you during the workshop and in the future.
    </td>
    <td><strong>A simple workflow</strong>
    </td>
-   <td colspan="2" ><a href="https://open.neotomadb.org/EPD_binder/simple_workflow.html">https://open.neotomadb.org/EPD_binder/simple_workflow.html</a>
+   <td colspan="2" ><a href="https://open.neotomadb.org/Current_Worksop/simple_workflow.html">https://open.neotomadb.org/EPD_binder/simple_workflow.html</a>
    </td>
   </tr>
   <tr>
