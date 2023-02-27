@@ -254,7 +254,8 @@ neotomatx <- neotoma2::taxa(bc_dl)
 ##### Results
 
 ```{r taxaprint, echo=FALSE, message=FALSE}
-neotoma2::taxa(bc_dl) %>% 
+neotomatx <- neotoma2::taxa(bc_dl)
+neotomatx %>% 
   DT::datatable(data = head(neotomatx, n = 20), rownames = FALSE, 
                 options = list(scrollX = "100%", dom = 't'))
 ```

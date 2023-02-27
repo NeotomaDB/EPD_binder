@@ -9,4 +9,8 @@ install.packages("remotes")
 install.packages("pacman")
 install.packages("leaflet")
 install.packages("Bchron")
+install.packages("DT")
+install.packages("raster")
+install.packages("terra")
+
 remotes::install_github('NeotomaDB/neotoma2@production')
