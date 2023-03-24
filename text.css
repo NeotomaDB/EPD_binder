@@ -1,7 +1,7 @@
 p { font-family: "Raleway";
     color: rgba(0,0,0,0.8); }
 
-a { font-weight: 700;
+a { font-weight: 600;
     color: rgba(59, 72, 202, 0.8); }
 
 h1, h2, h3, h4, h5 { font-family: 'Raleway';
@@ -53,6 +53,16 @@ p.hangingindent:hover{
   background:#dddddd
 }
 
+div.figure {
+	padding-top: 20px;
+}
+
+p.caption {
+	font-family: "EB Garamond";
+	color:rgba(0,0,0,0.7);
+	font-size:90%;
+}
+
 a:link { so-language: zxx }
 
 summary {
@@ -67,6 +77,11 @@ td {
 table {
   padding-top: 0px;
   padding-bottom: 10px;
+  font-size: 80%;
+}
+
+pre.r {
+	font-size: 80%;
 }
 
 div.resource-box {

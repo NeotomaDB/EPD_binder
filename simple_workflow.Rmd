@@ -58,7 +58,7 @@ In this workshop we want to highlight two key structural concepts:
 
 ### 2.2.1 Data Structure in the Neotoma Database
 
-![*The structure of sites, collection units and datasets within Neotoma. A site contains one or more collection units. Chronologies are associated with collection units. Data of a common type (pollen, diatoms, vertebrate fauna) are assigned to a dataset.](images/sitecollunitdataset.png){width=100%}
+![**Figure**. *The structure of sites, collection units and datasets within Neotoma. A site contains one or more collection units. Chronologies are associated with collection units. Data of a common type (pollen, diatoms, vertebrate fauna) are assigned to a dataset.*](images/sitecollunitdataset.png){width=50%}
 
 Data in Neotoma is associated with sites -- specific locations with lat/long coordinates.
 
@@ -68,7 +68,7 @@ Within a **collection unit** data is collected at various [**analysis units**]. 
 
 ### 2.2.2 Data Structures in `neotoma2`
 
-![Neotoma R Package diagram. Each box represents a data class within the package. Individual boxes show the class object, its name, its properties, and functions that can be applied to those objects. For example, a `sites` object has a property `sites`, that is a list. The function `plotLeaflet()` can be used on a `sites` object.](images/neotomaUML_as.svg)
+![**Figure**. *Neotoma R Package diagram. Each box represents a data class within the package. Individual boxes show the class object, its name, its properties, and functions that can be applied to those objects. For example, a `sites` object has a property `sites`, that is a list. The function `plotLeaflet()` can be used on a `sites` object.*](images/neotomaUML_as.svg)
 
 If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_Language) for the objects in the `neotoma2` R package we can see that the data structure generally mimics the structure within the database itself.  As we will see in the [Site Searches section](#3-site-searches), we can search for these objects, and begin to manipulate them (in the [Simple Analysis section](#4-simple-analytics)).
 
@@ -347,7 +347,7 @@ readr::write_csv(taxaplots, "data/mytaxontable.csv")
 
 ##### 3.4.3.2. Result
 
-```{r PlotTaxonCounts, echo=FALSE, fig.cap="**Figure**. A plot of the number of sites a taxon appears in, against the number of samples a taxon appears in.", message=FALSE}
+```{r PlotTaxonCounts, echo=FALSE, fig.cap="**Figure**. *A plot of the number of sites a taxon appears in, against the number of samples a taxon appears in.*", message=FALSE}
 taxaplots <- taxa(sa_dl)
 ggplot(data = taxaplots, aes(x = sites, y = samples)) +
   geom_point() +
@@ -358,11 +358,11 @@ ggplot(data = taxaplots, aes(x = sites, y = samples)) +
   theme_bw()
 ```
 
-#### 3.4.4. {-}
+#### 3.4.4. Editing the Taxonomy Table {-}
 
-The plot is mostly for illustration, but we can see, as a sanity check, that the relationship is as we'd expect. There are a large number of taxa that are rarely present, and then several that are quite common.
+The plot (above) is mostly for illustration, but we can see, as a sanity check, that the relationship is as we'd expect. There are a large number of taxa that are rarely present, and then several that are quite common.
 
-You can then export either one of these tables and add a column with the counts, you could also add extra contextual information, such as the `ecologicalgroup` or `taxongroup` to help you out. Once you've cleaned up the translation table you can load it in, and then apply the transformation:
+Exporting the taxon table to a `csv` file allows us to edit the table, filtering and selecting taxa based on contextual information, such as the `ecologicalgroup` or `taxongroup` to help you out. Once you've cleaned up the translation table you can load it in (try to save it under a different file name!), and then apply the transformation:
 
 ```{r translationTable, message=FALSE, eval=FALSE}
 translation <- readr::read_csv("data/taxontable.csv")
@@ -374,7 +374,7 @@ DT::datatable(translation, rownames = FALSE,
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-You can see we've changed some of the taxon names in the taxon table (don't look too far, I just did this as an example).  To replace the names in the `samples()` output, we'll join the two tables using an `inner_join()` (meaning the `variablename` must appear in both tables for the result to be included), and then we're going to select only those elements of the sample tables that are relevant to our later analysis:
+You can see we've changed some of the taxon names in the taxon table.  To replace the names in the `samples()` output, we'll join the two tables using an `inner_join()` (meaning the `variablename` must appear in both tables for the result to be included), and then we're going to select only those elements of the sample tables that are relevant to our later analysis, using the `harmonizedname` column as our new name for the taxa:
 
 ```{r joinTranslation, eval = FALSE}
 allSamp <- samples(sa_dl)
@@ -404,13 +404,22 @@ DT::datatable(head(cleanSamp, n = 50), rownames = FALSE,
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-We now have a cleaner set of taxon names compared to the original table, both because of harmonization, and because we cleared out many of the non **TRSH** taxa from the harmonization table (the original `samples()` table is below).
+We now have a cleaner set of taxon names compared to the original table, both because of harmonization, and because we cleared out many of the non **TRSH** taxa from the harmonization table. Plotting the same set of taxa with the new harmonized names results in this plot:
 
-```{r origTableOut, message = FALSE, echo=FALSE}
-samp <- samples(sa_dl) %>%
-  select(siteid, sitename, variablename, sampleid, units, age, agetype, depth, datasetid, long, lat)
-DT::datatable(head(samp %>% arrange(sitename, age, variablename), n = 50), rownames = FALSE,
-                options = list(scrollX = "100%", dom = 't'))
+```{r origTableOut, message = FALSE, echo=FALSE, fig.cap="**Figure**. *The same site/sample plot as above, with with the new harmonized taxonomy. Note that the distribution of points along the curve is smoother, as we remove some of the taxonomic issues.*"}
+taxaplots <- samples(sa_dl) %>%
+  inner_join(translation, by = c("variablename" = "variablename")) %>% 
+  dplyr::select(!c("variablename")) %>%
+  group_by(harmonizedname) %>%
+  summarise(sites = length(unique(siteid)), samples = length(unique(sampleid)), .groups='keep')
+
+ggplot(data = taxaplots, aes(x = sites, y = samples)) +
+  geom_point() +
+  stat_smooth(method = 'glm', 
+              method.args = list(family = 'poisson')) +
+  xlab("Number of Sites") +
+  ylab("Number of Samples") +
+  theme_bw()
 ```
 
 ## 4. Simple Analytics
@@ -487,7 +496,7 @@ samplesByAge <- samples(sa_dl) %>%
   summarise(samples = length(unique(siteid)), .groups = 'keep')
 
 # Now get the proportion of sites at which each taxon appears:
-groupbyage <- taxaByAge %>%
+groupbyage <- taxaSitesByAge %>%
   inner_join(samplesByAge, by = "age") %>% 
   mutate(proportion = n / samples)
 
