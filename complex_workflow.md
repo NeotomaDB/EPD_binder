@@ -1,7 +1,7 @@
 ---
 title: "A Not so Simple Workflow"
 author: "Simon Goring, Socorro Dominguez Vidaña"
-date: "2022-11-16"
+date: "2023-03-24"
 output:
   html_document:
     code_folding: show
@@ -43,11 +43,11 @@ pacman::p_load(neotoma2, dplyr, ggplot2, Bchron)
 
 ## Loading Datasets
 
-We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/EPD_binder/simple_workflow.html). Assuming we found a record that we were interested in, we can go back and pull a single record using its `datasetid`. In this case, the dataset is for [Stará Boleslav](https://data.neotomadb.org/24238). Let's start by pulling in the record and using the `chronologies()` helper function to look at the chronologies associated with the record:
+We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). Assuming we found a record that we were interested in, we can go back and pull a single record using its `datasetid`. In this case, the dataset is for [Potapuram Cheruvu](https://data.neotomadb.org/12018). Let's start by pulling in the record and using the `chronologies()` helper function to look at the chronologies associated with the record:
 
 
 ```r
-stara <- get_downloads(24238)
+potapuram <- get_downloads(12018)
 ```
 
 ```
@@ -55,26 +55,27 @@ stara <- get_downloads(24238)
 ```
 
 ```r
-stara_chron <- chronologies(stara)
+potapuram_chron <- chronologies(potapuram)
 
-stara_chron %>% as.data.frame() %>% 
+potapuram_chron %>% as.data.frame() %>% 
   DT::datatable(data = ., 
                 options = list(scrollX = "100%"))
 ```
 
 ```{=html}
-<div id="htmlwidget-225942f896d40f8f9a3f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-225942f896d40f8f9a3f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["14589","14590","14591"],["C14 BP age with Tilia (Grimm)","CAL BP age with CLKAM (Blaauw) sigma 2","linear interpolation between neighbouring dated levels"],["linear interpolation","linear interpolation","Clam"],[2050,2000,2000],[5,400,400],[1,0,1],["2013-01-01","2013-01-01","2007-06-20"],["Radiocarbon years BP","Calibrated radiocarbon years BP","Calibrated radiocarbon years BP"],["C14 BP","CAL BP","PALYCZ"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>chronologyid<\/th>\n      <th>notes<\/th>\n      <th>agemodel<\/th>\n      <th>ageboundolder<\/th>\n      <th>ageboundyounger<\/th>\n      <th>isdefault<\/th>\n      <th>dateprepared<\/th>\n      <th>modelagetype<\/th>\n      <th>chronologyname<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3491b42bfef0a040383a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3491b42bfef0a040383a">{"x":{"filter":"none","vertical":false,"data":[["1"],["6362"],["clam parameters: \r\ntype=2 (linear regression)\r\nsmooth=1 (linear)"],["clam"],[180],[-60],[1],["2014-02-12"],["Calibrated radiocarbon years BP"],["Anupama et al. 2013"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>chronologyid<\/th>\n      <th>notes<\/th>\n      <th>agemodel<\/th>\n      <th>ageboundolder<\/th>\n      <th>ageboundyounger<\/th>\n      <th>isdefault<\/th>\n      <th>dateprepared<\/th>\n      <th>modelagetype<\/th>\n      <th>chronologyname<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
-There are three chronologies here, but for whatever reason we've decided not to use any of them.  We want to build a new one with the function `Bchronology()` from the [`Bchron` package](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html). First we want to see what chroncontrols we have for the prior chronologies. We're going to select the chronologies used for chronology `14591` as our template.  
+There is one chronology here, but for whatever reason we've decided not to use it.  We want to build a new one with the function `Bchronology()` from the [`Bchron` package](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html). First we want to see what chroncontrols we have for the prior chronologies. We're going to select the chronologies used for chronology `6362` as our template.  
 
 ### Extract `chroncontrols`
 
 
 ```r
-controls <- chroncontrols(stara) %>% 
-  dplyr::filter(chronologyid == 14591) %>% 
+# Extract the chronological controls used in the original chronology:
+controls <- chroncontrols(potapuram) %>% 
+  dplyr::filter(chronologyid == 6362) %>% 
   arrange(depth)
 
 controls %>% DT::datatable(data = ., 
@@ -82,19 +83,21 @@ controls %>% DT::datatable(data = .,
 ```
 
 ```{=html}
-<div id="htmlwidget-93873706cd83ab343945" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-93873706cd83ab343945">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5"],[15771,15771,15771,15771,15771],[14591,14591,14591,14591,14591],[0,7.5,62.5,122.5,227.5],[null,5,5,5,5],[null,730,950,1320,1990],[53783,53779,53780,53781,53782],[null,610,810,1160,1850],[null,670,880,1240,1920],["Core top","Radiocarbon","Radiocarbon","Radiocarbon","Radiocarbon"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>siteid<\/th>\n      <th>chronologyid<\/th>\n      <th>depth<\/th>\n      <th>thickness<\/th>\n      <th>agelimitolder<\/th>\n      <th>chroncontrolid<\/th>\n      <th>agelimityounger<\/th>\n      <th>chroncontrolage<\/th>\n      <th>chroncontroltype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6994e745d67fd6c05e05" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6994e745d67fd6c05e05">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["7544","7544","7544"],[6362,6362,6362],[0,63,97],[2,2,2],[-60,140,200],[17413,17414,17415],[-50,60,120],[-55,100,160],["Core top","Radiocarbon","Radiocarbon"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>siteid<\/th>\n      <th>chronologyid<\/th>\n      <th>depth<\/th>\n      <th>thickness<\/th>\n      <th>agelimitolder<\/th>\n      <th>chroncontrolid<\/th>\n      <th>agelimityounger<\/th>\n      <th>chroncontrolage<\/th>\n      <th>chroncontroltype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
-We can look at other tools to decided how we want to manage the chroncontrols, for example, saving them and editing them using Excel or another spreadsheet program.  We could add a new date by adding a new row. In this example we're just going to modify the existing ages to provide better constraints at the core top. We are setting the core top to *0 calibrated years BP*, and assuming an uncertainty of 2 years, and a thickness of 1cm.
+We can look at other tools to decided how we want to manage the chroncontrols, for example, saving them and editing them using Excel or another spreadsheet program.  We could add a new date by adding a new row. In this example we're just going to modify the existing ages to provide better constraints at the core top. We are setting the core top to *-55 calibrated years BP*, and assuming an uncertainty of 2 years, and a thickness of 2cm.
+
+This generally won't change too much, and I have no real basis for doing this explicitly, but this is simply for illustration.
 
 To do these assignments we're just directly modifying cells within the `controls` `data.frame`:
 
 
 ```r
-controls$chroncontrolage[1] <- 0
-controls$agelimityounger[1] <- -2
-controls$agelimitolder[1] <- 2
+controls$chroncontrolage[1] <- -55
+controls$agelimityounger[1] <- -53
+controls$agelimitolder[1] <- -57
 controls$thickness[1] <- 1
 
 controls %>% DT::datatable(data = ., 
@@ -102,8 +105,8 @@ controls %>% DT::datatable(data = .,
 ```
 
 ```{=html}
-<div id="htmlwidget-1ea984967a5a5a124d4a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1ea984967a5a5a124d4a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5"],[15771,15771,15771,15771,15771],[14591,14591,14591,14591,14591],[0,7.5,62.5,122.5,227.5],[1,5,5,5,5],[2,730,950,1320,1990],[53783,53779,53780,53781,53782],[-2,610,810,1160,1850],[0,670,880,1240,1920],["Core top","Radiocarbon","Radiocarbon","Radiocarbon","Radiocarbon"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>siteid<\/th>\n      <th>chronologyid<\/th>\n      <th>depth<\/th>\n      <th>thickness<\/th>\n      <th>agelimitolder<\/th>\n      <th>chroncontrolid<\/th>\n      <th>agelimityounger<\/th>\n      <th>chroncontrolage<\/th>\n      <th>chroncontroltype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6648d6d58f20d8a1d5b7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6648d6d58f20d8a1d5b7">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["7544","7544","7544"],[6362,6362,6362],[0,63,97],[1,2,2],[-57,140,200],[17413,17414,17415],[-53,60,120],[-55,100,160],["Core top","Radiocarbon","Radiocarbon"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>siteid<\/th>\n      <th>chronologyid<\/th>\n      <th>depth<\/th>\n      <th>thickness<\/th>\n      <th>agelimitolder<\/th>\n      <th>chroncontrolid<\/th>\n      <th>agelimityounger<\/th>\n      <th>chroncontrolage<\/th>\n      <th>chroncontroltype<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":"100%","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ### Extract Depth & Analysis Unit IDs
@@ -114,20 +117,24 @@ Once our `chroncontrols` table is updated, we extract the `depth`s and `analysis
 ```r
 # Get a two column data.frame with columns depth and analysisunitid.
 # Sort the table by depth from top to bottom for "Bchronology"
-predictDepths <- samples(stara) %>%
+predictDepths <- samples(potapuram) %>%
   select(depth, analysisunitid) %>% 
   unique() %>% 
   arrange(depth)
 
 # Pass the values from `controls`. We're assuming the difference between
 # chroncontrolage and the agelimityounger is 1 SD.
+# Note that for the parameter 'calCurves' we are using a "normal" 
+# distribution for the modern sample (core top) and choosing the
+# IntCal20 curve for the other two radiocarbon dates.
 
 newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
                                 ageSds = abs(controls$agelimityounger - 
                                                controls$chroncontrolage),
-                                calCurves = c("normal", rep("intcal20", 4)),
+                                calCurves = c("normal", rep("intcal20", 2)),
                                 positionThicknesses = controls$thickness,
                                 positions = controls$depth,
+                                predictPositions = predictDepths$depth,
                                 allowOutside = TRUE,
                                 ids = controls$chroncontrolid)
 
@@ -152,6 +159,7 @@ Given the new chronology, we want to add it to the `sites` object so that it bec
 
 
 ```r
+# Add information about the people who generated the new chronology:
 creators <- c(set_contact(givennames = "Simon James",
                           familyname = "Goring",
                           ORCID = "0000-0002-2700-4605"),
@@ -159,7 +167,8 @@ creators <- c(set_contact(givennames = "Simon James",
                           familyname = "Dominguez Vidaña",
                           ORCID = "0000-0002-7926-4935"))
 
-newChronStara <- set_chronology(agemodel = "Bchron model",
+# Add information about the chronology:
+newChronpotapuram <- set_chronology(agemodel = "Bchron model",
                                 contact = creators,
                                 isdefault = 1,
                                 ageboundolder = max(newpredictions),
@@ -169,10 +178,11 @@ newChronStara <- set_chronology(agemodel = "Bchron model",
                                 chronologyname = "Simon's example chronology",
                                 chroncontrols = controls)
 
-newChronStara$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
+
+newChronpotapuram$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
                                 ageSds = abs(controls$agelimityounger - 
                                                controls$chroncontrolage),
-                                calCurves = c("normal", rep("intcal20", 4)),
+                                calCurves = c("normal", rep("intcal20", 2)),
                                 positionThicknesses = controls$thickness,
                                 positions = controls$depth,
                                 allowOutside = TRUE,
@@ -184,9 +194,9 @@ newChronStara$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncon
 
 Once we've created the chronology we need to apply it back to the collectionunit. We also need to add the predicted dates into the samples for each dataset associated with the collectionunit.
 
-So: 
+So:
 
-1. we have a collectionunit in `stara` that is accessible at `stara[[1]]$collunits`.
+1. we have a collectionunit in `potapuram` that is accessible at `potapuram[[1]]$collunits`.
 2. We can use the function `add_chronology()`, which takes the chronology object and a `data.frame()` of sample ages.
 3. The predicted dates associated with the new chronology need to be transferred to each `samples` object within the `collectionunit`.
 
@@ -202,8 +212,8 @@ newSampleAges <- data.frame(predictDepths,
                               apply(newpredictions, 2, sd),
                             agetype = "Calibrated radiocarbon years")
 
-stara[[1]]$collunits[[1]] <- add_chronology(stara[[1]]$collunits[[1]], 
-                                            newChronStara, 
+potapuram[[1]]$collunits[[1]] <- add_chronology(potapuram[[1]]$collunits[[1]], 
+                                            newChronpotapuram, 
                                             newSampleAges)
 ```
 
@@ -212,15 +222,15 @@ With this, we now have the updated collectionunit. Lets take a look at how this 
 
 ```r
 # The new chronology is currently the default chronology.
-newages <- samples(stara) %>%
+newages <- samples(potapuram) %>%
   select(depth, analysisunitid, age) %>% 
   unique() %>% 
   arrange(depth) %>% 
   mutate(agecat = "new")
 
-stara[[1]]$collunits[[1]]$chronologies <- set_default(stara[[1]]$collunits[[1]]$chronologies,
-                                                      14591)
-plotforages <- samples(stara) %>%
+potapuram[[1]]$collunits[[1]]$chronologies <- set_default(potapuram[[1]]$collunits[[1]]$chronologies,
+                                                      6362)
+plotforages <- samples(potapuram) %>%
   select(depth, analysisunitid, age) %>% 
   unique() %>% 
   arrange(depth) %>% 
@@ -247,7 +257,7 @@ So we can see the impact of the new chronology on the age model for the record, 
 
 From this notebook we have learned how to:
 
-1. Download a single record (the Stara record using `get_downloads()`)
+1. Download a single record (the potapuram record using `get_downloads()`)
 2. Examining the chronologies for the record (using `chronologies()` and associated chronological controls (using `chroncontrols()`)
 3. Creating a new chronology for the record (using `set_chronology()`)
 4. Adding the chronology to the record (using `add_chronology()`)
