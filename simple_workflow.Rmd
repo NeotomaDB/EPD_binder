@@ -487,7 +487,7 @@ samplesByAge <- samples(sa_dl) %>%
   summarise(samples = length(unique(siteid)), .groups = 'keep')
 
 # Now get the proportion of sites at which each taxon appears:
-groupbyage <- taxaByAge %>%
+groupbyage <- taxaSitesByAge %>%
   inner_join(samplesByAge, by = "age") %>% 
   mutate(proportion = n / samples)
 
