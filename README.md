@@ -7,7 +7,7 @@ A repository to host interactive R workshops. This repository will always be set
 
 This repository is built with the structure required to serve the content through an interactive, online RStudio session using Binder (and Docker). Clicking the Binder link will open RStudio in the user's browser.
 
-**Currently, this repo hosts the Workshop to be delivered for the INQUA Sponsored Workshop in India.**
+**Currently, this repo hosts the Workshop to be delivered for the online African Pollen Database workshop.**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
