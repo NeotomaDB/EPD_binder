@@ -1,3 +1,5 @@
+[![language](https://img.shields.io/badge/language-EN-red)](README.md) [![language](https://img.shields.io/badge/language-RU-red)](README.ru.md)
+
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 
@@ -18,6 +20,10 @@ This is an open project and contributions are welcome from any individual.  All 
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--7926--4935-brightgreen.svg)](https://orcid.org/0000-0002-7926-4935) [Socorro Dominguez Vidana](https://sedv8808.github.io/)
 
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605) [Simon Goring](http://goring.org)
+
+### Translations
+
+* Russian: [Arsenii Galimov](https://scholar.google.com/citations?user=wRtBmBcAAAAJ&hl=ru)
 
 ## How to use this repository
 
