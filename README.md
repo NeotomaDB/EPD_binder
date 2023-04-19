@@ -23,7 +23,7 @@ This is an open project and contributions are welcome from any individual.  All 
 
 ### Translations
 
-* Russian: [Arsenii Galimov](https://scholar.google.com/citations?user=wRtBmBcAAAAJ&hl=ru)
+* Russian: [Arsenii Galimov](https://ipae.uran.ru/Galimov_AT)
 
 ## How to use this repository
 

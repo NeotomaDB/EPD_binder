@@ -22,7 +22,7 @@
 
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605) [Simon Goring](http://goring.org)
 
-* перевод: [Arsenii Galimov](https://scholar.google.com/citations?user=wRtBmBcAAAAJ&hl=ru)
+* перевод: [Arsenii Galimov](https://ipae.uran.ru/Galimov_AT)
 
 ## Как использовать репозиторий
 
