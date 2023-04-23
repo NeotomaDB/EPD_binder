@@ -74,6 +74,46 @@ If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_L
 
 It is important to note: *within the `neotoma2` R package, most objects are `sites` objects, they just contain more or less data*.  There are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
 
+### 2.2.3 Piping in `R` {.tabset}
+
+Piping is a technique that simplifies the process of chaining multiple operations on a data object. It involves using either of these operators: `|>` or `%>%`. `|>` is a base R operator while `%>%` comes from the `tidyverse` ecosystem in R. In `neotoma2` we use `%>%`.
+
+The pipe operator works as a real-life pipe, which carries water from one location to another. In programming, the output of the function on the left-hand side of the pipe is taken as the initial argument for the function on the right-hand side of the pipe. It helps by making code easier to write and read. Additionally, it reduces the number of intermediate objects created during data processing, which can make code more memory-efficient and faster.
+
+You can retrieve a site and then plot it by doing:
+```
+# Retrieve the site
+plot_site <- neotoma2::get_sites(sitename = "%Swamp%")
+# Plot the site
+neotoma2::plotLeaflet(plot_site)
+```
+
+This would create a variable `plot_site` that maybe we will not need any more but was necessary so that we could pass it to the `plotLeaflet` function.
+
+When we pipe using `%>%`, we do not need to create the variable that we need to pass:
+
+#### 2.2.3.1. Code
+
+```{r piping code, eval=FALSE}
+# get_sites and pipe
+get_sites(sitename = "%Swamp%") %>%
+  # Notice that the next function does not need the first argument 
+  # because the response of `get_sites(sitename = "%Swamp%") will be used
+  # as the argument.
+  plotLeaflet()
+```
+#### 2.2.3.2. Result
+
+```{r piping result, echo=FALSE}
+# get_sites and pipe
+get_sites(sitename = "%Swamp%") %>%
+  # Notice that the next function does not need the first argument 
+  # because the response of `get_sites(sitename = "%Swamp%") will be used
+  # as the argument.
+  plotLeaflet()
+```
+
+
 ## 3. Site Searches
 
 ### 3.1. `get_sites()`
