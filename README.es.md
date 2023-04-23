@@ -9,7 +9,7 @@ Es un repositorio que albergar talleres interactivos de R. Este repositorio siem
 
 Este repositorio está construido de tal forma que permite que se trabaje en línea a través de la estructura necesaria para mostrar el contenido a través de RStudio usando Binder (y Docker). Cuando se haga click en el enlace Binder, RStudio se abrirá en el navegador del usuario.
 
-**Actualmente, este repositorio contiene un taller que se llevará acabo en línea: Taller sobre las Bases de Datos de Polen Africano.**
+**Actualmente, este repositorio contiene un taller que se llevará acabo en línea: UQAM GEOTOP.**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
