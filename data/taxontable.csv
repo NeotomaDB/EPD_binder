@@ -1,1499 +1,235 @@
-taxonid,variablename,harmonizedname,samples,sites
-1,Abies,Abies,600,26
-40221,Abrus,Abrus,1,1
-1580,Acacia,Acacia,1031,75
-37409,Acacia (group III),Acacia,158,19
-37408,Acacia (group I),Acacia,90,16
-20612,Acacia/Albizia,Acacia,28,5
-9681,Acacia-type,Acacia,26,2
-43585,Acacia mellifera (smooth),Acacia,18,1
-28495,Acacia gerrardii,Acacia,13,1
-45963,Acacia (group II),Acacia,8,2
-2366,Acacia (type III),Acacia,6,2
-2365,Acacia (type I),Acacia,5,3
-40107,Acacia-type (type II),Acacia,4,2
-40108,Acacia-type (type III),Acacia,2,1
-36901,Acacia ehrenbergiana-type,Acacia,1,1
-36903,Acacia kamerunensis-type,Acacia,1,1
-46835,Acacia tortilis var. raddiana,Acacia,1,1
-2453,Acanthaceae undiff.,Acanthaceae undiff.,123,12
-338,Acer,Acer,358,20
-36744,Acridocarpus,Acridocarpus,173,13
-37693,Adansonia digitata,Adansonia,19,6
-37410,Adansonia,Adansonia,8,5
-37636,Adenia,Adenia,75,6
-47479,Adenia lobata-type,Adenia,10,1
-43131,Adenia venenata-type,Adenia,1,1
-37637,Adenia-type,Adenia,1,1
-45933,Adenium-type obesum,Adenium,14,2
-39997,Adenium,Adenium,6,3
-36747,Adenorandia-type (A. kalbreyeri),Adenorandia-type (A. kalbreyeri),4,1
-40291,Adina,Adina,23,2
-43359,Aeschynomene-type baumii,Aeschynomene,145,8
-2499,Aeschynomene,Aeschynomene,78,9
-2500,Aeschynomene baumii-type,Aeschynomene,78,3
-29764,Aeschynomene-type,Aeschynomene,14,4
-41403,Aeschynomene-type (A. baumii),Aeschynomene,11,1
-47313,Aeschynomene afraspera-type,Aeschynomene,1,1
-11,Aesculus,Aesculus,3,2
-37694,Afraegle,Afraegle,4,4
-37695,Afraegle paniculata,Afraegle,2,2
-39999,Afraegle-type (A. paniculata),Afraegle,1,1
-45675,Afrosersalisia,Afrosersalisia,3,1
-43412,Afzelia africana-type,Afzelia,3,2
-37771,Afzelia,Afzelia,1,1
-43169,Afzelia cf. A. africana,Afzelia,1,1
-40000,Aidia-type,Aidia,36,1
-2506,Aidia,Aidia,16,3
-2507,Aidia micrantha-type,Aidia,6,2
-43529,Aidia-type micrantha,Aidia,4,2
-40001,Aidia-type (A. micrantha),Aidia,1,1
-5750,Ailanthus,Ailanthus,4,2
-43055,Alangium chinense,Alangium,29,3
-37852,Alangium,Alangium,4,2
-9833,Albizia,Albizia,65,14
-40002,Albizia-type,Albizia,28,4
-45801,cf. Albizia,Albizia,1,1
-1708,Alchornea,Alchornea,3032,90
-47522,Alchornea cordifolia-type,Alchornea,49,1
-46016,Alchornea cordifolia,Alchornea,3,2
-1822,Allophylus,Allophylus,830,58
-46034,Allophylus/Protea,Allophylus,58,4
-29471,Allophylus-type,Allophylus,20,3
-47643,Allophylus/Protea/Faurea,Allophylus,10,1
-37697,Allophylus africanus,Allophylus,7,2
-47523,Allophylus africanus-type,Allophylus,2,1
-45948,Allophylus abyssinicus-type,Allophylus,1,1
-330,Alnus,Alnus,716,27
-3770,Alnus glutinosa-type,Alnus,429,10
-1299,Alnus glutinosa,Alnus,243,4
-353,Alnus viridis,Alnus,11,2
-14,Alnus viridis-type,Alnus,8,3
-41772,Alstonia-type,Alstonia,23,3
-40415,Alstonia,Alstonia,21,2
-43056,Alstonia-type (A. boonei),Alstonia,20,2
-45463,Alstonia boonei,Alstonia,19,2
-44745,Amanoa-type,Amanoa-type,28,2
-347,Anacardiaceae,Anacardiaceae,258,28
-18,Anacardiaceae undiff.,Anacardiaceae,35,8
-2007,Anacardium,Anacardiaceae,1,1
-41641,Anacolosa uncifera,Anacolosa uncifera,2,1
-40180,Androstachys,Androstachys,6,1
-45751,Aningeria-type,Aningeria-type,5,2
-40336,Anisotes,Anisotes,11,3
-47680,Anisotes-type,Anisotes,1,1
-47480,Annona senegalensis,Annona,3,1
-5762,Annona,Annona,2,1
-44975,Annona senegalensis-type,Annona,1,1
-3293,Annonaceae,Annonaceae,35,7
-30491,Annonaceae undiff.,Annonaceae,6,2
-43058,Anogeissus-type (A. leiocarpa),Anogeissus,17,2
-40003,Anogeissus,Anogeissus,8,1
-43057,Anogeissus-type,Anogeissus,1,1
-2361,Anthocleista,Anthocleista,414,42
-47524,Anthocleista vogelii-type,Anthocleista,17,1
-40394,Anthocleista grandiflora,Anthocleista,9,1
-40005,Anthonotha-type,Anthonotha,3,2
-40004,Anthonotha,Anthonotha,2,1
-37413,Anthostema,Anthostema,99,4
-41773,Anthostema-type,Anthostema,85,5
-37700,Anthostema senegalense,Anthostema,37,2
-43165,Anthostema-type (A. senegalense),Anthostema,2,1
-36754,Antiaris-type (A. toxicaria),Antiaris,54,1
-37903,Antiaris-type,Antiaris,13,2
-44753,Antiaris-type toxicaria,Antiaris,2,1
-36752,Antiaris,Antiaris,1,1
-9841,Antidesma,Antidesma,155,18
-29111,Antidesma-type,Antidesma,130,10
-37701,Antidesma venosum,Antidesma,19,3
-43164,Antidesma-type (A. venosum),Antidesma,7,1
-43059,Antidesma-type (A. rufescens),Antidesma,4,1
-39447,Antrocaryon-type,Antrocaryon,28,5
-39445,Antrocaryon,Antrocaryon,7,1
-35464,Aphloia theiformis,Aphloia theiformis,3,2
-2389,Apodytes dimidiata,Apodytes,339,22
-2390,Apodytes,Apodytes,112,10
-36759,Aporrhiza,Aporrhiza,17,1
-45822,Aporrhiza-type,Aporrhiza,2,1
-3834,Arbutus,Arbutus,174,12
-3835,Arbutus unedo,Arbutus,107,5
-23,Arceuthobium,Arceuthobium,1,1
-5220,Arceuthobium oxycedri,Arceuthobium,1,1
-9851,Ardisia,Ardisia,1,1
-199,Arecaceae,Arecaceae,90,13
-910,Arecaceae undiff.,Arecaceae,55,4
-39423,Arecaceae (trichotomosulcate),Arecaceae,1,1
-31058,Argania spinosa,Argania spinosa,1,1
-43141,Argyrella-type (A. canescens),Argyrella-type (A. canescens),2,1
-3347,Ascarina,Ascarina,4,1
-37001,Astropanax mannii-type,Astropanax,89,1
-45967,Astropanax abyssinicus,Astropanax,8,2
-45767,Astropanax myrianthus,Astropanax,6,2
-47365,Astropanax barteri,Astropanax,1,1
-36997,Astropanax goetzenii-type,Astropanax,1,1
-47481,Aubrevillea,Aubrevillea,1,1
-39397,Azima,Azima,5,1
-41692,Baikiaea,Baikiaea,53,2
-36762,Balanites,Balanites,150,23
-37703,Balanites aegyptiaca-type,Balanites,12,5
-45934,Balanites rotundifolia-type,Balanites,12,1
-37702,Balanites aegyptiaca,Balanites,3,3
-43060,Balanites rotudinfolia-type,Balanites,2,1
-45816,cf. Balanites,Balanites,2,1
-36764,Baphia-type,Baphia-type,25,5
-2406,Baphiopsis parviflora,Baphiopsis parviflora,1,1
-43676,Barbeya oleoides,Barbeyaceae,1,1
-43674,Barbeyaceae,Barbeyaceae,1,1
-37773,Barleria,Barleria,10,4
-9878,Barringtonia,Barringtonia,5,2
-1968,Bauhinia,Bauhinia,10,4
-37705,Bauhinia rufescens,Bauhinia,2,1
-973,Berberis-type,Berberis,16,1
-1631,Berberis,Berberis,12,4
-40121,Berlinia-type,Berlinia,101,7
-40008,Berlinia,Berlinia,14,1
-36770,Bertiera,Bertiera,1,1
-40535,Bertiera-type,Bertiera,1,1
-29,Betula,Betula,532,35
-1885,Bignoniaceae,Bignoniaceae undiff.,74,10
-3290,Bignoniaceae undiff.,Bignoniaceae undiff.,8,1
-39411,Bismarckia nobilis,Bismarckia nobilis,29,2
-37774,Blepharis,Blepharis,90,11
-40009,Blepharis-type,Blepharis,58,2
-2431,Blighia,Blighia,64,13
-2432,Blighia unijugata-type,Blighia,38,2
-43104,Blighia sapida-type,Blighia,15,1
-43623,Blighia-type unijugata,Blighia,9,3
-37762,Blighia-type,Blighia,8,2
-37951,Blighia-type (B. unijugata),Blighia,4,2
-9885,Bombax,Bombax,29,8
-41643,Bombax buonopozense-type,Bombax,3,3
-43061,Bombax costatum-type,Bombax,3,2
-20566,Borassus,Borassus,9,4
-37763,Borassus-type,Borassus-type,18,6
-41710,Borassus-type (B. aethiopum),Borassus-type (B. aethiopum),6,3
-43363,Borassus-type aethiopum,Borassus-type aethiopum,21,4
-37706,Borassus/Hyphaene,Borassus/Hyphaene,86,8
-36771,Boscia,Boscia,36,6
-40366,cf. Boscia,Boscia,3,1
-36772,Boscia-type,Boscia-type,32,8
-47314,Boscia-type angustifolia,Boscia-type angustifolia,4,1
-47315,Boscia-type salicifolia,Boscia-type salicifolia,8,1
-37775,Bosqueia,Bosqueia,105,12
-47474,Bosqueia-type,Bosqueia,18,1
-48021,Bosqueia phoberos,Bosqueia,5,1
-28521,Boswellia,Boswellia,14,2
-40011,Botryospermum,Botryospermum,1,1
-40184,Brachylaena,Brachylaena,53,4
-2348,Brachystegia,Brachystegia,664,21
-2353,Bridelia,Bridelia,396,39
-36919,Bridelia ferruginea-type,Bridelia,160,5
-36773,Bridelia-type,Bridelia,73,2
-40012,Bridelia micrantha-type,Bridelia,53,2
-36921,Bridelia scleroneura-type,Bridelia,49,2
-37707,Bridelia micrantha,Bridelia,33,5
-36918,Bridelia ferruginea,Bridelia,4,1
-36774,Brucea,Brucea,34,7
-42696,Brucea antidysenterica-type,Brucea,14,1
-41408,Brucea antidysenterica,Brucea,4,2
-40376,Bruniaceae,Bruniaceae,262,5
-40376,Bruniaceae,Bruniaceae,137,2
-1117,Buddleja,Buddleja,36,4
-37776,Burkea,Burkea,158,9
-40251,Burkea africana,Burkea,48,1
-46248,Burkea-type africana,Burkea,10,1
-2036,Burseraceae,Burseraceae undiff.,45,2
-3287,Burseraceae undiff.,Burseraceae undiff.,6,1
-36775,Butyrospermum,Butyrospermum,35,5
-2628,Buxus,Buxus,262,12
-3971,Buxus sempervirens,Buxus,15,3
-40253,Buxus hildebrandtii-type,Buxus,14,2
-40256,Buxus madagascarica,Buxus,14,1
-9596,Byttneria,Byttneria,2,1
-37777,Cadaba,Cadaba,25,5
-40367,cf. Cadaba,Cadaba,17,1
-47316,Cadaba-type,Cadaba-type,7,2
-37909,cf. Cadaba/Maerua,Maerua/Ritchiea,1,1
-1880,Caesalpinioideae,Caesalpinioideae undiff.,146,14
-2151,Caesalpinioideae undiff.,Caesalpinioideae undiff.,48,13
-40015,Caesalpinia/Haematoxylum,Caesalpinioideae undiff.,10,2
-2331,Caesalpinia-type,Caesalpinioideae undiff.,4,3
-45523,Calamus deerratus,Calamus,36,2
-9893,Calamus,Calamus,7,2
-5181,Calligonum,Calligonum,46,16
-33651,Calligonum polygonoides,Calligonum,13,1
-2897,Calluna vulgaris,Calluna,44,1
-9773,Calluna,Calluna,10,2
-39425,Calpocalyx-type,Calpocalyx-type,53,4
-43607,Calpocalyx-type klainei,Calpocalyx-type,53,1
-45464,Calpocalyx-type letestui,Calpocalyx-type,36,2
-41625,Calpocalyx-type (C. letestui),Calpocalyx-type,6,2
-37778,Calycobolus,Calycobolus,7,3
-36776,Campylospermum,Campylospermum,152,9
-47653,Campylospermum densiflorum,Campylospermum,2,1
-48050,Canarium schweinfurthii,Canarium-type,26,1
-36922,Canarium-type,Canarium-type,26,4
-35950,Canarium,Canarium-type,11,1
-2415,Canthium,Canthium-type,613,32
-41410,Canthium gueinzii-type,Canthium-type,153,6
-37953,Canthium schimperianum-type,Canthium-type,150,10
-37952,Canthium schimperianum,Canthium-type,41,2
-37645,Canthium-type,Canthium-type,39,6
-37755,Canthium subcordatum,Canthium-type,26,2
-2105,Capparaceae,Capparaceae undiff.,270,38
-36777,Capparaceae undiff.,Capparaceae undiff.,67,6
-3990,Capparis,Capparis,116,18
-40359,Capparis fascicularis-type,Capparis,47,7
-42698,Capparis tomentosa-type,Capparis,12,5
-37646,Capparis tomentosa,Capparis,2,2
-47049,Capparis decidua-type,Capparis,1,1
-47645,Capparis erythrocarpos,Capparis,1,1
-40368,cf. Capparis,Capparis,4,1
-394,Caprifoliaceae,Caprifoliaceae,2,1
-36779,Carapa-type (C. procera),Carapa,74,3
-47381,Carapa/Ekebergia,Carapa,36,2
-25564,Carapa,Carapa,18,2
-36778,Carapa procera,Carapa,2,1
-37955,Carapa-type (C. grandiflora),Carapa,1,1
-45310,Carissa-type spinarum,Carissa,14,1
-40167,Carissa,Carissa,9,1
-47317,Carissa spinarum-type,Carissa,3,1
-1319,Carpinus betulus,Ostrya/Carpinus,299,15
-1429,Carpinus,Ostrya/Carpinus,20,4
-44,Carya,Carya-type,4,2
-3995,Carya-type,Carya-type,1,1
-9699,Casearia,Casearia,7,2
-1958,Cassia-type,Cassia,523,24
-2056,Cassia,Cassia,200,20
-2380,Cassia mimosoides-type,Cassia,37,1
-41413,Cassia-type (C. mimosoides),Cassia,8,1
-43062,Cassia-type (C. italica),Cassia,1,1
-40122,Cassine-type,Cassine,26,4
-20568,Cassine,Cassine,21,3
-2657,Castanea sativa,Castanea,106,10
-47,Castanea,Castanea,96,11
-2704,Casuarina,Casuarina,15,5
-47766,Casuarina equisetifolia-type,Casuarina,6,1
-9602,Casuarina equisetifolia,Casuarina,5,2
-46421,Casuarina-type,Casuarina,3,1
-40018,Catha-type (C. edulis),Catha-type,32,1
-40017,Catha-type,Catha-type,18,1
-47910,Catunaregam-type,Catunaregam-type,1,1
-45939,Caucanthus-type,Caucanthus-type,14,3
-37910,cf. Cayratia,Cayratia,1,1
-37417,Cayratia-type,Cayratia-type,4,2
-2249,Cedrus,Cedrus,445,16
-3998,Cedrus atlantica,Cedrus,185,4
-31491,Cedrus cf. C. atlantica,Cedrus,71,1
-31600,cf. Cedrus,Cedrus,1,1
-37710,Ceiba pentandra,Ceiba,156,11
-21801,Ceiba,Ceiba,9,3
-1562,Celastraceae,Celastraceae undiff.,724,51
-29112,Celastraceae undiff.,Celastraceae undiff.,80,10
-44946,Celastrus-type,Celastraceae undiff.,2,1
-2631,cf. Celtis,Celtis,12,1
-49,Celtis,Celtis/Holoptelea,3801,115
-36816,Holoptelea grandis,Celtis/Holoptelea,216,17
-37711,Celtis toka,Celtis/Holoptelea,75,4
-20580,Holoptelea,Celtis/Holoptelea,54,10
-4000,Celtis australis,Celtis/Holoptelea,46,5
-47681,Celtis/Holoptelea (tetraporate),Celtis/Holoptelea,36,1
-46035,Celtis/Holoptelea,Celtis/Holoptelea,33,3
-46870,Celtis africana-type,Celtis/Holoptelea,14,1
-47646,Celtis/Hymenocardia,Celtis/Hymenocardia,22,1
-5322,Ceratonia,Ceratonia,11,3
-31620,cf. Ceratonia,Ceratonia,2,1
-5323,Ceratonia siliqua,Ceratonia siliqua,25,5
-3479,Cercis,Cercis,1,1
-4045,Cercis siliquastrum,Cercis siliquastrum,1,1
-40019,Chaetachme aristata,Hymenocardia/Chaetachme,40,4
-39398,Chaetachme,Hymenocardia/Chaetachme,24,3
-41645,Chaetocarpus-type,Chaetocarpus-type,1,1
-47734,cf. Chamaerops,Chamaerops,1,1
-32538,Chamaerops humilis,Chamaerops humilis,148,3
-47483,Chassalia-type,Chassalia-type,2,1
-40318,Chlorophora,Chlorophora,26,2
-47773,Chouxia,Chouxia,1,1
-40320,Chrozophora brocchiana-type,Chrozophora brocchiana-type,25,1
-37418,Chrysobalanus/Parinari,Chrysobalanus-type,65,5
-41711,Chrysobalanus-type,Chrysobalanus-type,28,2
-1987,Chrysophyllum,Chrysophyllum,79,6
-2436,Chrysophyllum bangweolense-type,Chrysophyllum,16,1
-48033,Chytranthus macrobotrys,Chytranthus macrobotrys,1,1
-43673,Cissampelos mucronata-type,Cissampelos-type,60,3
-36782,Cissampelos,Cissampelos-type,55,6
-43172,Cissampelos cf. C. mucronata,Cissampelos-type,41,2
-43373,Cissampelos-type mucronata,Cissampelos-type,38,5
-36783,Cissampelos-type,Cissampelos-type,20,4
-37713,Cissampelos mucronata,Cissampelos-type,6,3
-43135,Cissampelos-type (C. mucronata),Cissampelos-type,1,1
-2096,Cissus,Cissus-type,141,20
-30021,Cissus-type,Cissus-type,34,6
-43594,Cissus-type quadrangularis,Cissus-type,30,5
-43065,Cissus phymatocarpa-type,Cissus-type,5,1
-43166,Cissus quadrangularis-type,Cissus-type,1,1
-3420,Cistus,Cistus,443,20
-5623,Cistus albidus-type,Cistus,36,1
-56,Citrus,Citrus,5,2
-2424,Clausena,Clausena,99,3
-2425,Clausena anisata,Clausena/Bersama,41,6
-2393,Bersama abyssinica-type,Clausena/Bersama,39,5
-2391,Bersama,Clausena/Bersama,33,8
-41467,Bersama abyssinica,Clausena/Bersama,27,5
-46883,Clausena/Bersama,Clausena/Bersama,1,1
-41468,Cleistanthus-type,Cleistanthus-type,124,4
-40395,Cleistanthus,Cleistanthus-type,31,2
-43374,Cleistanthus-type libericus,Cleistanthus-type,7,1
-43106,Cleistanthus-type (C. libericus),Cleistanthus-type,6,1
-32869,Clerodendrum,Clerodendrum,26,12
-2408,Cliffortia,Cliffortia,617,25
-40125,Cliffortia nitidula,Cliffortia,136,5
-2409,Cliffortia nitidula-type,Cliffortia,86,4
-1750,Clusiaceae,Clusiaceae,5,3
-2354,Clutia,Clutia-type,416,27
-36785,Clutia-type,Clutia-type,4,2
-48016,Clutia abyssinica,Clutia-type,3,1
-44756,Cnestis ferruginea-type,Cnestis-type,4,2
-36787,Cnestis-type,Cnestis-type,1,1
-37649,Cocculus pendulus,Cocculus pendulus-type,8,3
-42702,Cocculus pendulus-type,Cocculus pendulus-type,3,1
-25566,Cochlospermum,Cochlospermum,15,5
-9618,Cocos nucifera,Cocos nucifera-type,17,2
-44758,Cocos nucifera-type,Cocos nucifera-type,1,1
-35973,Coffea,Coffea,5,2
-42703,Cola-type,Cola-type,30,1
-39778,Cola,Cola-type,8,3
-43173,Cola cf. C. cordifolia,Cola-type,7,1
-40032,Colophospermum mopane,Colophospermum mopane,36,2
-2333,Combretaceae,Combretaceae/Melastomataceae,1832,76
-257,Combretaceae/Melastomataceae,Combretaceae/Melastomataceae,393,23
-37447,Combretaceae undiff.,Combretaceae/Melastomataceae,288,10
-1215,Combretaceae/Melastomataceae undiff.,Combretaceae/Melastomataceae,274,5
-1701,Melastomataceae,Combretaceae/Melastomataceae,177,11
-1959,Combretaceae-type,Combretaceae/Melastomataceae,30,2
-24101,Melastomataceae undiff.,Combretaceae/Melastomataceae,5,2
-29848,Combretum,Combretum-type,88,5
-37422,Combretum aculeatum-type,Combretum-type,350,9
-46829,Combretum cf. C. paniculatum,Combretum-type,2,1
-37424,Combretum molle-type,Combretum-type,450,10
-3234,Combretum-type,Combretum-type,31,5
-42707,Combretum-type (C. molle),Combretum-type,8,1
-45969,Combretum-type aculeatum,Combretum-type,12,1
-43578,Combretum-type molle,Combretum-type,73,6
-46020,Combretum-type paniculatum,Combretum-type,1,1
-43375,Commelina-type benghalensis,Commelina-type benghalensis,90,16
-2378,Commiphora,Commiphora-type,461,56
-28520,Commiphora africana,Commiphora-type,5,2
-36932,Commiphora africana-type,Commiphora-type,54,11
-41418,Commiphora edulis subsp. boiviniana-type,Commiphora-type,3,2
-2379,Commiphora edulis-type,Commiphora-type,2,2
-40369,Commiphora-type,Commiphora-type,29,1
-1991,Connaraceae,Connaraceae,61,2
-2170,Copaifera-type,Copaifera-type,1,1
-41460,Coptosperma-type (C. graveolens),Coptosperma-type graveolens,6,1
-43534,Coptosperma-type graveolens,Coptosperma-type graveolens,12,1
-1724,Cordia,Cordia-type,73,18
-40127,Cordia africana-type,Cordia-type,20,10
-43108,Cordia platythyrsa-type,Cordia-type,17,2
-29695,Cordia-type,Cordia-type,22,2
-1605,Coriaria,Coriaria,2,1
-361,Cornus,Cornus,12,5
-4180,Cornus mas-type,Cornus,1,1
-3570,Cornus sanguinea,Cornus,1,1
-40128,Cornus subg. Afrocrania,Cornus,199,14
-40129,Cornus volkensii,Cornus,152,17
-67,Corylus,Corylus,640,24
-1316,Corylus avellana,Corylus,414,12
-3399,Corylus-type,Corylus,3,1
-4194,Cotinus coggygria,Cotinus-type,14,4
-4193,Cotinus-type,Cotinus-type,7,1
-45823,Coula edulis,Coula-type,15,1
-49335,Coula-type,Coula-type,18,1
-69,Crataegus-type,Crataegus-type,21,5
-40035,Craterispermum,Craterispermum,3,1
-36789,Crateva adansonii,Crateva adansonii,8,2
-45949,Crateva-type adansonii,Crateva adansonii,1,1
-40036,Cressa,Cressa-type,1,1
-40038,Cressa-type,Cressa-type,2,2
-40039,Cressa-type (C. cretica),Cressa-type,4,1
-37656,Crossopteryx,Crossopteryx-type,15,1
-42709,Crossopteryx febrifuga,Crossopteryx-type,40,1
-37657,Crossopteryx-type,Crossopteryx-type,16,4
-47371,Crossopteryx-type febrifuga,Crossopteryx-type,8,1
-1925,Croton-type,Jatropha/Croton,465,37
-1770,Croton,Jatropha/Croton,462,30
-40083,Neoboutonia,Jatropha/Croton,321,14
-43653,Croton/Neoboutonia,Jatropha/Croton,42,4
-40144,Neoboutonia-type,Jatropha/Croton,21,4
-43123,Neoboutonia-type (N. melleri),Jatropha/Croton,5,1
-48018,Neoboutonia macrocalyx,Jatropha/Croton,4,1
-43595,Crudia-type gabonensis,Crudia-type,97,2
-39451,Crudia-type (C. zenkeri),Crudia-type,16,2
-36790,Crudia,Crudia-type,15,3
-36791,Crudia-type,Crudia-type,11,3
-44760,Cryptosepalum-type,Cryptosepalum-type,1,1
-1630,Cunoniaceae,Cunoniaceae,12,2
-72,Cupressaceae,Cupressaceae undiff.,308,14
-72,Cupressaceae,Cupressaceae undiff.,159,2
-534,Cupressaceae undiff.,Cupressaceae undiff.,158,2
-1476,Cupressus,Cupressaceae undiff.,134,5
-45803,Cupressus lusitanica,Cupressaceae undiff.,17,1
-2375,Schefflera,Cussonia/Schefflera,419,18
-2377,Schefflera myriantha-type,Cussonia/Schefflera,245,8
-36792,Cussonia,Cussonia/Schefflera,222,19
-43657,Cussonia/Schefflera,Cussonia/Schefflera,48,4
-43109,Cussonia arborea-type,Cussonia/Schefflera,28,1
-2376,Schefflera abyssinica-type,Cussonia/Schefflera,25,5
-40132,Cussonia-type,Cussonia/Schefflera,14,2
-46253,Schefflera volkensii,Cussonia/Schefflera,6,1
-9795,Schefflera-type,Cussonia/Schefflera,4,3
-37786,Cuviera,Cuviera,7,1
-44764,Cylicodiscus,Cylicodiscus,6,2
-47257,Cylicomorpha,Cylicomorpha,19,1
-40335,Cynometra-type,Cynometra-type,50,3
-39780,Cynometra,Cynometra-type,1,1
-43066,Cyphostemma-type (C. cyphopetalum),Cyphostemma-type,23,1
-36934,Cyphostemma-type,Cyphostemma-type,17,4
-4210,Cytisus-type,Cytisus-type,14,2
-39456,Dacryodes-type,Dacryodes-type,87,6
-29194,Dalbergia,Dalbergia,17,5
-1833,Dalechampia,Dalechampia,2,1
-40496,Daniellia,Daniellia,2,1
-2680,Daphne,Daphne/Thymelaea,81,14
-32679,Daphne gnidium,Daphne/Thymelaea,31,5
-4214,Daphne/Thymelaea,Daphne/Thymelaea,2,1
-48031,cf. Dasylepis,Dasylepis,14,1
-40498,Deinbollia,Deinbollia,15,1
-37787,Delonix,Delonix,12,2
-40500,Desplatsia,Desplatsia,4,1
-29011,Detarioideae,Detarioideae,10,1
-37426,Detarium,Detarium,284,14
-43110,Detarium senegalense-type,Detarium,1,1
-40199,cf. Dialium,Dialium,20,1
-36936,Dialium,Dialium-type,49,8
-47774,Dialium-type,Dialium-type,1,1
-46025,Dialium guineense,Dialium-type,1,1
-43886,Dichapetalum,Dichapetalum,1,1
-44867,Dichostemma glaucescens-type,Dichostemma glaucescens-type,3,1
-37427,Dichrostachys,Dichrostachys-type,67,10
-37716,Dichrostachys cinerea,Dichrostachys-type,18,3
-43111,Dichrostachys cinerea-type,Dichrostachys-type,8,4
-45971,Dichrostachys-type,Dichrostachys-type,1,1
-40042,Didelotia-type,Didelotia-type,5,2
-852,Diospyros,Diospyros-type,855,66
-79,Diospyros-type,Diospyros-type,4,3
-20598,Dipterocarpaceae,Dipterocarpaceae,74,5
-40044,Distemonanthus benthamianus,Distemonanthus benthamianus-type,3,1
-44868,Distemonanthus benthamianus-type,Distemonanthus benthamianus-type,1,1
-36982,Dobera,Dobera,27,3
-47775,Dobera glabra-type,Dobera,1,1
-80,Dodonaea,Dodonaea,528,32
-20639,Dodonaea viscosa,Dodonaea,456,19
-2433,Dodonaea viscosa-type,Dodonaea,181,6
-45804,Dodonaea viscosa var. angustifolia,Dodonaea,58,1
-35988,Dombeya,Dombeya-type,501,36
-2437,Dombeya-type,Dombeya-type,176,18
-43174,Dombeya cf. D. buetnerii,Dombeya-type,4,1
-47649,Dorstenia kameruniana,Dorstenia kameruniana,1,1
-40045,Dovyalis,Dovyalis,4,1
-43379,Dracaena afromontana-type,Dracaena afromontana-type,1,1
-9632,Drypetes,Drypetes-type,73,8
-36797,Drypetes-type,Drypetes-type,8,1
-36941,Drypetes-type (D. gossweileri),Drypetes-type,2,1
-9937,Dypsis,Dypsis,10,2
-2352,Ebenaceae,Ebenaceae undiff.,80,10
-42710,Ebenaceae undiff.,Ebenaceae undiff.,14,2
-43601,Ehretia cymosa,Ehretia cymosa,51,1
-2363,Ekebergia-type,Ekebergia-type,157,13
-40133,Ekebergia,Ekebergia-type,89,8
-40134,Ekebergia-type (E. capensis),Ekebergia-type,25,3
-43624,Ekebergia-type capensis,Ekebergia-type,2,1
-37429,Elaeis guineensis,Elaeis,493,30
-37428,Elaeis,Elaeis,13,3
-1601,Elaeocarpaceae,Elaeocarpaceae,23,1
-2758,Elaeocarpus,Elaeocarpaceae,9,2
-36798,Embelia-type,Embelia-type,140,1
-36945,Embelia-type (E. schimperi),Embelia-type,68,1
-3315,Embelia,Embelia-type,3,2
-1026,Empetrum-type,Empetrum-type,44,1
-40135,Englerina,Englerina,7,2
-40181,Englerophytum,Englerophytum,85,7
-37680,Entada,Prosopis/Entada,48,8
-2367,Entada-type,Prosopis/Entada,151,16
-44869,Entada gigas,Prosopis/Entada,3,1
-36800,Entandrophragma-type,Entandrophragma-type,11,4
-36799,Entandrophragma,Entandrophragma-type,7,4
-3578,Ephedra fragilis-type,Ephedra undiff.,442,17
-366,Ephedra,Ephedra undiff.,348,30
-87,Ephedra undiff.,Ephedra undiff.,178,2
-3572,Ephedra distachya-type,Ephedra undiff.,169,15
-3422,Ephedra fragilis,Ephedra undiff.,153,8
-3421,Ephedra distachya,Ephedra undiff.,15,2
-32750,Ephedra alata,Ephedra undiff.,12,1
-43583,Ephedra fragilis-type (smooth),Ephedra undiff.,5,1
-4273,Ephedra cf. E. fragilis,Ephedra undiff.,1,1
-4274,Ephedra cf. E. distachya,Ephedra undiff.,1,1
-40349,Ephippiandra,Ephippiandra,10,2
-92,Ericaceae,Ericaceae undiff.,2819,95
-909,Ericaceae undiff.,Ericaceae undiff.,1038,16
-4255,Erica arborea-type,Ericaceae undiff.,685,13
-2903,Erica,Ericaceae undiff.,554,13
-4250,Erica arborea,Ericaceae undiff.,459,10
-47319,Erica-type arborea,Ericaceae undiff.,41,1
-22585,Erica-type,Ericaceae undiff.,15,1
-4261,Erica undiff.,Ericaceae undiff.,7,1
-45466,Eriocoelum macrocarpum-type,Eriocoelum-type,27,1
-45824,Eriocoelum-type,Eriocoelum-type,1,1
-1997,Erythrina,Erythrina,20,6
-36804,Erythrococca-type,Erythrococca-type,74,9
-36803,Erythrococca,Erythrococca-type,58,8
-36806,Erythrococca-type (type 4),Erythrococca-type,57,1
-36805,Erythrococca-type (type 3),Erythrococca-type,42,1
-37717,Erythrococca africana,Erythrococca-type,8,2
-39781,Erythrophleum,Erythrophleum-type,27,2
-44870,Erythrophleum-type,Erythrophleum-type,1,1
-1999,Erythroxylaceae,Erythroxylaceae,15,1
-43996,Erythroxylum-type,Erythroxylaceae,2,1
-1998,Erythroxylum,Erythroxylaceae,1,1
-2351,Euclea,Euclea-type,924,55
-47682,Euclea-type,Euclea-type,8,1
-20591,Syzygium,Eugenia/Syzygium,1226,46
-2368,Syzygium-type,Eugenia/Syzygium,828,24
-36807,Eugenia/Syzygium,Eugenia/Syzygium,165,2
-1133,Eugenia-type,Eugenia/Syzygium,54,4
-45534,Syzygium guineense,Eugenia/Syzygium,16,3
-43126,Syzygium-type guineense,Eugenia/Syzygium,14,1
-102,Eugenia,Eugenia/Syzygium,13,4
-43441,Euphorbia-type umbellata,Euphorbia-type umbellata,5,3
-39578,Excoecaria,Excoecaria,13,1
-47372,Fadogia-type,Fadogia-type,2,2
-36946,Fagaropsis,Fagaropsis,2,1
-36947,Fagaropsis angolensis,Fagaropsis,1,1
-36948,Fagaropsis-type (F. angolensis),Fagaropsis,1,1
-32818,Fagonia,Fagonia,14,6
-107,Fagus,Fagus,270,12
-1320,Fagus sylvatica,Fagus,294,9
-43113,Faidherbia albida,Faidherbia albida,24,2
-40171,Farsetia,Farsetia,9,1
-36808,Faurea,Faurea/Allophylus,179,13
-36809,Faurea-type,Faurea/Allophylus,161,2
-43656,Faurea/Allophylus,Faurea/Allophylus,155,6
-29514,Ficalhoa,Ficalhoa,86,7
-36950,Ficalhoa-type (F. laurifolia),Ficalhoa,1,1
-1727,Ficus,Ficus,979,71
-4289,Ficus carica,Ficus,62,7
-47776,Filicium,Filicium,2,1
-43137,Flabellariopsis acuminata,Flabellariopsis-type,18,1
-43439,Flabellariopsis-type,Flabellariopsis-type,12,3
-36810,Flacourtia,Flacourtia,11,5
-29162,Fleroya rubrostipulata-type,Fleroya rubrostipulata-type,22,2
-25479,Flueggea,Flueggea-type,7,2
-47320,Flueggea virosa,Flueggea-type,5,2
-43068,Flueggea virosa-type,Flueggea-type,28,4
-43579,Flueggea-type,Flueggea-type,6,1
-43580,Flueggea-type virosa,Flueggea-type,21,2
-2322,Frangula alnus,Frangula alnus,5,1
-369,Fraxinus,Fraxinus-type,511,18
-32842,Fraxinus angustifolia-type,Fraxinus-type,90,2
-3579,Fraxinus excelsior,Fraxinus-type,72,7
-4301,Fraxinus excelsior-type,Fraxinus-type,397,11
-3580,Fraxinus ornus,Fraxinus-type,662,18
-32843,Fraxinus ornus-type,Fraxinus-type,8,2
-114,Fraxinus undiff.,Fraxinus-type,23,2
-32845,Fraxinus xanthoxyloides-type,Fraxinus-type,5,1
-23545,Fraxinus-type,Fraxinus-type,3,1
-5489,Fumana,Fumana,3,3
-37789,Gaertnera,Gaertnera,14,2
-41627,Gaertnera paniculata-type,Gaertnera,61,4
-40350,Gagnebina,Gagnebina,5,2
-2418,Galiniera,Galiniera-type,90,7
-41422,Galiniera coffeoides,Galiniera-type,25,3
-42714,Galiniera saxifraga,Galiniera-type,1,1
-2419,Galiniera saxifraga-type,Galiniera-type,44,1
-37660,Galiniera-type,Galiniera-type,4,1
-45943,Galiniera-type saxifraga,Galiniera-type,13,1
-9965,Ganophyllum,Ganophyllum,24,3
-40048,Ganophyllum giganteum,Ganophyllum,11,2
-40049,Ganophyllum-type (G. giganteum),Ganophyllum,15,2
-2386,Garcinia,Garcinia,8,5
-43069,Garcinia quadrifaria-type,Garcinia,2,2
-43115,Garcinia staudtii-type,Garcinia,1,1
-2387,Garcinia volkensii-type,Garcinia,6,3
-9645,Gardenia,Gardenia undiff.,51,4
-37661,Gardenia imperialis,Gardenia undiff.,20,5
-47373,Gardenia ternifolia var. jovis-tonantis,Gardenia undiff.,1,1
-37690,Gardenia undiff.,Gardenia undiff.,1,1
-47364,Gardenia-type imperialis,Gardenia undiff.,4,2
-40264,Gardenieae,Gardenieae,7,3
-4316,Genista,Genista-type,10,1
-3449,Genista-type,Genista-type,175,15
-41646,Gilbertiodendron,Gilbertiodendron-type,14,1
-41648,Gilbertiodendron-type,Gilbertiodendron-type,18,1
-41649,Gilbertiodendron-type (G. mayombense),Gilbertiodendron-type,1,1
-43602,Gilbertiodendron-type mayombense,Gilbertiodendron-type,14,1
-47673,Glenniea,Glenniea,3,1
-36812,Gnidia,Gnidia-type,28,4
-36813,Gnidia-type,Gnidia-type,106,2
-36953,Gnidia-type (G. glauca),Gnidia-type,56,1
-5255,Gossypium,Gossypium,2,1
-20571,Grewia,Grewia-type,372,38
-37718,Grewia-type,Grewia-type,41,7
-45301,Grewia-type tenax,Grewia-type,21,2
-41631,Guibourtia-type (G. demeusei),Guibourtia-type,10,2
-45467,Guibourtia-type demeusei,Guibourtia-type,57,1
-47322,Guiera senegalensis,Guiera senegalensis,39,1
-37735,Gymnosporia,Gymnosporia,41,5
-37736,Gymnosporia senegalensis,Gymnosporia,14,3
-45403,Gymnosporia-type senegalensis,Gymnosporia,12,2
-39406,Gyrocarpus,Gyrocarpus,3,1
-36955,Haematostaphis barteri,Haematostaphis barteri,10,2
-36956,Haematostaphis-type (H. barteri),Haematostaphis barteri,2,1
-2410,Hagenia,Hagenia,583,22
-2411,Hagenia abyssinica,Hagenia,1027,35
-3125,Hamamelidaceae,Hamamelidaceae,16,1
-39783,Hannoa,Hannoa,3,1
-47841,Harrisonia-type,Harrisonia-type,1,1
-2359,Harungana,Harungana,108,15
-36957,Harungana madagascariensis,Harungana,15,3
-36958,Harungana madagascariensis-type,Harungana,7,3
-2684,Hedera,Hedera,277,16
-4367,Hedera helix,Hedera,213,8
-40416,Heteromorpha,Heteromorpha-type,92,3
-46026,Heteromorpha-type,Heteromorpha-type,1,1
-2009,Heteropterys,Heteropterys,2,2
-44873,Hevea brasiliensis,Hevea brasiliensis,9,2
-1732,Hibiscus,Hibiscus-type,27,8
-37666,Hibiscus-type,Hibiscus-type,7,3
-41713,Hibiscus-type (H. micranthus),Hibiscus-type,3,1
-45312,Hibiscus-type micranthus,Hibiscus-type,3,1
-3555,Hippocastanoideae,Hippocastanoideae,6,1
-3574,Hippocratea,Hippocratea-type,10,6
-9668,Hippocratea-type,Hippocratea-type,1,1
-2677,Hippophaë,Hippophaë,49,2
-1306,Hippophaë rhamnoides,Hippophaë,2,2
-3325,Homalium,Homalium,29,3
-43615,Hua gabonii,Hua gabonii,1,1
-44874,Hugonia,Hugonia,14,2
-43590,Hugonia-type platysepala,Hugonia,2,1
-43162,Hylodendron gabunense,Hylodendron gabunense,6,1
-2360,Hymenocardia,Hymenocardia/Chaetachme,585,37
-40056,Hymenocardia acida,Hymenocardia/Chaetachme,1,1
-40057,Hymenocardia acida-type,Hymenocardia/Chaetachme,55,6
-45468,Hymenocardia-type ulmoides,Hymenocardia/Chaetachme,6,1
-47845,Hymenocardia/Chaetachme,Hymenocardia/Chaetachme,30,1
-2422,Hymenodictyon,Hymenodictyon-type,95,7
-2423,Hymenodictyon floribundum-type,Hymenodictyon-type,42,2
-40058,Hymenodictyon-type,Hymenodictyon-type,76,2
-41430,Hymenodictyon-type (H. floribundum),Hymenodictyon-type,29,3
-43382,Hymenodictyon-type floribundum,Hymenodictyon-type,54,5
-39428,Hymenostegia,Hymenostegia-type,1,1
-39429,Hymenostegia-type,Hymenostegia-type,2,2
-43596,Hymenostegia-type pellegrini,Hymenostegia-type,50,1
-44890,Hyperacanthus,Hyperacanthus,2,1
-2523,Hyphaene,Hyphaene-type,216,11
-2524,Hyphaene cf. H. thebaica,Hyphaene-type,1,1
-46064,Hyphaene thebaica,Hyphaene-type,1,1
-40360,Hyphaene-type,Hyphaene-type,57,4
-3194,Hyptis,Hyptis-type,47,5
-3058,Hyptis-type,Hyptis-type,29,4
-37793,Icacinaceae,Icacinaceae,117,6
-49328,Icacinaceae undiff.,Icacinaceae,9,1
-135,Ilex,Ilex,671,34
-4406,Ilex aquifolium,Ilex,123,8
-2372,Ilex mitis,Ilex,731,33
-48011,Illigera,Illigera,11,1
-29798,Indigofera,Indigofera-type,341,39
-47568,Indigofera schimperi-type,Indigofera-type,8,1
-29799,Indigofera-type,Indigofera-type,12,3
-45951,Indigofera-type schimperi,Indigofera-type,5,1
-37796,Iodes,Iodes,23,4
-36818,Irvingia,Irvingia-type,1,1
-39432,Irvingia wombolu,Irvingia-type,5,1
-36819,Irvingia-type,Irvingia-type,78,5
-43118,Irvingia-type (I. gabonensis),Irvingia-type,2,1
-39434,Irvingia-type (I. wombolu),Irvingia-type,4,1
-43612,Irvingia-type gabonensis,Irvingia-type,53,2
-36817,Irvingiaceae,Irvingiaceae,54,5
-42719,Irvingiaceae undiff.,Irvingiaceae,21,1
-36959,Isoberlinia,Isoberlinia-type,62,5
-36960,Isoberlinia-type,Isoberlinia-type,59,9
-2010,Ixora,Ixora-type,62,4
-20676,Ixora-type,Ixora-type,97,4
-36962,Ixora-type (I. brachypoda),Ixora-type,3,1
-47436,Ixora-type brachypoda,Ixora-type,1,1
-48017,Jasminum abyssinicum,Jasminum abyssinicum-type,3,1
-43383,Jasminum abyssinicum-type,Jasminum abyssinicum-type,1,1
-3195,Jatropha,Jatropha/Croton,1,1
-45826,Jatropha-type,Jatropha/Croton,5,2
-40370,Jatropha/Croton,Jatropha/Croton,1,1
-39408,Jatropha/Givotia,Jatropha/Croton,10,1
-372,Juglans,Juglans,132,12
-2664,Juglans regia,Juglans,22,8
-40059,Julbernardia,Julbernardia,16,3
-43384,Julbernardia paniculata-type,Julbernardia,2,1
-43603,Julbernardia seretii-type,Julbernardia,15,1
-43428,Julbernardia type 1,Julbernardia,67,3
-43438,Julbernardia type 2,Julbernardia,57,3
-983,Juniperus,Juniperus-type,906,33
-363,Juniperus-type,Juniperus-type,588,14
-40060,Juniperus procera,Juniperus-type,305,8
-45935,Juniperus procera-type,Juniperus-type,138,1
-45802,Juniperus cf. J. procera,Juniperus-type,65,1
-45970,Juniperus excelsa,Juniperus-type,26,1
-4416,Juniperus communis,Juniperus-type,5,1
-4418,Juniperus sabina,Juniperus-type,2,1
-43419,Justicia-type odora,Justicia-type odora,24,7
-29163,Keetia,Keetia,4,1
-2416,Keetia gueinzii-type,Keetia,78,3
-36821,Keetia-type (K. cornelia),Keetia,14,1
-36965,Keetia-type (K. venosa),Keetia,1,1
-43386,Keetia-type gueinzii,Keetia,2,1
-36823,Khaya,Khaya-type,36,6
-36824,Khaya-type,Khaya-type,17,3
-47767,Khaya-type senegalensis,Khaya-type,2,1
-40202,Kigelia,Kigelia,3,1
-43119,Kigelia africana,Kigelia,4,1
-40066,Kiggelaria,Kiggelaria,39,4
-40067,Kiggelaria africana,Kiggelaria,103,5
-40204,Kirkia,Kirkia,69,4
-36826,Klaineanthus gaboniae,Klaineanthus gaboniae,21,5
-36966,Kohautia,Kohautia,155,19
-36827,Landolphia,Landolphia-type,4,2
-36828,Landolphia-type,Landolphia-type,23,10
-36829,Landolphia-type (type 3),Landolphia-type,4,1
-20585,Lannea,Lannea-type,120,17
-2347,Lannea-type,Lannea-type,640,33
-37730,Lannea/Sclerocarya,Trichoscypha/Sclerocarya,219,11
-43442,Lantana-type viburnoides,Lantana-type viburnoides,3,3
-40364,Lasianthus,Lasianthus,44,3
-2640,Lauraceae,Lauraceae,19,2
-5305,Laurus,Laurus,3,2
-5306,Laurus nobilis,Laurus,1,1
-40389,Lawsonia,Lawsonia,10,2
-45307,Lawsonia-type inermis,Lawsonia,1,1
-41694,Lecaniodiscus cupanioides,Lecaniodiscus-type,2,1
-41693,Lecaniodiscus-type,Lecaniodiscus-type,1,1
-41695,Lecaniodiscus-type (L. cupanioides),Lecaniodiscus-type,1,1
-45469,Lecaniodiscus-type cupanioides,Lecaniodiscus-type,43,1
-36831,Lecaniodiscus/Lepisanthes senegalensis,Lecaniodiscus-type,1,1
-47492,Leea guineensis,Leea guineensis,23,1
-36781,cf. Leonardoxa,Leonardoxa-type,1,1
-45827,Leonardoxa-type,Leonardoxa-type,5,1
-28517,Lepisanthes,Lepisanthes,14,4
-28518,Lepisanthes senegalensis,Lepisanthes,2,1
-36757,Lepisanthes-type (L. senegalensis),Lepisanthes,3,3
-43360,Lepisanthes-type senegalensis,Lepisanthes,6,4
-40529,Leptactina,Leptactina,10,2
-40070,Leptaulus,Leptaulus,4,3
-48034,Leptaulus daphnoides,Leptaulus,1,1
-38556,Leucosidea,Leucosidea,17,2
-858,Ligustrum,Ligustrum-type,42,5
-4435,Ligustrum-type,Ligustrum-type,1,1
-36836,Lindackeria,Lindackeria-type,1,1
-36837,Lindackeria-type,Lindackeria-type,2,1
-37921,Linociera,Linociera,9,4
-36838,Lippia,Lippia-type,4,2
-36839,Lippia-type,Lippia-type,6,2
-44877,Loesenera-type,Loesenera-type,45,2
-36840,Lonchocarpus,Lonchocarpus-type,28,4
-45537,Lonchocarpus sericeus,Lonchocarpus-type,17,1
-47472,Lonchocarpus-type,Lonchocarpus-type,6,1
-164,Lonicera,Lonicera-type,23,3
-3708,Lonicera-type,Lonicera-type,4,1
-36841,Lophira,Lophira-type,175,11
-37756,Lophira alata,Lophira-type,69,5
-43070,Lophira lanceolata-type,Lophira-type,17,2
-49325,Lophira-type,Lophira-type,26,1
-776,Loranthaceae,Loranthaceae,187,30
-1621,Loranthaceae undiff.,Loranthaceae,28,4
-3583,Loranthus,Loranthus,11,5
-4474,Loranthus europaeus,Loranthus,15,4
-47256,Lovoa,Lovoa,28,1
-1587,Lycium,Lycium,54,6
-9701,Macaranga,Macaranga-type,1980,71
-38494,Macaranga capensis,Macaranga-type,217,8
-46250,Macaranga kilimandscharica,Macaranga-type,1,1
-46882,Macaranga monandra,Macaranga-type,1,1
-2355,Macaranga-type,Macaranga-type,1001,17
-47489,Machaerium lunatum-type,Machaerium lunatum-type,3,1
-20932,Maclura,Maclura,11,2
-43133,Macrosphyra-type,Macrosphyra-type,11,1
-28523,Maerua,Maerua/Ritchiea,125,11
-46023,Maerua crassifolia,Maerua/Ritchiea,3,3
-2349,Maerua-type,Maerua/Ritchiea,73,12
-49117,Maerua-type crassifolia,Maerua/Ritchiea,1,1
-37670,Maerua/Ritchiea,Maerua/Ritchiea,8,5
-47101,Maerva-type,Maerva-type,7,1
-2398,Maesa,Maesa-type,306,14
-40074,Maesa lanceolata,Maesa-type,15,3
-2399,Maesa lanceolata-type,Maesa-type,126,11
-40073,Maesa-type,Maesa-type,1,1
-40075,Maesa-type (M. lanceolata),Maesa-type,54,1
-36971,Maesobotrya barteri-type,Maesobotrya barteri-type,3,1
-45676,Maesopsis,Maesopsis-type,3,1
-47651,Maesopsis eminii,Maesopsis-type,2,1
-43933,Maesopsis-type,Maesopsis-type,9,1
-47672,Majidea,Majidea,2,1
-3329,Mallotus,Mallotus/Tabernaemontana,116,10
-36972,Mallotus oppositifolius,Mallotus/Tabernaemontana,11,1
-36842,Mallotus-type,Mallotus/Tabernaemontana,149,5
-36973,Mallotus-type (M. oppositifolius),Mallotus/Tabernaemontana,88,3
-49332,Mallotus/Tabernaemontana,Mallotus/Tabernaemontana,24,1
-1720,Malpighiaceae,Malpighiaceae,9,3
-47356,Mangifera indica,Mangifera indica,2,1
-37799,Manilkara,Manilkara-type,51,4
-40080,Manilkara-type,Manilkara-type,8,2
-43071,Mansonia altissima-type,Mansonia-type,3,2
-47494,Mansonia-type,Mansonia-type,19,1
-2024,Maprounea,Maprounea,23,4
-41775,Maranthes-type,Maranthes-type,32,2
-36975,Mareya-type,Mareya-type,7,2
-2466,Margaritaria,Margaritaria,18,2
-36843,Margaritaria discoidea,Margaritaria,63,6
-43530,Margaritaria-type discoidea,Margaritaria,53,2
-40205,Markhamia,Markhamia,7,2
-48914,Markhamia zanzibarica-type,Markhamia,1,1
-43599,Martretia,Martretia,85,3
-43616,Martretia quadricornis,Martretia,21,2
-1622,Maytenus,Maytenus,303,22
-43193,Maytenus-type,Maytenus,22,1
-2364,Meliaceae,Meliaceae/Sapotaceae,128,19
-3288,Meliaceae undiff.,Meliaceae/Sapotaceae,70,8
-779,Meliaceae/Sapotaceae,Meliaceae/Sapotaceae,48,4
-30444,Melochia,Melochia,3,2
-29036,Mendoncia,Mendoncia,1,1
-47495,Mezoneuron-type,Mezoneuron-type,1,1
-47420,Microdesmis,Microdesmis,4,1
-43122,Milicia-type excelsa,Milicia-type excelsa,28,2
-37758,Millettia,Millettia-type,1,1
-47473,Millettia-type,Millettia-type,8,1
-786,Mimosa,Mimosa,42,7
-37737,Mimosa pigra,Mimosa,33,5
-39458,Mimosa pigra-type,Mimosa,15,4
-41714,Mimosa-type (M. pigra),Mimosa,3,1
-44865,Mimosa-type pigra,Mimosa,7,2
-29012,mimosoid clade,mimosoid clade,130,19
-29018,mimosoid clade undiff.,mimosoid clade,12,3
-2525,Mimusops,Mimusops-type,83,6
-47652,Mimusops kummel,Mimusops-type,1,1
-37922,Mimusops-type,Mimusops-type,17,2
-29159,Mitragyna,Mitragyna-type,187,19
-36850,Mitragyna inermis,Mitragyna-type,11,1
-37431,Mitragyna inermis-type,Mitragyna-type,121,4
-45527,Mitragyna ledermannii,Mitragyna-type,11,1
-37739,Mitragyna stipulosa,Mitragyna-type,12,1
-37740,Mitragyna stipulosa-type,Mitragyna-type,42,3
-37738,Mitragyna-type,Mitragyna-type,15,3
-36851,Mitragyna-type (M. inermis),Mitragyna-type,103,4
-41425,Mitragyna-type (M. rubrostipulata),Mitragyna-type,45,4
-47558,Mitragyna-type inermis,Mitragyna-type,43,1
-43416,Mitragyna-type rubrostipulata,Mitragyna-type,82,6
-43611,Mitragyna-type stipulosa,Mitragyna-type,12,1
-40390,Mitriostigma,Mitriostigma,1,1
-40343,Monimia-type,Monimia-type,11,1
-2768,Monimiaceae,Monimiaceae,3,2
-40173,Monotes,Monotes,2,1
-43178,Monotes lutambensis,Monotes,20,1
-40478,Montiniaceae,Montiniaceae,3,1
-185,Moraceae,Urticaceae/Moraceae,697,44
-1910,Moraceae (diporate),Urticaceae/Moraceae,16,3
-2026,Moraceae (triporate),Urticaceae/Moraceae,2,1
-874,Moraceae undiff.,Urticaceae/Moraceae,181,11
-40210,Moraceae-type,Urticaceae/Moraceae,25,1
-36853,Morelia senegalensis,Morelia senegalensis,178,18
-34570,Morella,Morella,444,9
-37931,Morella cf. M. kandtiana,Morella,3,1
-37929,Morella cf. M. salicifolia,Morella,1,1
-37926,Morella salicifolia,Morella,61,3
-25491,Morinda,Morinda,1,1
-44878,Morinda lucida,Morinda,1,1
-186,Morus,Morus,73,10
-1507,Morus-type,Morus,35,2
-36977,Musanga,Musanga-type,36,5
-36978,Musanga-type,Musanga-type,48,4
-43654,Musanga/Myrianthus,Musanga/Myrianthus,19,3
-37800,Mussaenda,Mussaenda-type,11,4
-44879,Mussaenda-type,Mussaenda-type,3,2
-38534,cf. Myrianthus,Musanga/Myrianthus,13,1
-36979,Myrianthus,Musanga/Myrianthus,33,3
-36980,Myrianthus arboreus,Musanga/Myrianthus,7,1
-2395,Myrianthus holstii-type,Musanga/Myrianthus,50,1
-37741,Myrianthus serratus,Musanga/Myrianthus,2,2
-2394,Myrianthus-type,Musanga/Myrianthus,77,5
-36981,Myrianthus-type (M. arboreus),Musanga/Myrianthus,45,3
-40082,Myrianthus-type (M. holstii),Musanga/Myrianthus,183,2
-43608,Myrianthus-type arboreus,Musanga/Myrianthus,12,1
-43388,Myrianthus-type holstii,Musanga/Myrianthus,18,3
-383,Myrica,Myricaceae,2084,81
-381,Myricaceae,Myricaceae,25,2
-379,Myrica-type,Myricaceae,24,1
-381,Myricaceae,Myricaceae,8,1
-45025,Myrothamnus,Myrothamnus,29,1
-254,Myrsine,Myrsine,338,16
-36854,Myrsine africana,Myrsine,63,9
-883,Myrtaceae,Myrtaceae,588,37
-380,Myrtaceae undiff.,Myrtaceae undiff.,18,3
-4557,Myrtus communis,Myrtus/Eucalyptus,316,11
-4556,Myrtus,Myrtus/Eucalyptus,92,7
-1249,Eucalyptus,Myrtus/Eucalyptus,90,20
-5488,Myrtus/Eucalyptus,Myrtus/Eucalyptus,6,1
-2866,Eucalyptus-type,Myrtus/Eucalyptus,1,1
-47497,Napoleona-type,Napoleona-type,4,1
-37673,Nauclea,Nauclea-type,74,4
-45528,Nauclea latifolia,Nauclea-type,6,1
-39601,Nauclea-type,Nauclea-type,16,3
-40271,Naucleeae,Naucleeae,1,1
-5248,Nerium,Nerium,4,1
-5524,Nerium oleander,Nerium,2,2
-39791,Nesogordonia,Nesogordonia,25,3
-47527,Newbouldia laevis,Newbouldia laevis,1,1
-43652,Newtonia-type,Newtonia-type,12,1
-5247,Nitraria,Nitraria,2,1
-39413,Noronhia,Noronhia,27,3
-29516,Nuxia,Nuxia-type,188,11
-36984,Nuxia congesta,Nuxia-type,167,6
-43665,Nuxia floribunda,Nuxia-type,4,2
-36855,Nuxia-type,Nuxia-type,178,5
-36985,Nuxia-type (N. congesta),Nuxia-type,70,3
-36983,Nuxia/Dobera,Nuxia/Dobera,52,6
-2362,Nuxia/Ficalhoa,Nuxia/Ficalhoa,462,5
-39605,Nypa,Nypa,2,1
-3254,Ochnaceae,Ochnaceae undiff.,1,1
-29555,Ochnaceae undiff.,Ochnaceae undiff.,2,1
-45839,Ochthocosmus,Ochthocosmus,6,1
-29155,Ocotea,Ocotea,59,3
-44880,Octolobus,Octolobus,1,1
-29849,Olacaceae,Olacaceae,2,1
-29851,Olacaceae undiff.,Olacaceae,18,1
-40413,Olax,Olax,6,2
-46242,Olax dissitiflora,Olax,4,1
-43421,Oldfieldia-type,Oldfieldia-type,3,2
-2338,Olea,Olea/Phillyrea,3280,90
-3425,Phillyrea,Olea/Phillyrea,1032,28
-36856,Olea capensis,Olea/Phillyrea,989,21
-2401,Olea capensis-type,Olea/Phillyrea,899,10
-4582,Olea europaea,Olea/Phillyrea,404,14
-37933,Olea europaea subsp. cuspidata,Olea/Phillyrea,328,13
-2402,Olea europaea-type,Olea/Phillyrea,153,7
-37937,Olea capensis subsp. hochstetteri,Olea/Phillyrea,113,6
-5512,Olea-type,Olea/Phillyrea,54,2
-4089,Phillyrea angustifolia,Olea/Phillyrea,30,1
-45972,Olea hochstetteri-type,Olea/Phillyrea,29,2
-43934,Olea welwitschii,Olea/Phillyrea,26,1
-4090,Phillyrea-type,Olea/Phillyrea,12,1
-34325,Olea/Phillyrea,Olea/Phillyrea,7,1
-37934,Olea cf. O. europaea subsp. cuspidata,Olea/Phillyrea,3,1
-37938,Olea cf. O. capensis subsp. hochstetteri,Olea/Phillyrea,2,1
-46125,Olea capensis-type ssp. hochstetteri,Olea/Phillyrea,1,1
-2339,Oleaceae,Oleaceae undiff.,321,22
-674,Oleaceae undiff.,Oleaceae undiff.,47,4
-4583,Oleaceae/Brassicaceae,Oleaceae/Brassicaceae,15,1
-43391,Oligocodon-type cunliffeae,Oligocodon-type cunliffeae,2,1
-40384,Olinia,Olinia,40,3
-45829,Oncoba-type,Oncoba-type,1,1
-39414,Operculicarya,Operculicarya,14,2
-44881,Oricia,Oricia,4,1
-36857,Ormocarpum,Ormocarpum-type,26,4
-36986,Ormocarpum-type,Ormocarpum-type,13,8
-41434,Ormocarpum-type (O. trichocarpum),Ormocarpum-type,1,1
-1237,Ostrya,Ostrya/Carpinus,70,4
-3994,Ostrya carpinifolia/Carpinus orientalis,Ostrya/Carpinus,57,1
-384,Ostrya-type,Ostrya/Carpinus,372,13
-197,Ostrya/Carpinus,Ostrya/Carpinus,127,2
-3588,Ostrya/Carpinus orientalis,Ostrya/Carpinus,275,6
-33349,Osyris,Osyris,1,1
-3253,Ouratea,Ouratea-type,2,1
-3110,Ouratea-type,Ouratea-type,3,2
-47499,Oxyanthus-type,Oxyanthus-type,1,1
-44882,Oxystigma,Oxystigma,1,1
-40148,Ozoroa-type,Ozoroa-type,10,3
-3589,Paliurus,Paliurus,4,2
-37674,Pancovia,Pancovia-type,15,5
-39459,Pancovia-type,Pancovia-type,8,1
-43072,Pancovia-type (P. bijuga),Pancovia-type,3,2
-48015,Panda oleosa,Panda oleosa,3,1
-3340,Pandanus,Pandanus-type,125,12
-45529,Pandanus candelabrum,Pandanus-type,12,2
-44883,Pandanus-type,Pandanus-type,12,2
-36861,Pappea capensis,Pappea capensis,2,2
-43678,Pappea-type capensis,Pappea capensis,3,3
-22673,Parinari,Parinari-type,35,7
-2412,Parinari-type,Parinari-type,156,9
-37769,Parkia,Parkia-type,3,2
-47132,Parkia-type,Parkia-type,4,1
-1583,Parkinsonia,Parkinsonia-type,28,4
-37949,Parkinsonia-type,Parkinsonia-type,2,2
-38555,Passerina,Passerina,482,17
-3255,Passiflora,Passiflora,29,1
-3256,Passifloraceae,Passifloraceae,3,3
-3257,Paullinia,Paullinia-type,38,1
-42733,Paullinia pinnata,Paullinia-type,81,5
-37742,Paullinia-type,Paullinia-type,5,2
-36864,Pausinystalia,Pausinystalia-type,34,2
-36865,Pausinystalia-type,Pausinystalia-type,34,3
-39461,Pausinystalia-type (P. macroceras),Pausinystalia-type,62,4
-45471,Pausinystalia-type macroceras,Pausinystalia-type,116,2
-36866,Pavetta,Pavetta-type,109,14
-48915,Pavetta elliotti-type,Pavetta-type,1,1
-43075,Pavetta gardeniifolia-type,Pavetta-type,15,2
-47133,Pavetta-type,Pavetta-type,1,1
-40212,Peltophorum,Peltophorum,44,4
-40383,Penaeaceae,Penaeaceae,30,1
-29500,Pentaclethra,Pentaclethra,5,1
-41696,Pentaclethra eetveldeana,Pentaclethra,22,3
-36867,Pentaclethra macrophylla,Pentaclethra,60,9
-41650,Pentadesma,Pentadesma,34,5
-40085,Pentas,Pentas-type,1,1
-40086,Pentas-type,Pentas-type,9,4
-46831,Pentodon pentandrus,Pentodon pentandrus,2,1
-37978,Pentzia,Pentzia-type,34,4
-46024,Pentzia monodiana,Pentzia-type,1,1
-37979,Pentzia-type,Pentzia-type,293,7
-5239,Periploca,Periploca,42,3
-39658,Periplocoideae,Periplocoideae,12,5
-36868,Phaulopsis,Phaulopsis-type,2,1
-36987,Phaulopsis-type,Phaulopsis-type,38,1
-43145,Phaulopsis-type (P. imbricata),Phaulopsis-type,2,1
-47781,Philippia comorensis-type,Philippia comorensis-type,9,1
-2403,Phoenix,Phoenix,384,26
-43179,Phoenix cf. P. reclinata,Phoenix,23,1
-37743,Phoenix reclinata,Phoenix,231,16
-2404,Phoenix reclinata-type,Phoenix,69,7
-40385,Phylica,Phylica,98,3
-9842,Phyllanthaceae,Phyllanthaceae,9,1
-43613,Phyllanthus muellerianus-type,Phyllanthaceae,20,1
-37434,Phyllanthus reticulatus,Phyllanthaceae,12,3
-41776,Phyllanthus reticulatus-type,Phyllanthaceae,25,8
-41436,Phyllanthus-type (P. muellerianus),Phyllanthaceae,1,1
-41440,Phyllanthus-type (P. nummulariifolius),Phyllanthaceae,5,3
-41441,Phyllanthus-type (P. reticularus),Phyllanthaceae,2,1
-47135,Phyllanthus-type maderaspatensis,Phyllanthaceae,9,1
-43392,Phyllanthus-type muellerianus,Phyllanthaceae,2,1
-43443,Phyllanthus-type reticulatus,Phyllanthaceae,12,3
-210,Picea,Picea,81,18
-37744,Piliostigma,Piliostigma,112,12
-37745,Piliostigma reticulatum,Piliostigma,2,1
-45302,Piliostigma thonningii,Piliostigma,2,1
-43124,Piliostigma thonningii-type,Piliostigma,2,1
-329,Pinaceae,Pinaceae undiff.,10,3
-329,Pinaceae,Pinaceae undiff.,3,2
-64,Pinaceae undiff.,Pinaceae undiff.,7,3
-385,Pinus,Pinus,1999,69
-4626,Pinus cembra-type,Pinus,1,1
-46070,Pinus cf. P. laricio,Pinus,1,1
-4618,Pinus halepensis,Pinus,29,1
-4630,Pinus halepensis-type,Pinus,157,3
-47051,Pinus laricio-type,Pinus,1,1
-5517,Pinus pinaster-type,Pinus,127,3
-212,Pinus subg. Pinus,Pinus,113,3
-213,Pinus subg. Strobus,Pinus,159,2
-41777,Piptadenia-type,Piptadenia-type,2,1
-43076,Piptadeniastrum,Piptadeniastrum,7,1
-45831,Piptadeniastrum africanum,Piptadeniastrum,7,1
-43078,Piptadeniastrum-type (P. africanum),Piptadeniastrum,3,1
-47136,Piptadeniastrum-type africanum,Piptadeniastrum,12,1
-48035,Piptostigma,Piptostigma,4,1
-388,Pistacia,Pistacia,1381,32
-3427,Pistacia lentiscus,Pistacia,32,2
-2698,Pittosporaceae,Pittosporaceae,5,1
-2784,Pittosporum,Pittosporum,2,1
-39439,Plagiostyles africana,Plagiostyles-type,11,3
-39440,Plagiostyles-type,Plagiostyles-type,3,1
-222,Platanus,Platanus,328,16
-45677,Platycelyphium,Platycelyphium,3,1
-44886,Pleurostylia,Pleurostylia,1,1
-45770,Plicosephalus-type,Plicosephalus-type,1,1
-1628,Podocarpaceae,Podocarpaceae,110,1
-1028,Podocarpus,Podocarpus,4762,124
-43598,Podocarpus latifolius,Podocarpus,50,4
-45531,Podococcus barteri,Podocarpus,8,1
-2374,Polyscias,Polyscias-type,377,18
-2373,Polyscias fulva-type,Polyscias-type,350,18
-35507,Polyscias-type,Polyscias-type,17,2
-46257,Polyscias fulva,Polyscias-type,5,2
-389,Populus,Populus,98,12
-40402,Portulacaria,Portulacaria,1,1
-40391,Pouchetia,Pouchetia,1,1
-39415,Poupartia,Poupartia,1,1
-2089,Pouteria,Pouteria-type,13,4
-36992,Pouteria-type,Pouteria-type,15,3
-1494,Prosopis,Prosopis/Entada,26,7
-46832,Prosopis africana,Prosopis/Entada,1,1
-47768,Prosopis-type africana,Prosopis/Entada,2,2
-37681,Prosopis/Entada,Prosopis/Entada,8,2
-37806,Protea,Proteaceae,79,7
-2407,Protea-type,Proteaceae,145,13
-1667,Proteaceae,Proteaceae,639,21
-1667,Proteaceae,Proteaceae,159,2
-47399,Proteaceae (type IV),Proteaceae,3,1
-47398,Proteaceae (type II),Proteaceae,1,1
-715,Prunus,Prunus-type,515,27
-37960,Prunus africana,Prunus-type,192,19
-2413,Prunus africana-type,Prunus-type,213,7
-15536,Prunus sp.,Prunus-type,27,1
-942,Prunus undiff.,Prunus-type,9,1
-245,Prunus-type,Prunus-type,51,13
-40090,Pseudocedrela kotschyi,Pseudocedrela kotschyi,1,1
-46243,Pseudolachnostylis-type,Pseudolachnostylis-type,10,1
-36870,Pseudospondias,Pseudospondias-type,23,4
-46031,Pseudospondias microcarpa,Pseudospondias-type,3,1
-36871,Pseudospondias-type,Pseudospondias-type,9,2
-36872,Psorospermum,Psorospermum,1,1
-41652,Psorospermum febrifugum-type,Psorospermum,9,3
-3111,Psychotria,Psychotria-type,34,5
-29088,Psychotria-type,Psychotria-type,2,1
-47349,Psychotria-type amboniana,Psychotria-type,10,1
-2417,Psydrax schimperiana-type,Psydrax-type,23,1
-36873,Psydrax subcordata,Psydrax-type,5,2
-40150,Psydrax-type (P. schimperiana),Psydrax-type,56,3
-36993,Psydrax-type (P. subcordata),Psydrax-type,2,1
-43627,Psydrax-type schimperiana,Psydrax-type,15,3
-43591,Psydrax-type subcordata ,Psydrax-type,4,2
-39416,Ptaeroxylon,Ptaeroxylon,10,1
-27355,Pterocarpus,Pterocarpus-type,61,9
-43423,Pterocarpus-type,Pterocarpus-type,1,1
-43610,Pterocarpus-type angolensis,Pterocarpus-type,30,1
-43424,Pterocarpus-type lucens,Pterocarpus-type,8,3
-2667,Pterocarya,Pterocarya,1,1
-37941,Pterolobium,Pterolobium-type,4,3
-43425,Pterolobium stellatum,Pterolobium-type,7,3
-49326,Pterolobium-type,Pterolobium-type,3,1
-36899,Pterygota,Pterygota,1,1
-5193,Punica granatum,Punica granatum,4,2
-36874,Pycnanthus,Pycnanthus,170,17
-45532,Pycnanthus angolensis,Pycnanthus,36,2
-43079,Pycnanthus angolensis-type,Pycnanthus,73,4
-39786,Quassia silvestris,Quassia silvestris,1,1
-251,Quercus,Quercus,336,16
-33687,Quercus (deciduous-type),Quercus,325,2
-2342,Quercus (deciduous),Quercus,31,3
-33688,Quercus (evergreen-type),Quercus,322,2
-2532,Quercus (evergreen),Quercus,24,2
-33682,Quercus canariensis,Quercus,369,4
-44032,Quercus canariensis/Q. pyrenaica,Quercus,206,3
-4713,Quercus cerris-type,Quercus,677,14
-33683,Quercus cf. Q. canariensis,Quercus,109,1
-33685,Quercus cf. Q. rotundifolia,Quercus,110,1
-4716,Quercus coccifera,Quercus,359,5
-3592,Quercus coccifera-type,Quercus,288,5
-33689,Quercus faginea,Quercus,51,1
-4717,Quercus ilex,Quercus,78,2
-2929,Quercus ilex-type,Quercus,890,18
-4726,Quercus ilex/Q. coccifera,Quercus,403,5
-33690,Quercus ilex/Q. coccifera-type,Quercus,54,1
-4714,Quercus pubescens-type,Quercus,804,12
-46362,Quercus pubescens/Q. cerris-type,Quercus,15,1
-3593,Quercus robur-type,Quercus,236,4
-23592,Quercus sp.,Quercus,14,1
-4718,Quercus suber,Quercus,466,5
-4721,Quercus suber-type,Quercus,268,5
-2943,Quercus undiff.,Quercus,367,3
-2529,Randia,Randia,4,3
-1405,Rapanea,Rapanea,748,26
-38508,Rapanea melanophloeos,Rapanea,275,13
-2400,Rapanea melanophloeos-type,Rapanea,197,3
-41778,Raphia,Raphia-type,122,8
-45533,Raphia vinifera,Raphia-type,10,1
-43609,Raphia-type,Raphia-type,71,2
-44887,Raphiostylis,Raphiostylis,5,3
-37807,Rauvolfia,Rauvolfia,41,8
-46244,Rauvolfia caffra,Rauvolfia,8,1
-40346,Ravenea-type,Ravenea-type,8,1
-1950,cf. Rhamnaceae,Rhamnaceae-type,7,1
-256,Rhamnaceae,Rhamnaceae-type,352,42
-256,Rhamnaceae,Rhamnaceae-type,161,2
-1214,Rhamnaceae undiff.,Rhamnaceae-type,48,6
-47292,Rhamnaceae-type,Rhamnaceae-type,1,1
-785,Rhamnus,Rhamnaceae-type,147,18
-3072,Rhamnus-type,Rhamnaceae-type,65,6
-4298,Rhamnus/Paliurus,Rhamnaceae-type,18,1
-39442,Rhaphiostylis,Rhaphiostylis,4,2
-39418,Rhopalopilia,Rhopalopilia,10,1
-260,Rhus,Rhus-type,565,71
-4752,Rhus coriaria-type,Rhus-type,2,1
-45833,Rhus longipes,Rhus-type,11,1
-48019,Rhus rehmanniana var. rehmanniana,Rhus-type,7,1
-9789,Rhus undiff.,Rhus-type,1,1
-27625,Rhus-type,Rhus-type,229,20
-262,Ribes,Ribes-type,1,1
-5651,Ribes-type,Ribes-type,2,1
-40540,Rinorea,Rinorea-type,5,3
-47658,Rinorea-type,Rinorea-type,1,1
-37669,Ritchiea,Maerua/Ritchiea,3,1
-33800,Robinia pseudoacacia,Robinia pseudoacacia,1,1
-843,Rosa,Rosa,17,8
-45942,Rosa abyssinica-type,Rosa,13,1
-733,Rubiaceae,Rubiaceae-type,1348,67
-733,Rubiaceae,Rubiaceae-type,97,2
-266,Rubiaceae undiff.,Rubiaceae-type,292,21
-29147,Rubiaceae-type,Rubiaceae-type,10,1
-267,Rubus,Rubus-type,248,17
-2414,Rubus pinnatus-type,Rubus-type,146,10
-1419,Rubus-type,Rubus-type,54,3
-390,Rutaceae,Rutaceae undiff.,484,28
-390,Rutaceae,Rutaceae undiff.,159,2
-1220,Rutaceae undiff.,Rutaceae undiff.,3,2
-44891,Rytigynia,Rytigynia,4,2
-44864,Saba comorensis ,Saba comorensis ,1,1
-2042,Sabicea,Sabicea,16,3
-37811,Sabicea africana,Sabicea,139,4
-43147,Sabicea-type (S. africana),Sabicea,2,1
-44892,Sacoglottis gabonensis,Sacoglottis gabonensis,18,2
-37682,Salacia,Salacia-type,12,3
-37747,Salacia senegalensis,Salacia-type,6,2
-44893,Salacia-type,Salacia-type,25,2
-1746,Salicaceae,Salicaceae,70,3
-29556,Salicaceae undiff.,Salicaceae,3,2
-271,Salix,Salicaceae,987,50
-43181,Salix cf. S. ledermanii,Salicaceae,3,1
-41447,Salix subserrata,Salicaceae,1,1
-42740,Salix subserrata-type,Salicaceae,24,1
-37435,Salvadora,Salvadora,260,20
-37748,Salvadora persica,Salvadora,17,6
-47262,Salvadora persica-type,Salvadora,66,3
-45766,Salvadora-type persica,Salvadora,69,2
-33882,Salvadoraceae,Salvadoraceae,77,7
-902,cf. Sambucus,Sambucus undiff.,1,1
-275,Sambucus,Sambucus undiff.,126,7
-4782,Sambucus ebulus,Sambucus undiff.,7,1
-4783,Sambucus nigra,Sambucus undiff.,12,4
-3597,Sambucus nigra-type,Sambucus undiff.,24,7
-4785,Sambucus undiff.,Sambucus undiff.,28,1
-1657,Santalaceae,Santalaceae,132,10
-1657,Santalaceae,Santalaceae,84,2
-44894,Santiria trimera,Santiria-type,28,2
-36876,Santiria-type,Santiria-type,17,1
-1136,Sapindaceae,Sapindaceae,125,21
-1231,Sapindaceae undiff.,Sapindaceae,109,9
-2043,Sapium,Sapium-type,145,13
-1747,Sapium-type,Sapium-type,1,1
-1847,Sapotaceae,Meliaceae/Sapotaceae,691,37
-47400,Sapotaceae (reticulated),Meliaceae/Sapotaceae,1,1
-2100,Sapotaceae undiff.,Meliaceae/Sapotaceae,220,11
-29148,Sapotaceae-type,Meliaceae/Sapotaceae,36,1
-36878,Schrebera,Schrebera,11,6
-37729,Sclerocarya,Trichoscypha/Sclerocarya,76,6
-47659,Sclerocarya birrea-type,Trichoscypha/Sclerocarya,1,1
-46245,Sclerocarya caffra,Trichoscypha/Sclerocarya,9,1
-40162,Sclerochiton,Sclerochiton,9,1
-41779,Sclerosperma,Sclerosperma,10,2
-43605,Scorodophloeus zenkeri-type,Scorodophloeus zenkeri-type,23,1
-43081,Scottellia klaineana-type,Scottellia klaineana-type,3,1
-39795,Scytopetalum,Scytopetalum,1,1
-40152,Searsia,Searsia,324,6
-44888,Searsia longipes,Searsia,5,1
-40153,Searsia natalensis,Searsia,25,2
-40156,Searsia-type (S. natalensis),Searsia,10,3
-40159,Searsia-type (S. tripartita),Searsia,4,2
-2495,Securinega,Securinega,46,6
-37749,Securinega virosa,Securinega,103,11
-23984,Senna,Senna,20,1
-43105,Senna-type didymobotrya,Senna,6,1
-43063,Senna-type italica,Senna,6,2
-41520,Sericocomopsis-type,Sericocomopsis-type,11,2
-37809,Sherbournia,Sherbournia,8,5
-37006,Shirakiopsis elliptica-type,Shirakiopsis elliptica-type,39,2
-37007,Shirakiopsis-type (S. elliptica),Shirakiopsis elliptica-type,4,3
-43401,Shirakiopsis-type elliptica,Shirakiopsis elliptica-type,15,4
-9798,Sideroxylon,Sideroxylon,22,6
-45761,Sideroxylon-type oxyacanthum,Sideroxylon,4,2
-43630,Solanecio-type mannii,Solanecio-type mannii,1,1
-1435,Sorbus,Sorbus,1,1
-34037,Sorbus group,Sorbus,1,1
-3455,Sorbus-type,Sorbus,71,9
-36879,Sorindeia,Sorindeia-type,9,3
-46033,Sorindeia juglandifolia,Sorindeia-type,1,1
-36880,Sorindeia-type,Sorindeia-type,9,2
-43082,Sorindeia-type (S. juglandifolia),Sorindeia-type,99,2
-5324,Spartium,Spartium,2,2
-43668,Spathodea,Spathodea,6,1
-47506,Spathodea-type campanulata,Spathodea,6,1
-40215,Spirostachys,Spirostachys,155,6
-37810,Spondianthus,Spondianthus,6,2
-9803,Spondias mombin,Spondias-type,1,1
-1748,Spondias-type,Spondias-type,1,1
-47508,Spondias-type mombin,Spondias-type,9,1
-44895,Stachyothyrsus,Stachyothyrsus,46,2
-22707,Sterculia,Sterculia-type,14,4
-2438,Sterculia-type,Sterculia-type,98,16
-1729,Sterculioideae,Sterculioideae,147,2
-1729,Sterculioideae,Sterculioideae,88,8
-39420,Stereospermum,Stereospermum,15,6
-36886,Strombosia,Strombosia-type,50,9
-39444,Strombosia scheffleri-type,Strombosia-type,2,1
-44896,Strombosia-type,Strombosia-type,33,3
-29860,Strychnos,Strychnos,34,6
-1812,Styrax,Styrax,42,2
-43634,Suaeda-type monoica,Suaeda-type monoica,166,4
-43581,Swertia-type kilimandscharica,Swertia-type kilimandscharica,15,2
-1749,Symphonia,Symphonia,83,9
-2388,Symphonia globulifera,Symphonia,137,15
-2340,Syringa,Syringa,1,1
-2029,Tabernaemontana,Tabernaemontana-type,13,5
-43127,Tabernaemontana crassa-type,Tabernaemontana-type,1,1
-23841,Tabernaemontana-type,Tabernaemontana-type,9,4
-1309,Tamaricaceae,Tamaricaceae,4,1
-20592,Tamarindus,Tamarindus,23,3
-20687,Tamarindus indica,Tamarindus,1,1
-40097,Tamarindus-type (T. indica),Tamarindus,18,1
-46017,Tamarindus-type indica,Tamarindus,12,2
-2344,Tamarix,Tamarix,425,36
-37750,Tamarix senegalensis,Tamarix,16,2
-36889,Tapinanthus,Tapinanthus-type,54,10
-36890,Tapinanthus-type,Tapinanthus-type,154,16
-36892,Tapura,Tapura,14,1
-36893,Tapura fischeri,Tapura,1,1
-36894,Tapura fischeri-type,Tapura,7,1
-38553,Tarchonantheae,Tarchonantheae,43,2
-38554,Tarchonanthus,Tarchonanthus,192,17
-44339,Tarchonanthus camphoratus,Tarchonanthus,65,1
-43635,Tarchonanthus-type camphoratus,Tarchonanthus,1,1
-36895,Tarenna,Tarenna-type,16,4
-36896,Tarenna-type,Tarenna-type,86,4
-299,Taxus,Taxus,24,9
-4870,Taxus baccata,Taxus,84,6
-37943,Teclea,Teclea-type,76,13
-2426,Teclea-type,Teclea-type,116,18
-20688,Tectona grandis,Tectona grandis,1,1
-30622,Terminalia,Terminalia-type,53,8
-42750,Terminalia-type,Terminalia-type,12,1
-39466,Tessmannia,Tessmannia,1,1
-36897,Tetracera,Tetracera-type,213,8
-37013,Tetracera alnifolia,Tetracera-type,114,6
-37014,Tetracera alnifolia-type,Tetracera-type,4,2
-47685,Tetracera-type,Tetracera-type,12,1
-43556,Tetraena simplex-type,Tetracera-type,16,2
-37015,Tetrapleura,Tetrapleura,1,1
-37017,Tetrapleura tetraptera-type,Tetrapleura,14,4
-2356,Tetrorchidium,Tetrorchidium,523,25
-1840,Theaceae,Theaceae,1,1
-36793,Thecacoris,Thecacoris,11,5
-36898,Thecacoris-type,Thecacoris,9,1
-48038,Tieghemella,Tieghemella,3,1
-302,Tilia,Tilia,248,18
-1714,Tilioideae,Tilioideae,156,22
-29117,Tilioideae undiff.,Tilioideae undiff.,24,3
-37685,Tinospora bakis,Tinospora bakis,7,3
-29347,Toddalia,Toddalia,13,1
-2427,Toddalia asiatica,Toddalia,4,1
-2428,Toddalia asiatica-type,Toddalia,1,1
-37967,Toddalia-type (T. asiatica),Toddalia,8,3
-34120,Trachycarpus fortunei,Trachycarpus fortunei,2,1
-37444,Treculia,Treculia,67,5
-37751,Treculia africana,Treculia,43,6
-47351,Treculia-type africana,Treculia,10,1
-1113,cf. Trema,Trema-type,1,1
-304,Trema,Trema-type,524,37
-20690,Trema orientalis,Trema-type,58,4
-2439,Trema orientalis-type,Trema-type,55,2
-3079,Trema-type,Trema-type,2,1
-37968,Trema-type (T. orientalis),Trema-type,208,8
-43404,Trema-type orientalis,Trema-type,141,11
-47379,Tricalysia,Tricalysia,4,1
-3117,Trichilia,Trichilia-type,39,7
-9810,Trichilia-type,Trichilia-type,33,4
-40098,Trichocladus,Trichocladus-type,115,4
-47661,Trichocladus ellipticus,Trichocladus-type,1,1
-43637,Trichocladus ellipticus-type,Trichocladus-type,12,1
-45836,Trichocladus-type,Trichocladus-type,2,1
-37018,Trichoscypha,Trichoscypha/Sclerocarya,4,2
-49329,Trichoscypha cf. T. acuminata,Trichoscypha/Sclerocarya,5,1
-37019,Trichoscypha-type,Trichoscypha/Sclerocarya,28,3
-41654,Trichoscypha-type (T. arborea),Trichoscypha/Sclerocarya,1,1
-43426,Trichoscypha-type arborea,Trichoscypha/Sclerocarya,1,1
-49331,Trichoscypha/Sclerocarya,Trichoscypha/Sclerocarya,27,1
-36907,Trilepisium,Trilepisium,31,6
-45522,Trilepisium madagascariense,Trilepisium,42,4
-2397,Trilepisium madagascariense-type,Trilepisium,38,2
-36906,Trilepisium-type (T. madagascariense),Trilepisium,125,8
-43405,Trilepisium-type madagascariense,Trilepisium,44,6
-39797,Triplochiton,Triplochiton,9,1
-39798,Triplochiton scleroxylon,Triplochiton,26,3
-43085,Triplochiton scleroxylon-type,Triplochiton,25,2
-39639,Tristellateia,Tristellateia,1,1
-9812,Triumfetta,Triumfetta-type,13,5
-9813,Triumfetta-type,Triumfetta-type,82,10
-47678,Trymatococcus,Trymatococcus,1,1
-2358,Uapaca,Uapaca undiff.,818,38
-43450,Uapaca bojeri-type,Uapaca undiff.,1,1
-43606,Uapaca guineensis-type,Uapaca undiff.,17,1
-45535,Uapaca heudelotii,Uapaca undiff.,17,2
-37969,Uapaca kirkiana,Uapaca undiff.,63,2
-2385,Uapaca kirkiana-type,Uapaca undiff.,522,7
-43128,Uapaca lissopyrena-type,Uapaca undiff.,36,1
-45536,Uapaca mole-type,Uapaca undiff.,9,1
-37970,Uapaca nitida,Uapaca undiff.,25,1
-37971,Uapaca nitida-type,Uapaca undiff.,344,9
-43129,Uapaca robynsii-type,Uapaca undiff.,13,1
-44897,Uapaca staudtii,Uapaca undiff.,50,2
-2357,Uapaca undiff.,Uapaca undiff.,15,1
-3410,Ulex,Ulex-type,1,1
-3411,Ulex-type,Ulex-type,98,1
-1203,Ulmaceae,Ulmaceae,21,3
-310,Ulmus,Ulmus/Zelkova,719,26
-4933,Ulmus/Zelkova,Ulmus/Zelkova,99,1
-22689,Uncaria,Uncaria,33,2
-37020,Uncaria africana,Uncaria,9,1
-37021,Uncaria-type (U. africana),Uncaria,19,2
-43407,Uncaria-type africana,Uncaria,13,2
-22726,Urera,Urera,13,1
-2864,Urticaceae/Moraceae,Urticaceae/Moraceae,227,7
-1816,Urticalean Rosids,Urticalean Rosids,2,2
-317,Vaccinium,Vaccinium,3,1
-46246,Vangueria-type,Vangueria-type,2,2
-43427,Vangueria-type madagascariensis,Vangueria-type,8,2
-28501,Vepris,Vepris-type,1,1
-37963,Vepris nobilis,Vepris-type,4,1
-37964,Vepris-type,Vepris-type,4,2
-37965,Vepris-type (V. nobilis),Vepris-type,15,4
-43130,Vepris-type (V. trichocarpa),Vepris-type,1,1
-43638,Vepris-type dainellii,Vepris-type,16,3
-43640,Vepris-type nobilis,Vepris-type,2,1
-397,Viburnum,Viburnum-type,55,7
-4970,Viburnum tinus,Viburnum-type,5,4
-319,Viburnum undiff.,Viburnum-type,6,1
-3603,Viburnum-type,Viburnum-type,10,3
-2050,Vismia,Vismia,5,3
-1108,Vitaceae,Vitaceae,34,7
-37450,Vitaceae undiff.,Vitaceae undiff.,25,3
-37023,Vitellaria,Vitellaria,9,1
-37025,Vitellaria-type (V. paradoxa),Vitellaria,58,2
-47559,Vitellaria-type paradoxa,Vitellaria,5,1
-22712,cf. Vitex,Vitex-type,6,1
-4980,Vitex,Vitex-type,139,9
-4979,Vitex agnus-castus,Vitex-type,131,3
-37689,Vitex doniana,Vitex-type,7,2
-29509,Vitex-type,Vitex-type,11,3
-320,Vitis,Vitis,545,27
-1321,Vitis vinifera,Vitis,140,1
-5763,Waltheria,Waltheria-type,1,1
-29092,Waltheria-type,Waltheria-type,2,1
-40106,Welwitschia mirabilis,Welwitschia mirabilis,1,1
-47009,Widdringtonia,Widdringtonia,1,1
-2556,Ximenia,Ximenia-type,61,11
-28503,Ximenia americana,Ximenia-type,39,7
-25583,Ximenia-type,Ximenia-type,7,1
-45493,Xylocarpus,Xylocarpus,18,1
-41521,Xymalos,Xymalos,31,3
-2434,Zanha,Zanha,1,1
-2435,Zanha golungensis-type,Zanha,42,4
-43446,Zanha-type golungensis,Zanha,1,1
-42515,cf. Zanthoxylum,Zanthoxylum-type,9,1
-809,Zanthoxylum,Zanthoxylum-type,312,26
-2429,Zanthoxylum chalybeum-type,Zanthoxylum-type,10,2
-37027,Zanthoxylum gilletii,Zanthoxylum-type,11,1
-37691,Zanthoxylum undiff.,Zanthoxylum-type,1,1
-48040,Zanthoxylum usambarense,Zanthoxylum-type,1,1
-2430,Zanthoxylum usambarense-type,Zanthoxylum-type,94,3
-37445,Zanthoxylum zanthoxyloides,Zanthoxylum-type,138,5
-400,Zanthoxylum-type,Zanthoxylum-type,144,11
-37028,Zanthoxylum-type (Z. gilletii),Zanthoxylum-type,21,3
-41470,Zanthoxylum-type (Z. usambarense),Zanthoxylum-type,17,2
-42757,Zanthoxylum-type (Z. zanthoxyloides),Zanthoxylum-type,6,1
-43410,Zanthoxylum-type usambarense,Zanthoxylum-type,73,9
-47769,Zanthoxylum-type zanthoxyloides,Zanthoxylum-type,49,1
-2692,Zelkova,Ulmus/Zelkova,2,1
-9828,Ziziphus,Ziziphus-type,245,33
-42758,Ziziphus-type,Ziziphus-type,10,3
-2135,Zygophyllaceae,Zygophyllaceae undiff.,71,6
-37948,Zygophyllaceae undiff.,Zygophyllaceae undiff.,19,3
+taxonid,variablename,ecologicalgroup,harmonizedname
+1,Abies,TRSH,Abies
+550,Abies balsamea,TRSH,Abies
+3725,Abies undiff.,TRSH,Abies
+338,Acer,TRSH,Acer
+552,Acer cf. A. pensylvanicum,TRSH,Acer
+4,Acer negundo,TRSH,Acer
+553,Acer nigrum,TRSH,Acer
+5,Acer pensylvanicum,TRSH,Acer
+6,Acer rubrum,TRSH,Acer
+554,Acer saccharinum,TRSH,Acer
+555,Acer saccharum,TRSH,Acer
+3,Acer saccharum-type,TRSH,Acer
+8,Acer spicatum,TRSH,Acer
+9,Acer undiff.,TRSH,Acer
+330,Alnus,TRSH,Alnus
+344,Alnus incana,TRSH,Alnus
+13,Alnus incana-type,TRSH,Alnus
+15,Alnus undiff.,TRSH,Alnus
+353,Alnus viridis,TRSH,Alnus
+3606,Alnus viridis subsp. crispa,TRSH,Alnus
+3607,Alnus viridis subsp. crispa-type,TRSH,Alnus
+14,Alnus viridis-type,TRSH,Alnus
+564,Andromeda polifolia,TRSH,Andromeda
+563,Andromeda polifolia var. latifolia,TRSH,Andromeda
+21,Aquifoliaceae,TRSH,Aquifoliaceae
+23,Arceuthobium,TRSH,Arceuthobium
+1162,Arctostaphylos,TRSH,Arctostaphylos
+29,Betula,TRSH,Betula
+5735,Betula (large),TRSH,Betula
+574,Betula (shrub),TRSH,Betula
+5736,Betula (small),TRSH,Betula
+23078,Betula spp.,TRSH,Betula
+1011,Betula undiff.,TRSH,Betula
+327,Betulaceae,TRSH,Betula
+357,Betulaceae undiff.,TRSH,Betula
+394,Caprifoliaceae,TRSH,Caprifoliaceae
+9528,Caprifoliaceae sensu lato,TRSH,Caprifoliaceae
+9529,Caprifoliaceae sensu lato undiff.,TRSH,Caprifoliaceae
+44,Carya,TRSH,Carya
+587,Carya cordiformis,TRSH,Carya
+588,Carya ovata,TRSH,Carya
+2643,Cassiope-type,TRSH,Cassiope
+47,Castanea,TRSH,Castanea
+590,Castanea dentata,TRSH,Castanea
+3996,Castanea-type,TRSH,Castanea
+49,Celtis,TRSH,Celtis
+591,Celtis occidentalis,TRSH,Celtis
+24134,Celtis/Ulmus,TRSH,Celtis
+50,Cephalanthus,TRSH,Other
+593,Cephalanthus occidentalis,TRSH,Other
+743,cf. Sarcobatus vermiculatus,TRSH,Sarcobatus vermiculatus
+2574,cf. Shepherdia,TRSH,Shepherdia
+757,cf. Taxus,TRSH,Taxus
+9124,Chamaedaphne,TRSH,Chamaedaphne
+53,Chamaedaphne calyculata,TRSH,Chamaedaphne
+597,Comptonia peregrina,TRSH,Comptonia
+1944,Coniferae,TRSH,Other
+1943,Coniferae undiff.,TRSH,Other
+1693,Cornaceae,TRSH,Cornus
+361,Cornus,TRSH,Cornus
+599,Cornus alternifolia,TRSH,Cornus
+600,Cornus canadensis,TRSH,Cornus
+3170,Cornus racemosa,TRSH,Cornus
+601,Cornus rugosa,TRSH,Cornus
+579,Cornus sericea,TRSH,Cornus
+4175,Cornus suecica,TRSH,Cornus
+65,Cornus undiff.,TRSH,Cornus
+67,Corylus,TRSH,Corylus
+603,Corylus cornuta,TRSH,Corylus
+3399,Corylus-type,TRSH,Corylus
+72,Cupressaceae,TRSH,Thuja
+756,Cupressaceae cf. Thuja occidentalis,TRSH,Thuja
+607,Diervilla lonicera,TRSH,Diervilla lonicera
+907,Elaeagnaceae undiff.,TRSH,Elaeagnus
+84,Elaeagnus,TRSH,Elaeagnus
+615,Elaeagnus commutata,TRSH,Elaeagnus
+86,Empetrum,TRSH,Empetrum
+366,Ephedra,TRSH,Ephedra
+368,Ephedra nevadensis-type,TRSH,Ephedra
+23490,Ephedraceae,TRSH,Ephedra
+92,Ericaceae,TRSH,Ericaceae
+909,Ericaceae undiff.,TRSH,Ericaceae
+848,Ericales,TRSH,Ericales
+849,Ericales undiff.,TRSH,Ericales
+107,Fagus,TRSH,Fagus
+2588,Fagus grandifolia,TRSH,Fagus
+369,Fraxinus,TRSH,Fraxinus
+110,Fraxinus (tetracolpate),TRSH,Fraxinus
+111,Fraxinus (tricolpate),TRSH,Fraxinus
+1102,Fraxinus americana,TRSH,Fraxinus
+371,Fraxinus americana-type,TRSH,Fraxinus
+1082,Fraxinus nigra,TRSH,Fraxinus
+112,Fraxinus nigra-type,TRSH,Fraxinus
+1083,Fraxinus pennsylvanica,TRSH,Fraxinus
+961,Fraxinus pennsylvanica/F. americana-type,TRSH,Fraxinus
+113,Fraxinus pennsylvanica-type,TRSH,Fraxinus
+114,Fraxinus undiff.,TRSH,Fraxinus
+117,Gaultheria,TRSH,Gaultheria
+118,Gaylussacia,TRSH,Gaylussacia
+2274,Grossulariaceae,TRSH,Other
+135,Ilex,TRSH,Ilex
+672,Ilex/Nemopanthus,TRSH,Ilex
+1225,Ilex/Nemopanthus undiff.,TRSH,Ilex
+940,Ilex-type,TRSH,Ilex
+372,Juglans,TRSH,Juglans
+144,Juglans cinerea,TRSH,Juglans
+145,Juglans nigra,TRSH,Juglans
+146,Juglans undiff.,TRSH,Juglans
+983,Juniperus,TRSH,Juniperus
+4416,Juniperus communis,TRSH,Juniperus
+761,Juniperus communis/Thuja occidentalis-type,TRSH,Juniperus
+364,Juniperus/Thuja,TRSH,Juniperus
+363,Juniperus-type,TRSH,Juniperus
+148,Kalmia,TRSH,Kalmia
+153,Larix,TRSH,Larix
+1460,Larix laricina,TRSH,Larix
+162,Liquidambar,TRSH,Liquidambar
+164,Lonicera,TRSH,Lonicera
+598,Lonicera caerulea,TRSH,Lonicera
+640,Lonicera canadensis,TRSH,Lonicera
+642,Lonicera canadensis-type,TRSH,Lonicera
+641,Lonicera involucrata,TRSH,Lonicera
+776,Loranthaceae,TRSH,Loranthaceae
+185,Moraceae,TRSH,Morus
+874,Moraceae undiff.,TRSH,Morus
+186,Morus,TRSH,Morus
+662,Morus rubra-type,TRSH,Morus
+383,Myrica,TRSH,Myrica
+666,Myrica gale,TRSH,Myrica
+381,Myricaceae,TRSH,Myrica
+189,Nemopanthus,TRSH,Nemopanthus
+671,Nemopanthus mucronatus,TRSH,Nemopanthus
+193,Nyssa,TRSH,Nyssa
+4577,Nyssaceae,TRSH,Nyssa
+1237,Ostrya,TRSH,Ostraya
+197,Ostrya/Carpinus,TRSH,Ostraya
+384,Ostrya-type,TRSH,Ostraya
+210,Picea,TRSH,Picea
+1233,Picea cf. P. glauca,TRSH,Picea
+2317,Picea glauca,TRSH,Picea
+207,Picea glauca-type,TRSH,Picea
+2318,Picea mariana,TRSH,Picea
+208,Picea mariana-type,TRSH,Picea
+209,Picea rubens-type,TRSH,Picea
+897,Picea undiff.,TRSH,Picea
+329,Pinaceae,TRSH,Other
+64,Pinaceae undiff.,TRSH,Other
+385,Pinus,TRSH,Pinus
+836,Pinus banksiana/P. resinosa,TRSH,Pinus
+695,Pinus banksiana-type,TRSH,Pinus
+696,Pinus resinosa-type,TRSH,Pinus
+697,Pinus strobus,TRSH,Pinus
+212,Pinus subg. Pinus,TRSH,Pinus
+913,Pinus subg. Pinus undiff.,TRSH,Pinus
+213,Pinus subg. Strobus,TRSH,Pinus
+2917,Pinus subg. Strobus undiff.,TRSH,Pinus
+216,Pinus undiff.,TRSH,Pinus
+222,Platanus,TRSH,Platanus
+700,Platanus occidentalis,TRSH,Platanus
+389,Populus,TRSH,Populus
+1151,Populus balsamifera,TRSH,Populus
+238,Populus balsamifera-type,TRSH,Populus
+23203,Populus cf. P. tremuloides,TRSH,Populus
+709,Populus deltoides-type,TRSH,Populus
+710,Populus grandidentata-type,TRSH,Populus
+1155,Populus tremuloides,TRSH,Populus
+239,Populus tremuloides-type,TRSH,Populus
+237,Populus undiff.,TRSH,Populus
+715,Prunus,TRSH,Prunus
+716,Prunus pensylvanica,TRSH,Prunus
+717,Prunus serotina,TRSH,Prunus
+942,Prunus undiff.,TRSH,Prunus
+719,Prunus virginiana,TRSH,Prunus
+250,Pyrus-type,TRSH,Pyrus
+251,Quercus,TRSH,Quercus
+256,Rhamnaceae,TRSH,Rhamnaceae/Vitaceae
+726,Rhamnaceae/Vitaceae,TRSH,Rhamnaceae/Vitaceae
+785,Rhamnus,TRSH,Rhamnaceae/Vitaceae
+723,Rhamnus alnifolia/Frangula alnus,TRSH,Rhamnaceae/Vitaceae
+725,Rhamnus cathartica,TRSH,Rhamnaceae/Vitaceae
+724,Rhamnus/Vitis,TRSH,Rhamnaceae/Vitaceae
+1226,Rhamnus/Vitis undiff.,TRSH,Rhamnaceae/Vitaceae
+259,Rhododendron,TRSH,Rhododendron
+727,Rhododendron canadense,TRSH,Rhododendron
+155,Rhododendron subsect. Ledum,TRSH,Rhododendron
+156,Rhododendron subsect. Ledum/Chamaedaphne calyculata,TRSH,Rhododendron
+260,Rhus,TRSH,Rhus
+730,Rhus typhina,TRSH,Rhus
+262,Ribes,TRSH,Ribes
+718,Rosaceae cf. Prunus serotina,TRSH,Prunus
+733,Rubiaceae,TRSH,Rubiaceae
+266,Rubiaceae undiff.,TRSH,Rubiaceae
+267,Rubus,TRSH,Rubiaceae
+734,Rubus chamaemorus,TRSH,Rubiaceae
+271,Salix,TRSH,Salix
+739,Salix herbacea-type,TRSH,Salix
+740,Salix reticulata-type,TRSH,Salix
+25596,Salix spp.,TRSH,Salix
+1216,Salix undiff.,TRSH,Salix
+741,Salix vestita-type,TRSH,Salix
+275,Sambucus,TRSH,Sambucus
+7654,Sarcobataceae,TRSH,Sarcobatus vermiculatus
+279,Sarcobatus vermiculatus,TRSH,Sarcobatus vermiculatus
+542,Shepherdia,TRSH,Shepherdia
+289,Shepherdia argentea,TRSH,Shepherdia
+290,Shepherdia canadensis,TRSH,Shepherdia
+3010,Spermatophyta undiff. (trees),TRSH,Other
+5779,Symphoricarpos albus,TRSH,Symphoricarpos albus
+299,Taxus,TRSH,Taxus
+1461,Taxus canadensis,TRSH,Taxus
+853,Thuja,TRSH,Thuja
+42657,Thuja occidentalis,TRSH,Thuja
+302,Tilia,TRSH,Tilia
+758,Tilia americana,TRSH,Tilia
+306,Tsuga,TRSH,Tsuga canadensis
+763,Tsuga canadensis,TRSH,Tsuga canadensis
+1275,Tsuga undiff.,TRSH,Tsuga canadensis
+310,Ulmus,TRSH,Ulmus
+9817,Ulmus americana,TRSH,Ulmus
+317,Vaccinium,TRSH,Vaccinium
+764,Vaccinium angustifolium-type,TRSH,Vaccinium
+766,Vaccinium macrocarpon-type,TRSH,Vaccinium
+767,Vaccinium oxycoccos,TRSH,Vaccinium
+765,Vaccinium uliginosum-type,TRSH,Vaccinium
+1219,Vaccinium undiff.,TRSH,Vaccinium
+397,Viburnum,TRSH,Viburnum
+768,Viburnum alnifolium,TRSH,Viburnum
+770,Viburnum edule,TRSH,Viburnum
+396,Viburnum lentago,TRSH,Viburnum
+793,Viburnum nudum,TRSH,Viburnum
+794,Viburnum opulus,TRSH,Viburnum
+319,Viburnum undiff.,TRSH,Viburnum
+1108,Vitaceae,TRSH,Rhamnaceae/Vitaceae
+320,Vitis,TRSH,Rhamnaceae/Vitaceae

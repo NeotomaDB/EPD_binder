@@ -300,8 +300,8 @@ The following call can take some time, but we've frozen the object as an RDS dat
 ```{r taxa}
 ## This line is commented out because we've already run it for you.
 ## quebec_dl <- quebec_records %>% get_downloads(all_data = TRUE)
-## saveRDS(quebec_dl, "data/afDownload.RDS")
-quebec_dl <- readRDS("data/afDownload.RDS")
+## saveRDS(quebec_dl, "data/qcDownload.RDS")
+quebec_dl <- readRDS("data/qcDownload.RDS")
 ```
 
 Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets.  To extract all the samples we can call:
