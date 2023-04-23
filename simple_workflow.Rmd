@@ -80,26 +80,25 @@ Piping is a technique that simplifies the process of chaining multiple operation
 
 The pipe operator works as a real-life pipe, which carries water from one location to another. In programming, the output of the function on the left-hand side of the pipe is taken as the initial argument for the function on the right-hand side of the pipe. It helps by making code easier to write and read. Additionally, it reduces the number of intermediate objects created during data processing, which can make code more memory-efficient and faster.
 
-You can retrieve a site and then plot it by doing:
-```
+Without using pipes you can use the `neotoma2` R package to retrieve a site and then plot it by doing:
+
+```r
 # Retrieve the site
 plot_site <- neotoma2::get_sites(sitename = "%Swamp%")
 # Plot the site
-neotoma2::plotLeaflet(plot_site)
+neotoma2::plotLeaflet(object = plot_site)
 ```
 
-This would create a variable `plot_site` that maybe we will not need any more but was necessary so that we could pass it to the `plotLeaflet` function.
+This would create a variable `plot_site` that we will not need any more, but it was necessary so that we could pass it to the `plotLeaflet` function.
 
-When we pipe using `%>%`, we do not need to create the variable that we need to pass:
+With the pipe (`%>%`) we do not need to create the variable, we can just rewrite our code.  Notice that `plotLeaflet()` doesn't need the `object` argument because the response of `get_sites(sitename = "%Swamp%")` gets passed directly into the function.
 
 #### 2.2.3.1. Code
 
 ```{r piping code, eval=FALSE}
-# get_sites and pipe
+# get_sites and pipe. The `object` parameter for plotLeaflet will be the
+# result of the `get_sites()` function.
 get_sites(sitename = "%Swamp%") %>%
-  # Notice that the next function does not need the first argument 
-  # because the response of `get_sites(sitename = "%Swamp%") will be used
-  # as the argument.
   plotLeaflet()
 ```
 #### 2.2.3.2. Result
@@ -107,9 +106,6 @@ get_sites(sitename = "%Swamp%") %>%
 ```{r piping result, echo=FALSE}
 # get_sites and pipe
 get_sites(sitename = "%Swamp%") %>%
-  # Notice that the next function does not need the first argument 
-  # because the response of `get_sites(sitename = "%Swamp%") will be used
-  # as the argument.
   plotLeaflet()
 ```
 
