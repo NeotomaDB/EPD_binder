@@ -383,7 +383,7 @@ readr::write_csv(taxaplots, "data/mytaxontable.csv")
 #### Looking at the Taxonomic Structure
 
 The `taxa` function returns all our taxonomic information, and it provides some additional information, the columns `samples` and `sites` which record the number of samples across all datasets that contain the taxon, and the number of sites with the taxon. The plot 
-below 
+below shows the relationship between samples and sites, which we would expect to be somewhat skewed, as it is.
 
 ##### 3.4.3.1. Code
 
