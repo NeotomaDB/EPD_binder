@@ -380,14 +380,14 @@ taxaplots <- taxa(quebec_dl)
 readr::write_csv(taxaplots, "data/mytaxontable.csv")
 ```
 
-#### Looking at the Taxonomic Structure
+#### Looking at the Taxonomic Structure {.tabset}
 
 The `taxa` function returns all our taxonomic information, and it provides some additional information, the columns `samples` and `sites` which record the number of samples across all datasets that contain the taxon, and the number of sites with the taxon. The plot 
 below shows the relationship between samples and sites, which we would expect to be somewhat skewed, as it is.
 
 ##### 3.4.3.1. Code
 
-```{r PlotTaxonCountsFirst, echo=FALSE, fig.cap="**Figure**. *A plot of the number of sites a taxon appears in, against the number of samples a taxon appears in.*", message=FALSE}
+```{r PlotTaxonCountsFirst, fig.cap="**Figure**. *A plot of the number of sites a taxon appears in, against the number of samples a taxon appears in.*", eval=FALSE}
 taxaplots <- taxa(quebec_dl)
 ggplot(data = taxaplots, aes(x = sites, y = samples)) +
   geom_point() +
@@ -499,7 +499,7 @@ counts <- plottingSite %>%
          unit = c("NISP"),
          elementtypes = c("pollen"),
          groupby = "age",
-         operation = "prop")
+         operation = "prop") 
 
 counts <- counts[, colSums(counts > 0.01, na.rm = TRUE) > 5]
 ```
@@ -528,7 +528,7 @@ rioja::addClustZone(plot, clust, 4, col = "red")
 
 ### 4.2. Change in Time Across Sites
 
-We now have site information across our region, from East Africa to South East Asia, with samples, and with taxon names. I'm interested in looking at the distributions of taxa across time, and the proportion of their presence/absence. I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time. We're going to use our harmonization table again, to clean up the taxon names.
+We now have site information across our region with samples and with taxon names. I'm interested in looking at the distributions of taxa across time, and the proportion of their presence/absence. I'm going to pick the top 20 taxa (based on the number of times they appear in the records) and look at their distributions in time. We're going to use our harmonization table again, to clean up the taxon names.
 
 ```{r summarizeByTime, message = FALSE}
 # Harmonize the sample names as above.
@@ -566,7 +566,7 @@ mostCommon <- taxaSitesByAge %>%
 
 # The last thing to do is to select only some of the taxa:
 subsetTaxa <- groupbyage %>% 
-  filter(harmonizedname %in% mostCommon$harmonizedname, age < 10000)
+  filter(harmonizedname %in% mostCommon$harmonizedname, age < 10000) 
 
 # And then plot!
 ggplot(subsetTaxa,
@@ -623,7 +623,7 @@ spatial <- spatial %>%
 
 #### 4.3.1. Setting the Background
 
-We want to get the background distribution of July temperatures in South America, to plot our taxon distributions against by taking the maximum value of the temperature, however, since all values at the site are the same (because we used a spatial overlay) the maximum is the same as the actual July temperature at the site.
+We want to get the background distribution of July temperatures in Quebec, to plot our taxon distributions against by taking the maximum value of the temperature, however, since all values at the site are the same (because we used a spatial overlay) the maximum is the same as the actual July temperature at the site.
 
 ```{r topten}
 maxsamp <- spatial %>% 
