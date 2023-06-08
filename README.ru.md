@@ -1,5 +1,5 @@
-
 [![language-EN](https://img.shields.io/badge/language-EN-red)](README.md) [![language](https://img.shields.io/badge/language-ES-red)](README.es.md) [![language-RU](https://img.shields.io/badge/language-RU-red)](README.ru.md)
+[![language-JP](https://img.shields.io/badge/language-JP-red)](README.jp.md)
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
@@ -23,6 +23,8 @@
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605) [Simon Goring](http://goring.org)
 
 * перевод: [Arsenii Galimov](https://ipae.uran.ru/Galimov_AT)
+* испанский: [Deborah V. Espinosa-Martínez](https://orcid.org/0000-0002-3848-8094)
+* Японский: [Socorro Dominguez Vidana](https://ht-data.com/about.html)
 
 ## Как использовать репозиторий
 

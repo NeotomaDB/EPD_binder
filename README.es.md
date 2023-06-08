@@ -25,6 +25,7 @@ Es un proyecto abierto y, la o las contribuciones de cualquier persona son bienv
 
 * Ruso: [Arsenii Galimov](https://ipae.uran.ru/Galimov_AT)
 * Español: [Deborah V. Espinosa-Martínez](https://orcid.org/0000-0002-3848-8094)
+* Japonés: [Socorro Dominguez Vidana](https://ht-data.com/about.html)
 
 ## Como usar este repositorio
 
