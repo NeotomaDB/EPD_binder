@@ -12,5 +12,6 @@ install.packages("Bchron")
 install.packages("DT")
 install.packages("raster")
 install.packages("terra")
+install.packages("neotoma2")
 
-remotes::install_github('NeotomaDB/neotoma2@production')
+#remotes::install_github('NeotomaDB/neotoma2@production')

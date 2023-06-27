@@ -10,7 +10,7 @@
 
 Этот репозиторий построен таким образом, что позволяет работать в онлайн режиме через RStudio с использованием Binder (и Docker). Щелкнув ссылку Binder, вы откроете RStudio в браузере пользователя.
 
-**В данный момент, в этом репозитории хранится семинар, который будет проведен онлайн и называется: UQAM GEOTOP workshop**
+**В данный момент, в этом репозитории хранится семинар, который будет проведен онлайн и называется: INQUA Rome 2023 workshop**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 

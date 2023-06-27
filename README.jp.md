@@ -10,7 +10,7 @@
 
 このリポジトリは、BinderとDockerの技術を使って、ブラウザでRStudioを使うことができます。ワークショプのための必要なパッケージもすべて使えます。 [Binder]のリンクをクリックすると、ユーザーのブラウザでRStudioが開きます。
 
-**今、このリポジトリはUQAM GEOTOPのワークショップのコンテンツを上げています。**
+**今、このリポジトリはINQUA ROMA 2023のワークショップのコンテンツを上げています。**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 

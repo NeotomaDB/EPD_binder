@@ -10,7 +10,7 @@ A repository to host interactive R workshops. This repository will always be set
 
 This repository is built with the structure required to serve the content through an interactive, online RStudio session using Binder (and Docker). Clicking the Binder link will open RStudio in the user's browser.
 
-**Currently, this repo hosts the Workshop to be delivered for the UQAM GEOTOP workshop.**
+**Currently, this repo hosts the Workshop to be delivered for the INQUA Rome 2023 workshop.**
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
