@@ -94,17 +94,17 @@ To do these assignments we're just directly modifying cells within the `controls
 
 ```{r modifyControls, message = FALSE, eval=FALSE}
 # Directly assign the values
-controls$chroncontrolage[1] <- -55
-controls$agelimityounger[1] <- -53
-controls$agelimitolder[1] <- -57
-controls$thickness[1] <- 2
+controls$chroncontrolage[1] <- 20000	
+controls$agelimityounger[1] <- 15000
+controls$agelimitolder[1] <- 29000
+controls$thickness[1] <- 16
 ```
 
 ```{r modifyControlsShow, message = FALSE, eval = TRUE, echo=FALSE}
 controls$chroncontrolage[1] <- 20000	
-controls$agelimityounger[1] <- 18000
-controls$agelimitolder[1] <- 24000
-controls$thickness[1] <- 5
+controls$agelimityounger[1] <- 15000
+controls$agelimitolder[1] <- 29000
+controls$thickness[1] <- 16
 controls %>% DT::datatable(data = ., 
                 options = list(scrollX = "100%"))
 ```
@@ -222,12 +222,11 @@ newages <- samples(monticchio) %>%
   mutate(agecat = "new")
 
 monticchio[[1]]$collunits[[1]]$chronologies <- set_default(monticchio[[1]]$collunits[[1]]$chronologies,
-                                                      24863)
+                                                      25746)
 plotforages <- samples(monticchio) %>%
   select(depth, analysisunitid, age) %>% 
   unique() %>% 
   arrange(depth) %>% 
-
   mutate(agecat = "old") %>% 
   bind_rows(newages)
 
