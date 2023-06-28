@@ -18,7 +18,7 @@ output:
 
 ```{r setup, echo=FALSE}
 options(warn = -1)
-pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, terra, DT, readr, stringr, rioja)
+pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, DT, readr, stringr, rioja)
 ```
 
 ## 1. Introduction
