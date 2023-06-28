@@ -12,7 +12,7 @@
 
 **В данный момент, в этом репозитории хранится семинар, который будет проведен онлайн и называется: INQUA Rome 2023 workshop**
 
-[![Binder](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?labpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
 ## Авторы
 

@@ -12,7 +12,7 @@ Este repositorio está construido de tal forma que permite que se trabaje en lí
 
 **Actualmente, este repositorio contiene un taller que se llevará acabo en línea: INQUA Roma 2023.**
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?labpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
 ## Colaboradores
 

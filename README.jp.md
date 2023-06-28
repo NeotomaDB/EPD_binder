@@ -4,7 +4,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
 
-# 二オトマのワークショップ
+# Neotomaワークショップ
 
 交流的なRワークショップをホストするためのリポジトリです。このリポジトリは最新のワークショップ用にセットアップされています。前のワークショップは[Neotoma Workshops](https://github.com/NeotomaDB/Workshops)のリポジトリにアーカイブされています。
 
@@ -12,7 +12,7 @@
 
 **今、このリポジトリはINQUA ROMA 2023のワークショップのコンテンツを上げています。**
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?labpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
 ## 貢献者
 
