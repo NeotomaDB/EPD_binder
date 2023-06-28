@@ -12,7 +12,7 @@
 
 **今、このリポジトリはINQUA ROMA 2023のワークショップのコンテンツを上げています。**
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?labpath=rstudio)
 
 ## 貢献者
 
