@@ -11,3 +11,6 @@ slides/.DS_Store
 slides/.ipynb_checkpoints/slides1-checkpoint.ipynb
 
 wc10/
+complex_workflow_files/
+simple_workflow_files/
+Current_Workshop.Rproj
