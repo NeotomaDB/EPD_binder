@@ -45,7 +45,7 @@ In this tutorial you will learn how to:
 
 ### 2.1. Getting Help with Neotoma
 
-If you're planning on working with Neotoma, please join us on [Slack](https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ) where we manage a channel specifically for questions about the R package. You may also wish to join our Google Groups mailing list, please [contact us](mailto:neotoma-contact@googlegroups.com) to be added.
+If you're planning on working with Neotoma, please join us on [Slack](https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ) where we manage a channel specifically for questions about the R package. You may also wish to join the Neotoma community through our Google Groups mailing lists; please [see the information on our website](https://www.neotomadb.org/about/join-the-neotoma-community) to be added.
 
 ### 2.2 Understanding Data Structures in Neotoma
 
@@ -58,18 +58,20 @@ In this workshop we want to highlight two key structural concepts:
 
 ### 2.2.1 Data Structure in the Neotoma Database
 
-![**Figure**. *The structure of sites, collection units and datasets within Neotoma. A site contains one or more collection units. Chronologies are associated with collection units. Data of a common type (pollen, diatoms, vertebrate fauna) are assigned to a dataset.*](images/sitecollunitdataset.png){width=50%}
-
+![**Figure**. *The structure of sites, collection units, samples, and datasets within Neotoma. A site contains one or more collection units. Chronologies are associated with collection units. Samples with data of a common type (pollen, diatoms, vertebrate fauna) are assigned to a dataset.*](images/site_collunit_dataset_rev.png){width=50%}  
+  
+  
 Data in Neotoma is associated with sites -- specific locations with lat/long coordinates.
 
 Within a **site**, there may be one or more [**collection units**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#CollectionUnits) -- locations at which samples are physically collected within the site. For example, an archaeological **site** may have one or more **collection units**, pits within a broader dig site; a pollen sampling **site** on a lake may have multiple **collection units** -- core sites within the lake basin. Collection units may have higher resolution GPS locations than the site location, but are considered to be part of the broader site.
 
 Data within a **collection unit** is collected at various [**analysis units**](https://open.neotomadb.org/manual/sample-related-tables-1.html#AnalysisUnits). Any data sampled within an analysis unit is grouped by the dataset type (charcoal, diatom, dinoflagellate, etc.) and aggregated into a [**sample**](https://open.neotomadb.org/manual/sample-related-tables-1.html#Samples). The set of samples for a collection unit of a particular dataset type is then assigned to a [**dataset**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#Datasets).
 
-### 2.2.2 Data Structures in `neotoma2`
+### 2.2.2 Data Structures in `neotoma2` {#222-data-structures-in-neotoma2}
 
-![**Figure**. *Neotoma R Package diagram. Each box represents a data class within the package. Individual boxes show the class object, its name, its properties, and functions that can be applied to those objects. For example, a `sites` object has a property `sites`, that is a list. The function `plotLeaflet()` can be used on a `sites` object.*](images/neotomaUML_as.svg)
-
+![**Figure**. *Neotoma R Package UML diagram. Each box represents a data class within the package. Individual boxes show the class object, its name, its properties, and functions that can be applied to those objects. For example, a `sites` object has a property `sites`, that is a list. The function `plotLeaflet()` can be used on a `sites` object.*](images/neotomaUML_as.svg)  
+  
+  
 If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_Language) for the objects in the `neotoma2` R package we can see that the data structure generally mimics the structure within the database itself.  As we will see in the [Site Searches section](#3-site-searches), we can search for these objects, and begin to manipulate them (in the [Simple Analysis section](#4-simple-analytics)).
 
 It is important to note: *within the `neotoma2` R package, most objects are `sites` objects, they just contain more or less data*.  There are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
@@ -158,9 +160,9 @@ plotLeaflet(lac_sites)
 
 #### 3.1.2. Location: `loc=c()` {.tabset}
 
-The `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, ymin, xmax, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.
+The original `neotoma` package used a bounding box for locations, structured as a vector of latitude and longitude values: `c(xmin, ymin, xmax, ymax)`.  The `neotoma2` R package supports both this simple bounding box, but also more complex spatial objects, using the [`sf` package](https://r-spatial.github.io/sf/). Using the `sf` package allows us to more easily work with raster and polygon data in R, and to select sites from more complex spatial objects.  The `loc` parameter works with the simple vector, [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html), [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects and native `sf` objects in R.
 
-Looking for sites using a location. We're putting a rough representations of Italy.  To work with this spatial object in R we also transformed the `geoJSON` element to an object for the `sf` package.  There are many other tools to work with spatial objects in R. Regardless of how you get the data into R, `neotoma2` works with almost all objects in the `sf` package.
+As an example of searching for sites using a location, we've created a rough representation of Italy as a polygon.  To work with this spatial object in R we also transformed the `geoJSON` element to an object for the `sf` package.  There are many other tools to work with spatial objects in R. Regardless of how you get the data into R, `neotoma2` works with almost all objects in the `sf` package.
 
 ```{r boundingBox}
 geoJSON <- '{"coordinates":
@@ -182,7 +184,7 @@ geoJSON <- '{"coordinates":
 
 italy_sf <- geojsonsf::geojson_sf(geoJSON)
 
-# Note here we use the `all_data` flag to capture all the sites.
+# Note here we use the `all_data` flag to capture all the sites within the polygon.
 italy_sites <- neotoma2::get_sites(loc = italy_sf, all_data = TRUE)
 ```
 
@@ -208,7 +210,7 @@ neotoma2::plotLeaflet(italy_sites) %>%
 
 #### 3.1.3. Site Helpers {.tabset}
 
-If we look at the [data structure diagram](#222-data-structures-in-neotoma2) for the objects in the `neotoma2` R package we can see that there are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
+If we look at the [data structure diagram](#222-data-structures-in-neotoma2) for the objects in the `neotoma2` R package we can see that there are a set of functions that can operate on `sites`.  As we retrieve more information for `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
 
 As it is, we can take advantage of functions like `summary()` to get a more complete sense of the types of data we have in `italy_sites`.  The following code gives the summary table. We do some R magic here to change the way the data is displayed (turning it into a `datatable()` object), but the main piece is the `summary()` call.
 
@@ -233,9 +235,9 @@ In this document we list only the first 10 records (there are more, you can use 
 
 ### 3.2. Searching for datasets: {.tabset}
 
-We know that within Neotoma, collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above we can see that some of the sites we've looked at contain pollen records, some contain geochronologic data and some contain other dataset types. We could write something like this: `table(summary(italy_sites)$types)` to see the different datasettypes and their counts.
+Within Neotoma, collection units and datasets are contained within sites.  Similarly, a `sites` object contains `collectionunits` which contain `datasets`. From the table above (Result tab in Section 3.1.3.2) we can see that some of the sites we've looked at contain pollen records, some contain geochronologic data and some contain other dataset types. We could write something like this: `table(summary(italy_sites)$types)` to see the different datasettypes and their counts.
 
-With a `sites` object we can directly call `get_datasets()`, to pull in more metadata about the datasets.  The `get_datasets()` method also supports any of the search terms listed above in the [Site Search](#3-site-searches) section. At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(italy_sites)` to the output of a similar call using the following:
+With a `sites` object we can directly call `get_datasets()` to pull in more metadata about the datasets.  The `get_datasets()` method also supports any of the search terms listed above in the [Site Search](#3-site-searches) section. At any time we can use `datasets()` to get more information about any datasets that a `sites` object may contain.  Compare the output of `datasets(italy_sites)` to the output of a similar call using the following:
 
 #### 3.2.1. Code
 
@@ -290,7 +292,7 @@ We can see now that the data table looks different (comparing it to the [table a
 
 ### 3.4. Pulling in `sample()` data
 
-Because sample data adds a lot of overhead (for this pollen data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` after we've done our preliminary filtering. After `get_datasets()` you have enough information to filter based on location, time bounds and dataset type. When we move to `get_download()` we can do more fine-tuned filtering at the analysis unit or taxon level.
+Because sample data adds a lot of overhead (for this pollen data, the object that includes the dataset with samples is 20 times larger than the `dataset` alone), we try to call `get_downloads()` only after we've done our preliminary filtering. After `get_datasets()` you have enough information to filter based on location, time bounds and dataset type. When we move to `get_download()` we can do more fine-tuned filtering at the analysis unit or taxon level.
 
 The following call can take some time, but we've frozen the object as an RDS data file. You can run this command on your own, and let it run for a bit, or you can just load the object in.
 
@@ -313,11 +315,11 @@ When we've done this, we get a `data.frame` that is `r nrow(allSamp)` rows long 
 colnames(allSamp)
 ```
 
-For some dataset types, or analyses some of these columns may not be needed, however, for other dataset types they may be critically important.  To allow the `neotoma2` package to be as useful as possible for the community we've included as many as we can.
+For some dataset types or analyses, some of these columns may not be needed, however, for other dataset types they may be critically important.  To allow the `neotoma2` package to be as useful as possible for the community we've included as many as we can.
 
 #### 3.4.1. Extracting Taxa {.tabset}
 
-If you want to know what taxa we have in the record you can use the helper function `taxa()` on the sites object. The `taxa()` function gives us, not only the unique taxa, but two additional columns, `sites` and `samples` that tell us how many sites the taxa appear in, and how many samples the taxa appear in, to help us better understand how common individual taxa are.
+If you want to know what taxa we have in the record you can use the helper function `taxa()` on the sites object. The `taxa()` function gives us not only the unique taxa, but two additional columns -- `sites` and `samples` -- that tell us how many sites the taxa appear in, and how many samples the taxa appear in, to help us better understand how common individual taxa are.
 
 ##### 3.4.1.1. Code
 
@@ -336,13 +338,13 @@ neotomatx %>%
 
 #### 3.4.2. Understanding Taxonomies in Neotoma {-}
 
-Taxonomies in Neotoma are not as straightforward as we might expect. Taxonomic identification in paleoecology can be complex, impacted by the morphology of the object we are trying to identify, the condition of the palynomorph, the expertise of the analyst, and may other conditions. You can read more about concepts of taxonomy within Neotoma in the Neotoma Manual's [section on Taxonomic concepts](https://open.neotomadb.org/manual/database-design-concepts.html#taxonomy-and-synonymy).
+Taxonomies in Neotoma are not as straightforward as we might expect. Taxonomic identification in paleoecology can be complex, impacted by the morphology of the object we are trying to identify, the condition of the palynomorph, the expertise of the analyst, and many other conditions. You can read more about concepts of taxonomy within Neotoma in the Neotoma Manual's [section on Taxonomic concepts](https://open.neotomadb.org/manual/database-design-concepts.html#taxonomy-and-synonymy).
 
 We use the unique identifiers (*e.g.*, `taxonid`, `siteid`, `analysisunitid`) throughout the package, since they help us to link between records. The `taxonid` values returned by the `taxa()` call can be linked to the `taxonid` column in the `samples()` table.  This allows us to build taxon harmonization tables if we choose to. You may also note that the `taxonname` is in the field `variablename`.  Individual sample counts are reported in Neotoma as [`variables`](https://open.neotomadb.org/manual/taxonomy-related-tables-1.html#Variables). A "variable" may be either a species, something like laboratory measurements, or a non-organic proxy, like charcoal or XRF measurements, and includes the units of measurement and the value.
 
 #### 3.4.3. Simple Harmonization {.tabset}
 
-Lets say we want all samples from which *Quercus* taxa have been reported to be grouped together into one pseudo-taxon called *Quercus-undiff*. **NOTE**, this is not an ecologically useful grouping, but used for illustration.
+Let's say we want all samples from which *Pinus* taxa have been reported to be grouped together into one pseudo-taxon called *Pinus-undiff*. **NOTE**, this is not an ecologically useful grouping, but used for illustration.
 
 There are several ways of grouping taxa, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).  First, lets look for how many different ways *Pinus* appears in these records. We can use the function `str_detect()` from the `stringr` package to look for patterns, and then return either `TRUE` or `FALSE` when the string is detected:
 
@@ -361,9 +363,9 @@ allSamp$variablename[stringr::str_detect(allSamp$variablename, "Pinus")] <- "Pin
 
 There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Pinus.*"))` different taxa identified as being within the genus *Pinus* (including *Pinus*., *Pinus strobus*, and *Pinus banksiana/P. resinosa*). The above code reduces them all to a single taxonomic group *Pinus undiff*.
 
-Note that this changes *Pinus* _only_ in the `allSamp` object, not in any of the downloaded objects. If we were to call `samples()` again, the taxonomy would return to its original form.
+Note that this changes *Pinus* in the `allSamp` object _only_, not in any of the downloaded objects. If we were to call `samples()` again, the taxonomy would return to its original form.
 
-If we want to have an artifact of our choices, we can use an external table. For example, a table of pairs (what we want changed, and the name we want it replaced with) can be generated, and it can include regular expressions (if we choose):
+A second way to harmonize taxa is to use an external table, which is especially useful if we want to have an artifact of our choices. For example, a table of pairs (what we want changed, and the name we want it replaced with) can be generated, and it can include regular expressions (if we choose):
 
 | original | replacement |
 | -------- | ----------- |
@@ -411,10 +413,10 @@ ggplot(data = taxaplots, aes(x = sites, y = samples)) +
   ylab("Number of Samples") +
   theme_bw()
 ```
-
+  
 #### 3.4.4. Editing the Taxonomy Table {-}
 
-The plot (above) is mostly for illustration, but we can see, as a sanity check, that the relationship is as we'd expect. There are a large number of taxa that are rarely present, and then several that are quite common.
+The plot (above) is mostly for illustration, but we can see, as a sanity check, that the relationship is as we'd expect. Here, each point represents a separate taxon, roughly, so there is a large density of points (taxa) that plot in the lower left section of the figure, and fewer points in the upper right. This means that there are a large number of taxa that are rarely present and then several that are quite common.
 
 Exporting the taxon table to a `csv` file allows us to edit the table, filtering and selecting taxa based on contextual information, such as the `ecologicalgroup` or `taxongroup` to help you out. Once you've cleaned up the translation table you can load it in (try to save it under a different file name!), and then apply the transformation:
 
@@ -460,7 +462,7 @@ DT::datatable(head(cleanSamp, n = 50), rownames = FALSE,
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-We now have a cleaner set of taxon names compared to the original table, both because of harmonization, and because we cleared out many of the non **TRSH** taxa from the harmonization table. Plotting the same set of taxa with the new harmonized names results in this plot:
+We now have a cleaner set of taxon names compared to the original table, both because of harmonization, and because we cleared out many of the non-**TRSH** (trees and shrubs) taxa from the harmonization table. Plotting the same set of taxa with the new harmonized names results in this plot:
 
 ```{r origTableOut, message = FALSE, echo=FALSE, fig.cap="**Figure**. *The same site/sample plot as above, with with the new harmonized taxonomy. Note that the distribution of points along the curve is smoother, as we remove some of the taxonomic issues.*"}
 taxaplots <- samples(italy_dl) %>%
