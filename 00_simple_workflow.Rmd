@@ -45,7 +45,7 @@ In this tutorial you will learn how to:
 
 ### 2.1. Getting Help with Neotoma
 
-If you're planning on working with Neotoma, please join us on [Slack](https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ) where we manage a channel specifically for questions about the R package. You may also wish to join the Neotoma community through our Google Groups mailing lists; please [see the information on our website](https://www.neotomadb.org/about/join-the-neotoma-community) to be added.
+If you're planning on working with Neotoma, please join us on [Slack](https://join.slack.com/t/neotomadb/shared_invite/zt-cvsv53ep-wjGeCTkq7IhP6eUNA9NxYQ) where we manage a channel specifically for questions about the R package (the #it_r channel, or #it_r_es for R help in Spanish and #it_r_jp in Japanese). You may also wish to join the Neotoma community through our Google Groups mailing lists; please [see the information on our website](https://www.neotomadb.org/about/join-the-neotoma-community) to be added.
 
 ### 2.2 Understanding Data Structures in Neotoma
 
@@ -70,8 +70,7 @@ Data within a **collection unit** is collected at various [**analysis units**](h
 ### 2.2.2 Data Structures in `neotoma2` {#222-data-structures-in-neotoma2}
 
 ![**Figure**. *Neotoma R Package UML diagram. Each box represents a data class within the package. Individual boxes show the class object, its name, its properties, and functions that can be applied to those objects. For example, a `sites` object has a property `sites`, that is a list. The function `plotLeaflet()` can be used on a `sites` object.*](images/neotomaUML_as.svg)  
-  
-  
+
 If we look at the [UML diagram](https://en.wikipedia.org/wiki/Unified_Modeling_Language) for the objects in the `neotoma2` R package we can see that the data structure generally mimics the structure within the database itself.  As we will see in the [Site Searches section](#3-site-searches), we can search for these objects, and begin to manipulate them (in the [Simple Analysis section](#4-simple-analytics)).
 
 It is important to note: *within the `neotoma2` R package, most objects are `sites` objects, they just contain more or less data*.  There are a set of functions that can operate on `sites`.  As we add to `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
@@ -103,6 +102,7 @@ With the pipe (`%>%`) we do not need to create the variable, we can just rewrite
 get_sites(sitename = "%Lago%") %>%
   plotLeaflet()
 ```
+
 #### 2.2.3.2. Result
 
 ```{r piping result, echo=FALSE}
@@ -110,7 +110,6 @@ get_sites(sitename = "%Lago%") %>%
 get_sites(sitename = "%Lago%") %>%
   plotLeaflet()
 ```
-
 
 ## 3. Site Searches
 
@@ -185,6 +184,9 @@ geoJSON <- '{"coordinates":
 italy_sf <- geojsonsf::geojson_sf(geoJSON)
 
 # Note here we use the `all_data` flag to capture all the sites within the polygon.
+# We're using `all_data` here because we know that the site information is relatively small
+# for Italy. If we were working in a new area or with a new search we would limit the
+# search size.
 italy_sites <- neotoma2::get_sites(loc = italy_sf, all_data = TRUE)
 ```
 
@@ -212,7 +214,7 @@ neotoma2::plotLeaflet(italy_sites) %>%
 
 If we look at the [data structure diagram](#222-data-structures-in-neotoma2) for the objects in the `neotoma2` R package we can see that there are a set of functions that can operate on `sites`.  As we retrieve more information for `sites` objects, using `get_datasets()` or `get_downloads()`, we are able to use more of these helper functions.
 
-As it is, we can take advantage of functions like `summary()` to get a more complete sense of the types of data we have in `italy_sites`.  The following code gives the summary table. We do some R magic here to change the way the data is displayed (turning it into a `datatable()` object), but the main piece is the `summary()` call.
+As it is, we can take advantage of functions like `summary()` to get a more complete sense of the types of data we have in `italy_sites`.  The following code gives the summary table. We do some R magic here to change the way the data is displayed (turning it into a [`DT::datatable()`](https://rstudio.github.io/DT/) object), but the main piece is the `summary()` call.
 
 ##### 3.1.3.1. Code
 
@@ -385,8 +387,7 @@ readr::write_csv(taxaplots, "data/mytaxontable.csv")
 
 #### Looking at the Taxonomic Structure {.tabset}
 
-The `taxa` function returns all our taxonomic information, and it provides some additional information, the columns `samples` and `sites` which record the number of samples across all datasets that contain the taxon, and the number of sites with the taxon. The plot 
-below shows the relationship between samples and sites, which we would expect to be somewhat skewed, as it is.
+The `taxa` function returns all our taxonomic information, and it provides some additional information, the columns `samples` and `sites` which record the number of samples across all datasets that contain the taxon, and the number of sites with the taxon. The plot below shows the relationship between samples and sites, which we would expect to be somewhat skewed, as it is.
 
 ##### 3.4.3.1. Code
 
@@ -569,7 +570,7 @@ mostCommon <- taxaSitesByAge %>%
 
 # The last thing to do is to select only some of the taxa:
 subsetTaxa <- groupbyage %>% 
-  filter(harmonizedname %in% mostCommon$harmonizedname, age < 10000) 
+  filter(harmonizedname %in% mostCommon$harmonizedname, age < 15000) 
 
 # And then plot!
 ggplot(subsetTaxa,
@@ -577,74 +578,13 @@ ggplot(subsetTaxa,
   geom_point() +
   geom_smooth() +
   facet_wrap(~harmonizedname) +
-  coord_cartesian(xlim = c(10000, 0), ylim = c(0, 1)) +
-  scale_x_reverse(breaks = c(10000, 20000)) +
+  coord_cartesian(xlim = c(15000, 0), ylim = c(0, 1)) +
+  scale_x_reverse(breaks = c(15000, 20000)) +
   xlab("Proportion of Sites with Taxon") +
   theme_bw()
 ```
 
 We can see clear patterns of change, and the smooths are modeled using Generalized Additive Models (GAMs) in R, so we can have more or less control over the actual modeling using the `gam` or `mgcv` packages.  Depending on how we divide the data we can also look at shifts in altitude, latitude or longitude to better understand how species distributions and abundances changed over time in this region.
-
-### 4.3. Distributions in Climate (July max temperature) from Rasters
-
-We are often interested in the interaction between taxa and climate, assuming that time is a proxy for changing environments. The development of large-scale global datasets for climate has made it relatively straightforward to access data from the cloud in raster format.  R provides a number of tools (in the `sf` and `raster` packages) for managing spatial data, and providing support for spatial analysis of data.
-
-The first step is taking our sample data and turning it into a spatial object using the `sf` package in R:
-
-```{r makeSamplesSpatial}
-modern <- samples(italy_dl) %>% 
-  filter(age < 1000) %>% 
-  filter(ecologicalgroup == "TRSH" & elementtype == "pollen" & units == "NISP")
-
-spatial <- sf::st_as_sf(modern, 
-                        coords = c("long", "lat"),
-                        crs = "+proj=longlat +datum=WGS84")
-```
-
-The data is effectively the same, `sf` makes an object called `spatial` that is a `data.frame` with all the information from `samples()`, and a column (`geometry`) that contains the spatial data.
-
-We can use the [`getData()` function](https://www.rdocumentation.org/packages/raster/versions/3.5-15/topics/getData) in the `raster` package to get climate data from WorldClim. The operations that follow here can be applied to any sort of raster data, provided it is loaded into R as a `raster` object.
-
-Here we pull in the raster data, at a 10 minute resolution for the $T_{max}$ variable, maximum monthly temperature.  The raster itself has 12 layers, one for each month.  With the `extract()` function we just get information for the seventh month, July.  
-
-```{r worldTmax}
-worldTmax <- raster::getData('worldclim', var = 'tmax', res = 10)
-spatial$tmax7 <- raster::extract(worldTmax, spatial)[,7]
-```
-
-This adds a column to the `data.frame` `spatial`, that contains the maximum July temperature for each taxon at each site (all taxa at a site will share the same value).  We've already filtered to all UPHE taxa, but that still leaves us with `r length(length(unique(spatial$variablename)))` distinct names for the taxa.  We're going to use `dplyr`'s `mutate()` function to extract just the genus:
-
-```{r toGenus}
-spatial <- spatial %>%
-  mutate(variablename = stringr::str_replace(variablename, "[[:punct:]]", " ")) %>% 
-  mutate(variablename = stringr::word(variablename, 1)) %>% 
-  group_by(variablename, siteid) %>% 
-  summarise(tmax7 = max(tmax7), .groups = "keep") %>%
-  group_by(variablename) %>% 
-  filter(n() > 20)
-```
-
-#### 4.3.1. Setting the Background
-
-We want to get the background distribution of July temperatures in Rome, to plot our taxon distributions against by taking the maximum value of the temperature, however, since all values at the site are the same (because we used a spatial overlay) the maximum is the same as the actual July temperature at the site.
-
-```{r topten}
-maxsamp <- spatial %>% 
-  dplyr::group_by(siteid) %>% 
-  dplyr::summarise(tmax7 = max(tmax7), .groups = 'keep')
-```
-
-Now we're going to plot it out, using `facet_wrap()` to plot each taxon in its own panel:
-
-```{r ggplot}
-ggplot() +
-  geom_density(data = spatial,
-               aes(x = round(tmax7 / 10, 0)), col = 2) +
-  facet_wrap(~variablename) +
-  geom_density(data = maxsamp, aes(x = tmax7 / 10)) +
-  xlab("Maximum July Temperature") +
-  ylab("Kernel Density")
-```
 
 ## 5. Conclusion
 
