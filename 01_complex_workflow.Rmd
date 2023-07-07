@@ -29,7 +29,7 @@ This RMarkdown document will walk you through the process of:
 5.  Switching between default chronologies
 
 This approach is focused on a single record, but much of what is done here can be extended to multiple records using functions.
-
+ 
 ## Load Libraries
 
 For this workshop element we only need four packages, `neotoma2`, `dplyr`, `ggplot2` and `Bchron`. We'll be loading a record from Neotoma, building a new chronology for the record, and then adding the chronology back to the record.
