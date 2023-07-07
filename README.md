@@ -9,6 +9,8 @@ This repository is built with the structure required to serve the content throug
 
 **Currently, this repo hosts the Workshop to be delivered for the INQUA Rome 2023 workshop.**
 
+To access the content for this Workshop, click the badge below:
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NeotomaDB/Current_Workshop/main?urlpath=rstudio)
 
 ## Contributors
