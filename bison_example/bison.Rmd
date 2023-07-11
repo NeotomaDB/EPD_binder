@@ -43,7 +43,7 @@ plotLeaflet(bison)
 3. Now, let's get all the rows of sample data in Neotoma. Since there are 1258 sites, this operation might take a while, so an .RDS file `bisonDataDL.RDS` has been provided. Let's load that:
 
 ```{r obtain records}
-bison_dl <- readRDS("data/bisonDataDL.RDS")
+bison_dl <- readRDS('data/BisonDataDL.rds')
 head(bison_dl)
 ```
 
