@@ -17,7 +17,7 @@ output:
 
 ```{r setup, echo=FALSE}
 options(warn = -1)
-pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, DT, maptools, maps)
+pacman::p_load(neotoma2, dplyr, tidyverse, ggplot2, sf, geojsonsf, leaflet, DT, maptools, maps)
 ```
 
 ## 1. Exercise Using Vertebrate Data
@@ -102,8 +102,6 @@ nrow(allSampDF)
 8. Let's add a new column where we define if some of the given observations belong to the `Pleistocene` or `Holocene`. We will use `ageyounger` for this purpose. Let's remove the observations that have no era defined.
 
 ```{r pleistocene and holocene}
-library(tidyverse)
-
 allSampDF <- allSampDF %>% 
   mutate(era = factor(ifelse(ageyounger >= 11700, "Pleistocene", "Holocene"))) %>% # Assign a new column with the values Pleistocene or Holocene based on ageyounger
   mutate(era  = fct_relevel(era,"Pleistocene", "Holocene")) %>%
