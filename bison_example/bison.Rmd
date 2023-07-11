@@ -102,8 +102,11 @@ nrow(allSampDF)
 8. Let's add a new column where we define if some of the given observations belong to the `Pleistocene` or `Holocene`. We will use `ageyounger` for this purpose. Let's remove the observations that have no era defined.
 
 ```{r pleistocene and holocene}
+library(tidyverse)
+
 allSampDF <- allSampDF %>% 
-  mutate(era = ifelse(ageyounger >= 11700, "Pleistocene", "Holocene")) %>% # Assign a new column with the values Pleistocene or Holocene based on ageyounger
+  mutate(era = factor(ifelse(ageyounger >= 11700, "Pleistocene", "Holocene"))) %>% # Assign a new column with the values Pleistocene or Holocene based on ageyounger
+  mutate(era  = fct_relevel(era,"Pleistocene", "Holocene")) %>%
   filter(!is.na(era)) # Remove empty eras
 
 DT::datatable(head(allSampDF))
@@ -132,36 +135,13 @@ ggplot(data = taxaplots, aes(x = era, y=samples)) +
   ylab("Number of Bison") +
   theme_bw()
 ```
-
-10. Let's build a Convex Hull for the Bison data based on Time Period:
-
-```{r convexHull}
-bison_hull <- allSampDF %>%
-  group_by(era) %>%
-  slice(chull(long, lat)) # chull computes the convex hull using the xy points given to it
-bison_hull
-```
-11. Let's plot the result:
+Let's plot the observations of each era on the map; we will use the `map_data` function from the `maps` library:
 
 ```{r}
 world <- map_data("world")
-ggplot(allSampDF, aes(x = long, y = lat, colour=era)) + 
-              geom_map(data = world, 
-                       map = world,
-                       aes(map_id = region),
-                       color = "black",
-                       fill = "white",
-                       show.legend = FALSE,
-                       inherit.aes = FALSE) +
-              geom_point() + 
-              geom_polygon(data=bison_hull, alpha=.2) +
-              theme_bw() +
-              ggtitle("Bison in each Era") +
-              xlab("Longitude") + 
-              ylab("Latitude") + 
-              coord_sf(xlim=c(-175, -80),ylim=c(20,72))
 ```
-10.b We can try with a facet plot as well:
+
+10. Let's show the observations using a facet plot:
 
 ```{r facetPlot}
 ggplot(allSampDF, aes(x = long, y = lat)) + 
@@ -172,27 +152,10 @@ ggplot(allSampDF, aes(x = long, y = lat)) +
                        fill = "white",
                        show.legend = FALSE,
                        inherit.aes = FALSE) +
-              geom_point() + 
+              geom_point(aes(colour=era), show.legend = FALSE) + 
               facet_grid(era ~ .) +
               theme_bw() +
               ggtitle("Bisons in each Era") +
               xlab("Longitude") + 
               ylab("Latitude") 
-```
-10.b You can also use baseR to create similar plots! 
-
-```{r}
-xrange<-range(allSampDF$long,na.rm=T)
-yrange<-range(allSampDF$lat,na.rm=T)
-
-```
-
-```{r}
-
-data(wrld_simpl)
-plot(wrld_simpl,axes=TRUE,col="lightgray", xlim=xrange, ylim=yrange, main="Bison")
-points(allSampDF$long[which(allSampDF$era=="Holocene")],allSampDF$lat[which(allSampDF$era=="Holocene")],col="gold",pch=20,cex=0.8)
-points(allSampDF$long[which(allSampDF$era=="Pleistocene")],allSampDF$lat[which(allSampDF$era=="Pleistocene")],col="red",pch=20,cex=0.8)
-legend(x="bottomleft",legend=c("Holocene","Pleistocene"),pch=20,cex=1.25, col=c("gold","red"), bty="n")
-
 ```
