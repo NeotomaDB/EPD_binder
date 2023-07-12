@@ -485,9 +485,7 @@ ggplot(data = taxaplots, aes(x = sites, y = samples)) +
 
 ### 4.1. Stratigraphic Plotting
 
-We can use packages like `rioja` to do stratigraphic plotting for a single record, but first we need to do some different data management.  Although we could do harmonization again we're going to simply take the top ten most common taxa at a single site and plot them in a stratigraphic diagram.
-
-We're using the `arrange()` call to sort by the number of times that the taxon appears within the core. This way we can take out samples and select the taxa that appear in the first ten rows of the `plottingTaxa` `data.frame`.
+We can use packages like `rioja` to do stratigraphic plotting for a single record, but first we need to do some different data management.  Although we could do harmonization again we're going to simply take the taxa at a single site and plot them in a stratigraphic diagram.
 
 ```{r stratiplot, message = FALSE}
 # Get a particular site, in this case we are simply subsetting the
