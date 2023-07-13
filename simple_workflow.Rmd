@@ -41,7 +41,7 @@ In this tutorial you will learn how to:
 * Search for sites using site names and geographic parameters -- [Site Searches](#3-site-searches)
 * Filter results using temporal and spatial parameters -- [Filter Results](#33-filter-records-tabset)
 * Obtain sample information for the selected datasets -- [Sample Information](#34-pulling-in-sample-data)
-* Perform basic analysis including the use of climate data from rasters -- [Basic Analysis](#4-simple-analytics)
+* Perform basic Stratigraphic Plotting -- [Basic Analysis](#4-simple-analytics)
 
 ### 2.1. Getting Help with Neotoma
 
