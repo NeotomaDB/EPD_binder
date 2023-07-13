@@ -528,62 +528,6 @@ plot <- rioja::strat.plot(counts[,-1] * 100, yvar = counts$age,
 rioja::addClustZone(plot, clust, 4, col = "red")
 ```
 
-### 4.2. Change in Time Across Sites
-
-We now have site information across our region with samples and with taxon names. I'm interested in looking at the distributions of taxa across time, and the proportion of their presence/absence. We are going to pick the taxa (based on the number of times they appear in the records) and look at their distributions in time. We're going to use our harmonization table again, to clean up the taxon names.
-
-```{r summarizeByTime, message = FALSE}
-# Harmonize the sample names as above.
-# Note that when we group we are treating `age` in a special way.
-# If we multiply by 2, round to the nearest Thousandth, and then divide
-# by two, we are effectively putting the data into 500 year bins:
-
-# First, get the number of sites at which each taxon appears, within each
-# 500 year bin:
-taxaSitesByAge <- samples(italy_dl) %>%
-  inner_join(translation, by = c("variablename" = "variablename")) %>% 
-  dplyr::select(!c("variablename")) %>% 
-  group_by(harmonizedname,
-           "age" = round(age * 2, -3) / 2) %>%
-  summarise(n = length(unique(siteid)), .groups = 'keep')
-
-# Then get the total number of sites sampled within each 500 year bin:
-samplesByAge <- samples(italy_dl) %>%
-  inner_join(translation, by = c("variablename" = "variablename")) %>% 
-  dplyr::select(!c("variablename")) %>% 
-  group_by("age" = round(age * 2, -3) / 2) %>%
-  summarise(samples = length(unique(siteid)), .groups = 'keep')
-
-# Now get the proportion of sites at which each taxon appears:
-groupbyage <- taxaSitesByAge %>%
-  inner_join(samplesByAge, by = "age") %>% 
-  mutate(proportion = n / samples)
-
-# These lines of code give us the most common taxa
-# in this dataset (their count of samples is in the top 5%)
-mostCommon <- taxaSitesByAge %>%
-  group_by(harmonizedname) %>%
-  summarise(count = sum(n)) %>%
-  filter(count > quantile(count, 0.5))
-
-# The last thing to do is to select only some of the taxa:
-subsetTaxa <- groupbyage %>% 
-  filter(harmonizedname %in% mostCommon$harmonizedname, age < 15000) 
-
-# And then plot!
-ggplot(subsetTaxa,
-    aes(x = age, y = proportion)) +
-  geom_point() +
-  geom_smooth() +
-  facet_wrap(~harmonizedname) +
-  coord_cartesian(xlim = c(15000, 0), ylim = c(0, 1)) +
-  scale_x_reverse(breaks = c(15000, 20000)) +
-  xlab("Proportion of Sites with Taxon") +
-  theme_bw()
-```
-
-We can see clear patterns of change, and the smooths are modeled using Generalized Additive Models (GAMs) in R, so we can have more or less control over the actual modeling using the `gam` or `mgcv` packages.  Depending on how we divide the data we can also look at shifts in altitude, latitude or longitude to better understand how species distributions and abundances changed over time in this region.
-
 ## 5. Conclusion
 
 So, we've done a lot in this example.  We've (1) searched for sites using site names and geographic parameters, (2) filtered results using temporal and spatial parameters, (3) obtained sample information for the selected datasets and (4) performed basic analysis including the use of climate data from rasters.  Hopefully you can use these examples as templates for your own future work, or as a building block for something new and cool!
