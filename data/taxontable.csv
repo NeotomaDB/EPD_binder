@@ -1,235 +1,225 @@
-taxonid,variablename,ecologicalgroup,harmonizedname
-1,Abies,TRSH,Abies
-550,Abies balsamea,TRSH,Abies
-3725,Abies undiff.,TRSH,Abies
-338,Acer,TRSH,Acer
-552,Acer cf. A. pensylvanicum,TRSH,Acer
-4,Acer negundo,TRSH,Acer
-553,Acer nigrum,TRSH,Acer
-5,Acer pensylvanicum,TRSH,Acer
-6,Acer rubrum,TRSH,Acer
-554,Acer saccharinum,TRSH,Acer
-555,Acer saccharum,TRSH,Acer
-3,Acer saccharum-type,TRSH,Acer
-8,Acer spicatum,TRSH,Acer
-9,Acer undiff.,TRSH,Acer
-330,Alnus,TRSH,Alnus
-344,Alnus incana,TRSH,Alnus
-13,Alnus incana-type,TRSH,Alnus
-15,Alnus undiff.,TRSH,Alnus
-353,Alnus viridis,TRSH,Alnus
-3606,Alnus viridis subsp. crispa,TRSH,Alnus
-3607,Alnus viridis subsp. crispa-type,TRSH,Alnus
-14,Alnus viridis-type,TRSH,Alnus
-564,Andromeda polifolia,TRSH,Andromeda
-563,Andromeda polifolia var. latifolia,TRSH,Andromeda
-21,Aquifoliaceae,TRSH,Aquifoliaceae
-23,Arceuthobium,TRSH,Arceuthobium
-1162,Arctostaphylos,TRSH,Arctostaphylos
-29,Betula,TRSH,Betula
-5735,Betula (large),TRSH,Betula
-574,Betula (shrub),TRSH,Betula
-5736,Betula (small),TRSH,Betula
-23078,Betula spp.,TRSH,Betula
-1011,Betula undiff.,TRSH,Betula
-327,Betulaceae,TRSH,Betula
-357,Betulaceae undiff.,TRSH,Betula
-394,Caprifoliaceae,TRSH,Caprifoliaceae
-9528,Caprifoliaceae sensu lato,TRSH,Caprifoliaceae
-9529,Caprifoliaceae sensu lato undiff.,TRSH,Caprifoliaceae
-44,Carya,TRSH,Carya
-587,Carya cordiformis,TRSH,Carya
-588,Carya ovata,TRSH,Carya
-2643,Cassiope-type,TRSH,Cassiope
-47,Castanea,TRSH,Castanea
-590,Castanea dentata,TRSH,Castanea
-3996,Castanea-type,TRSH,Castanea
-49,Celtis,TRSH,Celtis
-591,Celtis occidentalis,TRSH,Celtis
-24134,Celtis/Ulmus,TRSH,Celtis
-50,Cephalanthus,TRSH,Other
-593,Cephalanthus occidentalis,TRSH,Other
-743,cf. Sarcobatus vermiculatus,TRSH,Sarcobatus vermiculatus
-2574,cf. Shepherdia,TRSH,Shepherdia
-757,cf. Taxus,TRSH,Taxus
-9124,Chamaedaphne,TRSH,Chamaedaphne
-53,Chamaedaphne calyculata,TRSH,Chamaedaphne
-597,Comptonia peregrina,TRSH,Comptonia
-1944,Coniferae,TRSH,Other
-1943,Coniferae undiff.,TRSH,Other
-1693,Cornaceae,TRSH,Cornus
-361,Cornus,TRSH,Cornus
-599,Cornus alternifolia,TRSH,Cornus
-600,Cornus canadensis,TRSH,Cornus
-3170,Cornus racemosa,TRSH,Cornus
-601,Cornus rugosa,TRSH,Cornus
-579,Cornus sericea,TRSH,Cornus
-4175,Cornus suecica,TRSH,Cornus
-65,Cornus undiff.,TRSH,Cornus
-67,Corylus,TRSH,Corylus
-603,Corylus cornuta,TRSH,Corylus
-3399,Corylus-type,TRSH,Corylus
-72,Cupressaceae,TRSH,Thuja
-756,Cupressaceae cf. Thuja occidentalis,TRSH,Thuja
-607,Diervilla lonicera,TRSH,Diervilla lonicera
-907,Elaeagnaceae undiff.,TRSH,Elaeagnus
-84,Elaeagnus,TRSH,Elaeagnus
-615,Elaeagnus commutata,TRSH,Elaeagnus
-86,Empetrum,TRSH,Empetrum
-366,Ephedra,TRSH,Ephedra
-368,Ephedra nevadensis-type,TRSH,Ephedra
-23490,Ephedraceae,TRSH,Ephedra
-92,Ericaceae,TRSH,Ericaceae
-909,Ericaceae undiff.,TRSH,Ericaceae
-848,Ericales,TRSH,Ericales
-849,Ericales undiff.,TRSH,Ericales
-107,Fagus,TRSH,Fagus
-2588,Fagus grandifolia,TRSH,Fagus
-369,Fraxinus,TRSH,Fraxinus
-110,Fraxinus (tetracolpate),TRSH,Fraxinus
-111,Fraxinus (tricolpate),TRSH,Fraxinus
-1102,Fraxinus americana,TRSH,Fraxinus
-371,Fraxinus americana-type,TRSH,Fraxinus
-1082,Fraxinus nigra,TRSH,Fraxinus
-112,Fraxinus nigra-type,TRSH,Fraxinus
-1083,Fraxinus pennsylvanica,TRSH,Fraxinus
-961,Fraxinus pennsylvanica/F. americana-type,TRSH,Fraxinus
-113,Fraxinus pennsylvanica-type,TRSH,Fraxinus
-114,Fraxinus undiff.,TRSH,Fraxinus
-117,Gaultheria,TRSH,Gaultheria
-118,Gaylussacia,TRSH,Gaylussacia
-2274,Grossulariaceae,TRSH,Other
-135,Ilex,TRSH,Ilex
-672,Ilex/Nemopanthus,TRSH,Ilex
-1225,Ilex/Nemopanthus undiff.,TRSH,Ilex
-940,Ilex-type,TRSH,Ilex
-372,Juglans,TRSH,Juglans
-144,Juglans cinerea,TRSH,Juglans
-145,Juglans nigra,TRSH,Juglans
-146,Juglans undiff.,TRSH,Juglans
-983,Juniperus,TRSH,Juniperus
-4416,Juniperus communis,TRSH,Juniperus
-761,Juniperus communis/Thuja occidentalis-type,TRSH,Juniperus
-364,Juniperus/Thuja,TRSH,Juniperus
-363,Juniperus-type,TRSH,Juniperus
-148,Kalmia,TRSH,Kalmia
-153,Larix,TRSH,Larix
-1460,Larix laricina,TRSH,Larix
-162,Liquidambar,TRSH,Liquidambar
-164,Lonicera,TRSH,Lonicera
-598,Lonicera caerulea,TRSH,Lonicera
-640,Lonicera canadensis,TRSH,Lonicera
-642,Lonicera canadensis-type,TRSH,Lonicera
-641,Lonicera involucrata,TRSH,Lonicera
-776,Loranthaceae,TRSH,Loranthaceae
-185,Moraceae,TRSH,Morus
-874,Moraceae undiff.,TRSH,Morus
-186,Morus,TRSH,Morus
-662,Morus rubra-type,TRSH,Morus
-383,Myrica,TRSH,Myrica
-666,Myrica gale,TRSH,Myrica
-381,Myricaceae,TRSH,Myrica
-189,Nemopanthus,TRSH,Nemopanthus
-671,Nemopanthus mucronatus,TRSH,Nemopanthus
-193,Nyssa,TRSH,Nyssa
-4577,Nyssaceae,TRSH,Nyssa
-1237,Ostrya,TRSH,Ostraya
-197,Ostrya/Carpinus,TRSH,Ostraya
-384,Ostrya-type,TRSH,Ostraya
-210,Picea,TRSH,Picea
-1233,Picea cf. P. glauca,TRSH,Picea
-2317,Picea glauca,TRSH,Picea
-207,Picea glauca-type,TRSH,Picea
-2318,Picea mariana,TRSH,Picea
-208,Picea mariana-type,TRSH,Picea
-209,Picea rubens-type,TRSH,Picea
-897,Picea undiff.,TRSH,Picea
-329,Pinaceae,TRSH,Other
-64,Pinaceae undiff.,TRSH,Other
-385,Pinus,TRSH,Pinus
-836,Pinus banksiana/P. resinosa,TRSH,Pinus
-695,Pinus banksiana-type,TRSH,Pinus
-696,Pinus resinosa-type,TRSH,Pinus
-697,Pinus strobus,TRSH,Pinus
-212,Pinus subg. Pinus,TRSH,Pinus
-913,Pinus subg. Pinus undiff.,TRSH,Pinus
-213,Pinus subg. Strobus,TRSH,Pinus
-2917,Pinus subg. Strobus undiff.,TRSH,Pinus
-216,Pinus undiff.,TRSH,Pinus
-222,Platanus,TRSH,Platanus
-700,Platanus occidentalis,TRSH,Platanus
-389,Populus,TRSH,Populus
-1151,Populus balsamifera,TRSH,Populus
-238,Populus balsamifera-type,TRSH,Populus
-23203,Populus cf. P. tremuloides,TRSH,Populus
-709,Populus deltoides-type,TRSH,Populus
-710,Populus grandidentata-type,TRSH,Populus
-1155,Populus tremuloides,TRSH,Populus
-239,Populus tremuloides-type,TRSH,Populus
-237,Populus undiff.,TRSH,Populus
-715,Prunus,TRSH,Prunus
-716,Prunus pensylvanica,TRSH,Prunus
-717,Prunus serotina,TRSH,Prunus
-942,Prunus undiff.,TRSH,Prunus
-719,Prunus virginiana,TRSH,Prunus
-250,Pyrus-type,TRSH,Pyrus
-251,Quercus,TRSH,Quercus
-256,Rhamnaceae,TRSH,Rhamnaceae/Vitaceae
-726,Rhamnaceae/Vitaceae,TRSH,Rhamnaceae/Vitaceae
-785,Rhamnus,TRSH,Rhamnaceae/Vitaceae
-723,Rhamnus alnifolia/Frangula alnus,TRSH,Rhamnaceae/Vitaceae
-725,Rhamnus cathartica,TRSH,Rhamnaceae/Vitaceae
-724,Rhamnus/Vitis,TRSH,Rhamnaceae/Vitaceae
-1226,Rhamnus/Vitis undiff.,TRSH,Rhamnaceae/Vitaceae
-259,Rhododendron,TRSH,Rhododendron
-727,Rhododendron canadense,TRSH,Rhododendron
-155,Rhododendron subsect. Ledum,TRSH,Rhododendron
-156,Rhododendron subsect. Ledum/Chamaedaphne calyculata,TRSH,Rhododendron
-260,Rhus,TRSH,Rhus
-730,Rhus typhina,TRSH,Rhus
-262,Ribes,TRSH,Ribes
-718,Rosaceae cf. Prunus serotina,TRSH,Prunus
-733,Rubiaceae,TRSH,Rubiaceae
-266,Rubiaceae undiff.,TRSH,Rubiaceae
-267,Rubus,TRSH,Rubiaceae
-734,Rubus chamaemorus,TRSH,Rubiaceae
-271,Salix,TRSH,Salix
-739,Salix herbacea-type,TRSH,Salix
-740,Salix reticulata-type,TRSH,Salix
-25596,Salix spp.,TRSH,Salix
-1216,Salix undiff.,TRSH,Salix
-741,Salix vestita-type,TRSH,Salix
-275,Sambucus,TRSH,Sambucus
-7654,Sarcobataceae,TRSH,Sarcobatus vermiculatus
-279,Sarcobatus vermiculatus,TRSH,Sarcobatus vermiculatus
-542,Shepherdia,TRSH,Shepherdia
-289,Shepherdia argentea,TRSH,Shepherdia
-290,Shepherdia canadensis,TRSH,Shepherdia
-3010,Spermatophyta undiff. (trees),TRSH,Other
-5779,Symphoricarpos albus,TRSH,Symphoricarpos albus
-299,Taxus,TRSH,Taxus
-1461,Taxus canadensis,TRSH,Taxus
-853,Thuja,TRSH,Thuja
-42657,Thuja occidentalis,TRSH,Thuja
-302,Tilia,TRSH,Tilia
-758,Tilia americana,TRSH,Tilia
-306,Tsuga,TRSH,Tsuga canadensis
-763,Tsuga canadensis,TRSH,Tsuga canadensis
-1275,Tsuga undiff.,TRSH,Tsuga canadensis
-310,Ulmus,TRSH,Ulmus
-9817,Ulmus americana,TRSH,Ulmus
-317,Vaccinium,TRSH,Vaccinium
-764,Vaccinium angustifolium-type,TRSH,Vaccinium
-766,Vaccinium macrocarpon-type,TRSH,Vaccinium
-767,Vaccinium oxycoccos,TRSH,Vaccinium
-765,Vaccinium uliginosum-type,TRSH,Vaccinium
-1219,Vaccinium undiff.,TRSH,Vaccinium
-397,Viburnum,TRSH,Viburnum
-768,Viburnum alnifolium,TRSH,Viburnum
-770,Viburnum edule,TRSH,Viburnum
-396,Viburnum lentago,TRSH,Viburnum
-793,Viburnum nudum,TRSH,Viburnum
-794,Viburnum opulus,TRSH,Viburnum
-319,Viburnum undiff.,TRSH,Viburnum
-1108,Vitaceae,TRSH,Rhamnaceae/Vitaceae
-320,Vitis,TRSH,Rhamnaceae/Vitaceae
+taxonid,variablename,harmonizedname,,,
+338,Acer,Acer,,,
+820,Achillea-type,Achillea,,,
+330,Alnus,Alnus,,,
+1299,Alnus glutinosa,Alnus,,,
+391,Amaranthaceae,Amaranthaceae,,,
+1142,Anemone,Anemone,,,
+5145,Anemone nemorosa,Anemone,,,
+1161,Anemone-type,Anemone,,,
+3438,Anthemis-type,Anthemis,,,
+311,Apiaceae,Apiaceae,,,
+1172,Apiaceae undiff.,Apiaceae,,,
+3832,Apium-type,Apium,,,
+3837,Arctium,Arctium,,,
+568,Arctostaphylos uva-ursi,Arctostaphylos,,,
+569,Armeria maritima,Armeria,,,
+25,Artemisia,Artemisia,,,
+418,Asteroideae,Asteroideae,,,
+3439,Aster-type,Aster,,,
+415,Avena/Triticum,Avena/Triticum,,,
+29,Betula,Betula,,,
+3208,Betula nana,Betula,,,
+1011,Betula undiff.,Betula,,,
+349,Bidens,Bidens,,,
+705,Bistorta vivipara,Bistorta,,,
+326,Botryococcus,Botryococcus,,,
+420,Brassicaceae,Brassicaceae,,,
+1168,Bryophyta,Bryophyta,,,
+9773,Calluna,Calluna,,,
+2897,Calluna vulgaris,Calluna,,,
+2944,Caltha palustris,Caltha,,,
+585,Caltha-type,Caltha,,,
+813,Campanula,Campanula,,,
+586,Campanula-type,Campanula,,,
+5823,Cannabis-type,Cannabis,,,
+2460,Carduus,Carduus,,,
+5064,Carex-type,Carex,,,
+1429,Carpinus,Carpinus,,,
+1319,Carpinus betulus,Carpinus,,,
+45,Caryophyllaceae,Caryophyllaceae,,,
+1013,Caryophyllaceae undiff.,Caryophyllaceae,,,
+1336,Centaurea cyanus,Centaurea,,,
+4001,Centaurea jacea-type,Centaurea,,,
+3441,Centaurea scabiosa,Centaurea,,,
+999,Cerastium-type,Cerastium,,,
+1062,Charcoal,Charcoal,,,
+160,Cichorioideae,Cichorioideae,,,
+821,Circaea,Circaea,,,
+4175,Cornus suecica,Cornus,,,
+67,Corylus,Corylus,,,
+1316,Corylus avellana,Corylus,,,
+1430,Crataegus,Crataegus,,,
+74,Cyperaceae,Cyperaceae,,,
+4221,Daucus-type,Daucus,,,
+2549,Dianthus-type,Dianthus,,,
+171,Diphasiastrum complanatum-type,Diphasiastrum,,,
+4235,Drosera rotundifolia/D. anglica,Drosera,,,
+4047,Dryas octopetala,Dryas,,,
+83,Dryopteris-type,Dryopteris,,,
+86,Empetrum,Empetrum,,,
+3572,Ephedra distachya-type,Ephedra,,,
+3578,Ephedra fragilis-type,Ephedra,,,
+90,Epilobium,Epilobium,,,
+91,Equisetum,Equisetum,,,
+4252,Erica tetralix,Erica,,,
+46468,Ericaceae cf. Vaccinium,Ericaceae,,,
+909,Ericaceae undiff.,Ericaceae,,,
+157,Fabaceae undiff.,Fabaceae,,,
+1324,Fagopyrum esculentum,Fagopyrum,,,
+107,Fagus,Fagus,,,
+1320,Fagus sylvatica,Fagus,,,
+1428,Filipendula,Filipendula,,,
+2322,Frangula alnus,Frangula,,,
+369,Fraxinus,Fraxinus,,,
+3579,Fraxinus excelsior,Fraxinus,,,
+115,Fungi undiff.,Fungi,,,
+1416,Galium-type,Galium,,,
+3449,Genista-type,Genista,,,
+2270,Gentiana pneumonanthe,Gentiana,,,
+120,Geranium,Geranium,,,
+121,Geum-type,Geum,,,
+5004,Gymnocarpium dryopteris,Gymnocarpium,,,
+4359,Gypsophila,Gypsophila,,,
+4367,Hedera helix,Hedera,,,
+451,Hedysarum,Hedysarum,,,
+1260,Helianthemum,Helianthemum,,,
+2537,Heracleum,Heracleum,,,
+1306,Hippophaë rhamnoides,Hippophaë,,,
+3705,Hordeum-type,Hordeum,,,
+4385,Hornungia-type,Hornungia,,,
+806,Humulus/Cannabis,Humulus/Cannabis,,,
+175,Huperzia selago,Huperzia,,,
+4395,Hydrocotyle vulgaris,Hydrocotyle,,,
+132,Hypericum,Hypericum,,,
+4406,Ilex aquifolium,Ilex,,,
+35429,Indeterminable (unknown),Indeterminable,,,
+905,Indeterminable undiff.,Indeterminable,,,
+2613,Isoëtes lacustris,Isoëtes,,,
+3706,Isoëtes setacea,Isoëtes,,,
+4412,Jasione montana,Jasione,,,
+983,Juniperus,Juniperus,,,
+4416,Juniperus communis,Juniperus,,,
+4121,Lobelia dortmanna,Lobelia,,,
+4464,Lonicera periclymenum,Lonicera,,,
+4469,Lonicera xylosteum,Lonicera,,,
+2904,Lotus,Lotus,,,
+168,Lycopodium annotinum,Lycopodium,,,
+650,Lycopodium annotinum-type,Lycopodium,,,
+170,Lycopodium clavatum,Lycopodium,,,
+539,Lysimachia,Lysimachia,,,
+655,Lythrum salicaria,Lythrum,,,
+4503,Maianthemum-type,Maianthemum,,,
+4505,Malus,Malus,,,
+997,Melampyrum,Melampyrum,,,
+656,Mentha-type,Mentha,,,
+9505,Menyanthes,Menyanthes,,,
+182,Menyanthes trifoliata,Menyanthes,,,
+4533,Mercurialis perennis,Mercurialis,,,
+666,Myrica gale,Myrica,,,
+667,Myriophyllum alterniflorum,Myriophyllum,,,
+4563,Narthecium-type,Narthecium,,,
+190,Nuphar,Nuphar,,,
+192,Nymphaea,Nymphaea,,,
+842,Ononis-type,Ononis,,,
+1331,Ophioglossum vulgatum,Ophioglossum,,,
+3699,Parnassia palustris,Parnassia,,,
+202,Pediastrum,Pediastrum,,,
+476,Pedicularis,Pedicularis,,,
+230,Persicaria amphibia,Persicaria,,,
+884,Persicaria maculosa-type,Persicaria,,,
+210,Picea,Picea,,,
+385,Pinus,Pinus,,,
+220,Plantago lanceolata,Plantago,,,
+219,Plantago major,Plantago,,,
+2905,Plantago major/P. media,Plantago,,,
+1307,Plantago maritima,Plantago,,,
+221,Plantago media,Plantago,,,
+38770,Plantago uniflora,Plantago,,,
+417,Poaceae,Poaceae,,,
+2113,Poaceae (>40 µm),Poaceae,,,
+125,Poaceae undiff.,Poaceae,,,
+33543,Poaceae undiff. (<40 µm),Poaceae,,,
+947,Polygonum aviculare,Polygonum,,,
+234,Polypodiaceae,Polypodiaceae,,,
+2299,Polypodiaceae undiff.,Polypodiaceae,,,
+835,Polypodium,Polypodium,,,
+2301,Polypodium vulgare,Polypodium,,,
+389,Populus,Populus,,,
+3435,Populus tremula,Populus,,,
+517,Potamogeton,Potamogeton,,,
+242,Potentilla-type,Potentilla,,,
+33823,Poterium sanguisorba,Poterium,,,
+715,Prunus,Prunus,,,
+720,Pteridium aquilinum,Pteridium,,,
+677,Pteridophyta,Pteridophyta,,,
+251,Quercus,Quercus,,,
+4728,Radiola linoides,Radiola,,,
+252,Ranunculaceae undiff.,Ranunculaceae,,,
+996,Ranunculus acris-type,Ranunculus,,,
+4737,Ranunculus peltatus-type,Ranunculus,,,
+27573,Ranunculus sect. Batrachium,Ranunculus,,,
+253,Ranunculus undiff.,Ranunculus,,,
+815,Ranunculus-type,Ranunculus,,,
+725,Rhamnus cathartica,Rhamnus,,,
+2931,Rhinanthus-type,Rhinanthus,,,
+2227,Rhynchospora alba,Rhynchospora,,,
+3443,Rosaceae cf. Sorbus,Rosaceae,,,
+355,Rosaceae undiff.,Rosaceae,,,
+733,Rubiaceae,Rubiaceae,,,
+4768,Rubus idaeus-type,Rubus,,,
+4053,Rumex acetosa,Rumex,,,
+5812,Rumex acetosa/R. acetosella,Rumex,,,
+1532,Rumex acetosella-type,Rumex,,,
+4055,Rumex crispus-type,Rumex,,,
+9504,Rumex/Oxyria,Rumex/Oxyria,,,
+271,Salix,Salix,,,
+275,Sambucus,Sambucus,,,
+3597,Sambucus nigra-type,Sambucus,,,
+1301,Sanguisorba officinalis,Sanguisorba,,,
+5092,Sanicula europaea,Sanicula,,,
+4818,Saxifraga aizoides-type,Saxifraga,,,
+4805,Saxifraga hirculus-type,Saxifraga,,,
+747,Saxifraga oppositifolia-type,Saxifraga,,,
+283,Scheuchzeria palustris,Scheuchzeria,,,
+4840,Schoenoplectus lacustris-type,Schoenoplectus,,,
+4834,Schoenus-type,Schoenus,,,
+4845,Scleranthus annuus,Scleranthus,,,
+4123,Scrophularia-type,Scrophularia,,,
+967,Secale,Secale,,,
+285,Sedum,Sedum,,,
+750,Selaginella selaginoides,Selaginella,,,
+1915,Senecio-type,Senecio,,,
+3703,Silene-type,Silene,,,
+38081,Silene-type undiff.,Silene,,,
+4856,Sinapis-type,Sinapis,,,
+3600,Solanum dulcamara,Solanum,,,
+1435,Sorbus,Sorbus,,,µm)
+1315,Sorbus aucuparia,Sorbus,,,
+293,Sparganium-type,Sparganium,,,
+2932,Spergula,Spergula,,,
+2936,Spergularia,Spergularia,,,
+294,Sphagnum,Sphagnum,,,
+491,Stachys-type,Stachys,,,
+4038,Stellaria palustris,Stellaria,,,
+4421,Succisa pratensis,Succisa,,,
+4870,Taxus baccata,Taxus,,,
+300,Thalictrum,Thalictrum,,,
+302,Tilia,Tilia,,,
+4907,Trientalis europaea,Trientalis,,,
+495,Trifolium pratense,Trifolium,,,
+496,Trifolium repens-type,Trifolium,,,
+4923,Trollius europaeus,Trollius,,,
+1121,Typha angustifolia-type,Typha,,,
+309,Typha latifolia,Typha,,,
+310,Ulmus,Ulmus,,,
+15671,Unknown (pre-Quaternary),Unknown,,,
+498,Urtica,Urtica,,,
+316,Utricularia,Utricularia,,,
+317,Vaccinium,Vaccinium,,,
+3713,Varia,Varia,,,
+794,Viburnum opulus,Viburnum,,,
+795,Viburnum opulus-type,Viburnum,,,
+1876,Vicia/Lathyrus,Vicia/Lathyrus,,,
+1334,Viscum,Viscum,,,
+4977,Viscum album,Viscum,,,
