@@ -1,6 +1,6 @@
 ---
-title: "A Not so Simple Workflow"
-author: "Simon Goring, Socorro Dominguez Vidaña"
+title: "A Not so Simple Workflow - SDM Version"
+author: "Nora Schlenker, Simon Goring, Socorro Dominguez Vidaña"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -22,68 +22,93 @@ highlight: tango
 
 This RMarkdown document will walk you through the process of:
 
-1.  Downloading a single record
-2.  Examining the chronologies for that record and associated chronological controls
-3.  Creating a new chronology for the record
-4.  Adding the chronology to the record
-5.  Switching between default chronologies
+1.  Downloading pollen records from multiple sites
+2.  Filtering for specific taxa and taxonomic harmonization
+3.  Filtering and binning for specific time periods
+4.  Linking to environmental data
+5.  Performing simple SDMs for different time periods
 
-This approach is focused on a single record, but much of what is done here can be extended to multiple records using functions.
- 
 ## Load Libraries
 
-For this workshop element we only need four packages, `neotoma2`, `dplyr`, `ggplot2` and `Bchron`. We'll be loading a record from Neotoma, building a new chronology for the record, and then adding the chronology back to the record.
+For this workshop element we only need quite a few packages. We'll be loading multiple records from Neotoma, filtering by taxa and time periods, and preforming simple species distrubution models.
 
-We'll be using the R package `pacman` here (so really, we need five packages), to automatically load and install packages:
+We'll be using the R package `pacman` here, to automatically load and install packages:
 
 ```{r setup}
-pacman::p_load(neotoma2, dplyr, ggplot2, Bchron)
+pacman::p_load(neotoma2, dplyr, ggplot2)
 ```
 
-## Loading Datasets
+## Loading Datasets [.tabset]
 
-We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). Assuming we found a record that we were interested in, we can go back and pull a single record using its `datasetid`. In this case, the dataset is for [Lago Grande di Monticchio](https://data.neotomadb.org/4275). Let's start by pulling in the record and using the `chronologies()` helper function to look at the chronologies associated with the record:
+We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). For this exercise we will be pulling pollen records from all of Europe to contstruct species distribution models for select species for different time periods. The following code defines our region of interest (a simple polygon of Europe) and downloads the sites, dataset, and downloads for all pollen records that are not missing an age depth model. This is the same workflow as the simple workflow we completed in the morning session but condensed to a few lines of code. Downloading this volume of data from Neotoma can take a long time and is computationally expensive for the database itself so we have already completed the data download and here you will read in the data from our data folder.Under the results you can take a look at all the sites we downloaded. 
 
-```{r getmonticchio, message = FALSE, eval = FALSE}
-# We could also search for Lago Monticchio:
-# monticchio <- get_sites(sitename = "Lago Grande di Monticchio", datasettype = "pollen") %>%
-#   get_downloads()
-# But we know the datasetid so we can directly call get_downloads with the datasetid:
-monticchio <- get_downloads(4275)
-monticchio_chron <- chronologies(monticchio)
-monticchio_chron %>% as.data.frame()
+#### Code 
+```{r geteurope, message = FALSE, eval = FALSE}
+europe <-  '{"type": "Polygon",
+"coordinates": [[
+ [ -32.13,66.46],
+ [-14.09,36.93],
+ [30.16,34.71],
+ [35.79,69.17],
+ [-32.13,66.46]]]}'
+europe_sf <- geojsonsf::geojson_sf(europe)
+
+## The following lines of code are commented out because we've already run it for you to speed up the process. 
+# Downloading large amounts of data can take a long time.
+# europe_sites <- neotoma2::get_sites(loc = europe, datasettype = "pollen", all_data = TRUE)
+# europe_datasets <- neotoma2::get_datasets(loc = europe, datasettype = "pollen", all_data = TRUE)
+# europe_records <- europe_datasets %>% 
+#   neotoma2::filter(!is.na(age_range_young))
+# europe_downloads <- europe_records %>% get_downloads(all_data = TRUE)
+# europe_samples <- samples(europe_downloads)
+# 
+# saveRDS(europe_sites, "data/europe_sites.RDS")
+# saveRDS(europe_datasets, "data/europe_datasets.RDS")
+# saveRDS(europe_downloads, "data/europe_downloads.RDS")
+# saveRDS(europe_samples, "data/europe_samples.RDS")
+
+europe_sites <- readRDS("data/europe_sites.RDS")
+europe_datasets <- readRDS("data/europe_datasets.RDS")
+europe_downloads <- readRDS("data/europe_downloads.RDS")
+europe_samples <- readRDS("data/europe_samples.RDS")
+
 ```
 
-```{r getmonticchioShow, eval=TRUE, echo = FALSE}
-monticchio <- get_downloads(4275)
-monticchio_chron <- chronologies(monticchio)
-monticchio_chron %>% as.data.frame() %>% 
+#### Sites Map
+```{r geteuropeshow, eval=TRUE, echo = FALSE}
+neotoma2::plotLeaflet(europe_sites) %>% 
+  leaflet::addPolygons(map = ., 
+                       data = europe_sf, 
+                       color = "green")
+
+```
+
+#### Data table
+
+```{r downloadsCode, echo = FALSE}
+europe_samples[1:10,] %>% dplyr::select(age, variablename, ecologicalgroup, value, units, sitename, lat, long) %>% 
   DT::datatable(data = ., 
-                options = list(scrollX = "100%"))
+                options = list(scrollX = "100%", dom = 't'))
 ```
 
-Lago Monticchio has three chronologies and we've decided not to use them because we want to standardize our methods. We want to build a new one with the function `Bchronology()` from the [`Bchron` package](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html).
+### Data exploration and complete taxon filtering and harmonization {.tabset}
 
-It's worth pointing out the `isdefault` column here. Neotoma provides the opportunity to link multiple chronologies to a single record. This lets researchers add their chronologies when they publish new studies. For example, the **Wang *et al.*** chronology comes from a set of Bayesian chronologies published by Yue Wang ([Wang *et al*., 2019](https://doi.org/10.1038/s41597-019-0182-7)). For each age type (Radiocarbon years BP, Calendar years BP, &cetera) there is a default chronology that defines the model for the date interpolation. There is also a hierarchy for the default chronologies. By default Neotoma assigns the age model using *calendar years* the highest priority, then *calibrated radiocarbon years*, then *radiocarbon years*. You can see the order in practice if we look at the content of `get_table("age types")`.
+Next we are going to 
 
-### Extract `chroncontrols`
-
-We're going to select chronology `25746` as our template. This is a Power interpolation model that _____ generated. To generate a new chronology for this record we want to see which chronological control points were used for the record. We will extract all the chroncontrols, filter by the chronologyid, and then arrange them by depth:
-
-```{r buildChronControl, message = FALSE, eval = FALSE}
-# Extract the chronological controls used in the original chronology:
-controls <- chroncontrols(monticchio) %>% 
-  dplyr::filter(chronologyid == 25746) %>% 
-  arrange(depth)
+#### Code
+```{r filtertaxa, message = FALSE, eval = FALSE}
+europe_subset <- europe_samples %>%
+  filter(stringr::str_detect(variablename, "Fagus*") | stringr::str_detect(variablename, "Picea*") | stringr::str_detect(variablename, "Corylus*")) %>%
+  mutate(variablename = replace(variablename, stringr::str_detect(variablename, "Fagus*"), "Fagus"), 
+         variablename = replace(variablename, stringr::str_detect(variablename, "Picea*"), "Picea"), 
+         variablename = replace(variablename, stringr::str_detect(variablename, "Corylus*"), "Corylus"))
 ```
 
-```{r buildChronControlShow, eval = TRUE, message = FALSE, echo = FALSE}
-controls <- chroncontrols(monticchio) %>% 
-  dplyr::filter(chronologyid == 25746) %>% 
-  arrange(depth)
-
-controls %>% DT::datatable(data = ., 
-                options = list(scrollX = "100%"))
+#### Results
+```{r filtertaxaShow, eval = TRUE, message = FALSE, echo = FALSE}
+europe_subset[1:10,] %>% dplyr::select(age, variablename, ecologicalgroup, value, units, sitename, lat, long) %>% 
+  DT::datatable(data = ., 
+                options = list(scrollX = "100%", dom = 't'))
 ```
 
 We can look at other tools to decided how we want to manage the chroncontrols, for example, saving them and editing them using Excel or another spreadsheet program. We could add a new date by adding a new row. In this example we're just going to modify the existing ages to provide better constraints at the core top. We are setting the core top to *-55 calibrated years BP*, and assuming an uncertainty of 2 years, and a thickness of 2cm.
