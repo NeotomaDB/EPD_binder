@@ -30,20 +30,20 @@ This RMarkdown document will walk you through the process of:
 
 ## Load Libraries
 
-For this workshop element we only need quite a few packages. We'll be loading multiple records from Neotoma, filtering by taxa and time periods, and preforming simple species distrubution models.
+For this workshop element we only need quite a few packages. We'll be loading multiple records from Neotoma, filtering by taxa and time periods, and preforming simple species distribution models.
 
-We'll be using the R package `pacman` here, to automatically load and install packages:
+We'll be using the R package `pacman` here, to automatically load and install packages. Note that we also use the package rpaleoclim to download the climate data, but since we have pre-downloaded the climate rasters for you, you will not need that package today. 
 
 ```{r setup}
-pacman::p_load(neotoma2, dplyr, ggplot2)
+pacman::p_load(neotoma2, dplyr, ggplot2, remotes, terra, sf)
 ```
 
-## Loading Datasets [.tabset]
+## Loading Datasets 
 
 We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). For this exercise we will be pulling pollen records from all of Europe to contstruct species distribution models for select species for different time periods. The following code defines our region of interest (a simple polygon of Europe) and downloads the sites, dataset, and downloads for all pollen records that are not missing an age depth model. This is the same workflow as the simple workflow we completed in the morning session but condensed to a few lines of code. Downloading this volume of data from Neotoma can take a long time and is computationally expensive for the database itself so we have already completed the data download and here you will read in the data from our data folder.Under the results you can take a look at all the sites we downloaded. 
 
 #### Code 
-```{r geteurope, message = FALSE, eval = FALSE}
+```{r geteurope, message = FALSE, eval = TRUE}
 europe <-  '{"type": "Polygon",
 "coordinates": [[
  [ -32.13,66.46],
@@ -76,6 +76,7 @@ europe_samples <- readRDS("data/europe_samples.RDS")
 
 #### Sites Map
 ```{r geteuropeshow, eval=TRUE, echo = FALSE}
+
 neotoma2::plotLeaflet(europe_sites) %>% 
   leaflet::addPolygons(map = ., 
                        data = europe_sf, 
@@ -91,183 +92,245 @@ europe_samples[1:10,] %>% dplyr::select(age, variablename, ecologicalgroup, valu
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-### Data exploration and complete taxon filtering and harmonization {.tabset}
+### Data Filtering 
+Taxon filtering and harmonization, pollen percent calculations, and data exploration 
 
-Next we are going to 
+Before we can start looking at our focal species we need to do some work with our sample table so that we have all the information we want. We need to do three things at this step: filtering the data to only include our focal taxa, doing taxon harmonization on our focal taxa, and calculating the pollen percent for each focal taxa for each pollen sample. 
+
+Our first task is to make a table that we will join with our samples table that tells us the total number of pollen per sample which we will use in our pollen percentage calculations. There are many decisions you can make at this step depending on your research question but here we are going to calculate pollen percent based on the total number of trees, shrubs, and herbaceous groups (ecologicalgroup = TRSH and UPHE). This is common for may studies that focus on these ecological groups but know that you can choose other combinations and this will effect how you interpret your results.  
+
+Then we can combine taxon filtering and harmonization and pollen percent calculation all in one segment of code. Here we are selecting the taxa *Fagus*, *Picea*, and *Corylus* and harmonizing all variations of those taxa to the genus level. 
 
 #### Code
-```{r filtertaxa, message = FALSE, eval = FALSE}
+```{r filtertaxa, message = FALSE, eval = TRUE}
+poll_total <- europe_samples %>%
+  filter(ecologicalgroup == "TRSH" | ecologicalgroup == "UPHE") %>% 
+  group_by(datasetid, age) %>%
+  summarise(totalpollen = sum(value)) %>%
+  ungroup() 
+
 europe_subset <- europe_samples %>%
-  filter(stringr::str_detect(variablename, "Fagus*") | stringr::str_detect(variablename, "Picea*") | stringr::str_detect(variablename, "Corylus*")) %>%
+  inner_join(poll_total, by = c("datasetid" = "datasetid", "age" = "age")) %>%
+  mutate(poll_perc = round(value/totalpollen*100, 2)) %>%
+  #filter to only taxa with the genera of our focal species
+  filter(stringr::str_detect(variablename, "Fagus*") | 
+           stringr::str_detect(variablename, "Picea*") | 
+           stringr::str_detect(variablename, "Corylus*")) %>%
+  #limiting the age to the range of ages we are interesting in. Here -74 is present since "radiocarbon years before present" starts at 1950
+  filter(age >= -74 & age <= 23000) %>% 
+  #rename our focal species to just their genera
   mutate(variablename = replace(variablename, stringr::str_detect(variablename, "Fagus*"), "Fagus"), 
          variablename = replace(variablename, stringr::str_detect(variablename, "Picea*"), "Picea"), 
-         variablename = replace(variablename, stringr::str_detect(variablename, "Corylus*"), "Corylus"))
+         variablename = replace(variablename, stringr::str_detect(variablename, "Corylus*"), "Corylus")) %>%
+  #group taxa of the same dataset and age to combine all renamed versions of taxa to get one pollen percent value for a harmonized record 
+  group_by(datasetid, age, variablename, units, ecologicalgroup, sitename, lat, long) %>%
+  summarise(pollen_percent = sum(poll_perc)) %>%
+  mutate(presence = case_when(pollen_percent > 1 ~ 1,
+                              .default = 0))
 ```
 
 #### Results
 ```{r filtertaxaShow, eval = TRUE, message = FALSE, echo = FALSE}
-europe_subset[1:10,] %>% dplyr::select(age, variablename, ecologicalgroup, value, units, sitename, lat, long) %>% 
+europe_subset[1:10,] %>% 
   DT::datatable(data = ., 
                 options = list(scrollX = "100%", dom = 't'))
+
+ggplot(europe_subset, aes(age)) + geom_histogram() + ylab("Count of Samples") + xlab("Age (years before present)") + theme_minimal()
 ```
 
-We can look at other tools to decided how we want to manage the chroncontrols, for example, saving them and editing them using Excel or another spreadsheet program. We could add a new date by adding a new row. In this example we're just going to modify the existing ages to provide better constraints at the core top. We are setting the core top to *-55 calibrated years BP*, and assuming an uncertainty of 2 years, and a thickness of 2cm.
+### Bin and filter data by time 
+Now that we have a dataset with our three focal taxa we now want to filter these taxa into time periods of interest. For this exercise we will be looking at modern samples (1950 to present), the Younger Drays (12.9 to 11.7 thousand years ago), and the Last Glacial Maximum (LGM; 21 thousand years ago). 
 
-This generally won't change too much, and I have no real basis for doing this explicitly, but this is simply for illustration.
-
-To do these assignments we're just directly modifying cells within the `controls` `data.frame`:
-
-```{r modifyControls, message = FALSE, eval=FALSE}
-# Directly assign the values
-controls$chroncontrolage[1] <- 20000	
-controls$agelimityounger[1] <- 15000
-controls$agelimitolder[1] <- 29000
-controls$thickness[1] <- 16
+#### Code
+```{r binbyage, message = FALSE, eval = TRUE}
+europe_binned <- europe_subset %>% 
+  mutate(timebins = case_when(age <= 0 ~ "Modern",
+                             age >= 11700 & age <= 12900 ~ "YD", 
+                             age >= 20000 & age <= 22000 ~ "LGM",
+                             .default = NA)) %>%
+  filter(!is.na(timebins))
 ```
 
-```{r modifyControlsShow, message = FALSE, eval = TRUE, echo=FALSE}
-controls$chroncontrolage[1] <- 20000	
-controls$agelimityounger[1] <- 15000
-controls$agelimitolder[1] <- 29000
-controls$thickness[1] <- 16
-controls %>% DT::datatable(data = ., 
-                options = list(scrollX = "100%"))
-```
-
-### Extract Depth & Analysis Unit IDs
-
-Once our `chroncontrols` table is updated, we extract the `depth`s and `analysisunitid`s from the dataset `samples()`. Pulling in both `depth`s and `analysisunitid`s is important because a single collection unit may have multiple datasets, which may have non-overlapping depth sequences. So, when adding sample ages back to a record we use the `analysisunitid` to make sure we are providing the correct assignment since depth may be specific to a single dataset.
-
-```{r predictDepths, message = FALSE, results="hide"}
-# Get a two column data.frame with columns depth and analysisunitid.
-# Sort the table by depth from top to bottom for "Bchronology"
-predictDepths <- samples(monticchio) %>%
-  select(depth, analysisunitid) %>% 
-  unique() %>% 
-  arrange(depth)
-
-# Pass the values from `controls`. We're assuming the difference between
-# chroncontrolage and the agelimityounger is 1 SD.
-# Note that for the parameter 'calCurves' we are using a "normal" 
-# distribution for the modern sample (core top) and choosing the
-# IntCal20 curve for the other two radiocarbon dates.
-
-newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
-                                ageSds = abs(controls$agelimityounger - 
-                                               controls$chroncontrolage),
-                                calCurves = c("normal", rep("intcal20", 5)),
-                                positionThicknesses = controls$thickness,
-                                positions = controls$depth,
-                                predictPositions = predictDepths$depth,
-                                allowOutside = TRUE,
-                                ids = controls$chroncontrolid)
-
-# Predict ages at each depth for which we have samples.  Returns a matrix.
-newpredictions <- predict(newChron, predictDepths$depth)
-```
-
-```{r chronologyPlot, fig.cap="Age-depth model for Stará Boleslav, with probability distributions superimposed on the figure at each chronology control depth."}
-plot(newChron) +
-  ggplot2::labs(
-    xlab = "Age (cal years BP)",
-    ylab = "Depth (cm)"
-  )
-```
-
-### Creating the New `chronology` and `contact` objects
-
-Given the new chronology, we want to add it to the `sites` object so that it becomes the default for any calls to `samples()`. To create the metadata for the new chronology, we use `set_chronology()` using the properties from the [`chronology` table in Neotoma](https://open.neotomadb.org/dbschema/tables/chronologies.html):
-
-```{r createChronology, message = FALSE}
-# Add information about the people who generated the new chronology:
-creators <- c(set_contact(givennames = "Simon James",
-                          familyname = "Goring",
-                          ORCID = "0000-0002-2700-4605"),
-              set_contact(givennames = "Socorro",
-                          familyname = "Dominguez Vidaña",
-                          ORCID = "0000-0002-7926-4935"))
-
-# Add information about the chronology:
-newChronmonticchio <- set_chronology(agemodel = "Bchron model",
-                                contact = creators,
-                                isdefault = 1,
-                                ageboundolder = max(newpredictions),
-                                ageboundyounger = min(newpredictions),
-                                dateprepared = lubridate::today(),
-                                modelagetype = "Calendar years BP",
-                                chronologyname = "Simon's example chronology",
-                                chroncontrols = controls)
-
-
-newChronmonticchio$notes <- 'newChron <- Bchron::Bchronology(ages = controls$chroncontrolage,
-                                ageSds = abs(controls$agelimityounger - 
-                                               controls$chroncontrolage),
-                                calCurves = c("normal", rep("intcal20", 2)),
-                                positionThicknesses = controls$thickness,
-                                positions = controls$depth,
-                                allowOutside = TRUE,
-                                ids = controls$chroncontrolid,
-                                predictPositions = predictDepths)'
-```
-
-### Adding the `chronology` to the `collectionunit`
-
-Once we've created the chronology we need to apply it back to the collectionunit. We also need to add the predicted dates into the samples for each dataset associated with the collectionunit.
-
-So:
-
-1.  we have a collectionunit in `monticchio` that is accessible at `monticchio[[1]]$collunits`.
-2.  We can use the function `add_chronology()`, which takes the chronology object and a `data.frame()` of sample ages.
-3.  The predicted dates associated with the new chronology need to be transferred to each `samples` object within the `collectionunit`.
-
-This is all bound up in the `add_chronology()` function, which takes the `collectionunit`, modifys it, and returns the newly updated `collectionunit`.
-
-```{r addChronology, message = FALSE}
-newSampleAges <- data.frame(predictDepths,
-                            age = colMeans(newpredictions),
-                            ageolder = colMeans(newpredictions) + 
-                              apply(newpredictions, 2, sd),
-                            ageyounger = colMeans(newpredictions) - 
-                              apply(newpredictions, 2, sd),
-                            agetype = "Calendar years")
-
-monticchio[[1]]$collunits[[1]] <- add_chronology(monticchio[[1]]$collunits[[1]], 
-                                            newChronmonticchio, 
-                                            newSampleAges)
-```
-
-With this, we now have the updated collectionunit. Lets take a look at how this affects the age model overal. To pull the ages from the prior chronologies, we use the `set_default()` function to change the default chronology, and then extract ages, depths & analysisunits:
-
-```{r getAgesfromChronologies}
-# The new chronology is currently the default chronology.
-newages <- samples(monticchio) %>%
-  select(depth, analysisunitid, age) %>% 
-  unique() %>% 
-  arrange(depth) %>% 
-  mutate(agecat = "new")
-
-monticchio[[1]]$collunits[[1]]$chronologies <- set_default(monticchio[[1]]$collunits[[1]]$chronologies,
-                                                      25746)
-plotforages <- samples(monticchio) %>%
-  select(depth, analysisunitid, age) %>% 
-  unique() %>% 
-  arrange(depth) %>% 
-  mutate(agecat = "old") %>% 
-  bind_rows(newages)
+#### Results
+```{r binbyageShow, eval = TRUE, message = FALSE, echo = FALSE}
+europe_binned %>% 
+  mutate(timebins = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
+  ggplot(aes(timebins)) + geom_bar(stat = "count") + 
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  facet_wrap(~variablename, ncol = 3) +
+  ylab("Count of Samples") + xlab("Time Bins") + theme_minimal()
 
 ```
 
-And we can look at the difference visually:
+## Loading Climate Data
 
-```{r plotAgeDifferences, fig.cap="Differences in age representation between chronologies between existing chronologies and the new Bchron chronology."}
-ggplot(plotforages, aes(x = depth, y = age)) +
-  geom_path(aes(color = agecat)) +
-  theme_bw() +
-  xlab("Depth (cm)") +
-  ylab("Calibrated Years BP")
+
+#### Code
+```{r downloadclims, message = FALSE, eval = TRUE}
+# europe_clim_mod <- paleoclim("cur", "5m", region = terra::ext(europe_sf))
+# europe_clim_yd <- paleoclim("yds", "5m", region = terra::ext(europe_sf))
+# europe_clim_lgm <- paleoclim("lgm", "5m", region = terra::ext(europe_sf))
+# 
+# saveRDS(europe_clim_mod, "data/europe_clim_mod.RDS")
+# saveRDS(europe_clim_yd, "data/europe_clim_yd.RDS")
+# saveRDS(europe_clim_lgm, "data/europe_clim_lgm.RDS")
+
+europe_clim_mod <- readRDS("data/europe_clim_mod.RDS")
+europe_clim_yd <- readRDS("data/europe_clim_yd.RDS")
+europe_clim_lgm <- readRDS("data/europe_clim_lgm.RDS")
+
+```
+#### Results
+```{r downloadclimsShow, echo = FALSE, message = FALSE, eval = TRUE}
+plot(europe_clim_mod[["bio_1"]]/10, main = "Modern Mean Annual Temp, Europe")
+plot(europe_clim_yd[["bio_1"]]/10, main = "Younger Dryas Mean Annual Temp, Europe")
+plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
+
 ```
 
-So we can see the impact of the new chronology on the age model for the record, and we can make choices as to which model we want to use going forward. We can use this approach to create multiple new chronologies for a single record, tuning parameters within `Bchronology()`, or using Bacon and different parameters. Because the `chronology` is an R object we can save the objects for use in future sessions, and associate them with existin records, or we can re-run the models again.
+## Species Distribution Models 
+
+Now that we have our taxa data and our climate data ready to go we will now extract climate data for each of the samples, create SDMs, and predict species distributions for all three taxa in all three time periods.  
+
+#### Extracting environmental varliables
+```{r extractclims, message = FALSE, eval = TRUE}
+#First lets save the projection information from our climate data to use later when creating our species points data
+proj_data <- crs(europe_clim_mod)
+
+#next we will split our taxa data into time bins
+taxa_mod <- filter(europe_binned, timebins == "Modern")
+taxa_yd <- filter(europe_binned, timebins == "YD")
+taxa_lgm <- filter(europe_binned, timebins == "LGM")
+
+# Now we will convert these to spatial points and extract the climate data
+## Modern
+taxa_mod <- st_as_sf(taxa_mod, coords = c("long", "lat"), crs = proj_data)
+taxa_mod_vect <- vect(taxa_mod$geometry)
+taxa_mod_clims <- terra::extract(europe_clim_mod, taxa_mod_vect)
+taxa_mod <- cbind(taxa_mod, taxa_mod_clims)
+corylus_mod <- filter(taxa_mod, variablename == "Corylus")
+fagus_mod <- filter(taxa_mod, variablename == "Fagus")
+picea_mod <- filter(taxa_mod, variablename == "Picea")
+
+## Younger Dryas
+taxa_yd <- st_as_sf(taxa_yd, coords = c("long", "lat"), crs = proj_data)
+taxa_yd_vect <- vect(taxa_yd$geometry)
+taxa_yd_clims <- terra::extract(europe_clim_yd, taxa_yd_vect)
+taxa_yd <- cbind(taxa_yd, taxa_yd_clims)
+corylus_yd <- filter(taxa_yd, variablename == "Corylus")
+fagus_yd <- filter(taxa_yd, variablename == "Fagus")
+picea_yd <- filter(taxa_yd, variablename == "Picea")
+
+## Last Glacial Maximum 
+taxa_lgm <- st_as_sf(taxa_lgm, coords = c("long", "lat"), crs = proj_data)
+taxa_lgm_vect <- vect(taxa_lgm$geometry)
+taxa_lgm_clims <- terra::extract(europe_clim_lgm, taxa_lgm_vect)
+taxa_lgm <- cbind(taxa_lgm, taxa_lgm_clims)
+corylus_lgm <- filter(taxa_lgm, variablename == "Corylus")
+fagus_lgm <- filter(taxa_lgm, variablename == "Fagus")
+picea_lgm <- filter(taxa_lgm, variablename == "Picea")
+
+
+
+```
+
+
+### Predicting SDMs {.tabset}
+Next we are going to set up the species distribution models
+
+
+#### Corylus 
+```{r corylussdm, message = FALSE, eval = TRUE}
+par(mfrow = c(2,3))
+
+corylus_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_mod)
+corylus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), corylus_mod_glm)
+plot(corylus_mod_glm_predict, main = "Predicted Corylus Pollen Percent, Modern")
+
+corylus_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_yd)
+corylus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), corylus_yd_glm)
+plot(corylus_yd_glm_predict, main = "Predicted Corylus Pollen Percent, Younger Dryas")
+
+corylus_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_lgm)
+corylus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), corylus_lgm_glm)
+plot(corylus_lgm_glm_predict, main = "Predicted Corylus Pollen Percent, LGM")
+
+# Using Presence Only data
+corylus_mod_glm <- glm(presence ~ bio_1 + bio_12, data = corylus_mod)
+corylus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), corylus_mod_glm)
+plot(corylus_mod_glm_predict, main = "Predicted Corylus Presence, Modern")
+
+corylus_yd_glm <- glm(presence ~ bio_1 + bio_12, data = corylus_yd)
+corylus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), corylus_yd_glm)
+plot(corylus_yd_glm_predict, main = "Predicted Corylus Presence, Younger Dryas")
+
+corylus_lgm_glm <- glm(presence ~ bio_1 + bio_12, data = corylus_lgm)
+corylus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), corylus_lgm_glm)
+plot(corylus_lgm_glm_predict, main = "Predicted Corylus Presence, LGM")
+
+```
+
+#### Fagus
+```{r fagussdm, message = FALSE, eval = TRUE}
+par(mfrow = c(1,3))
+
+fagus_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_mod)
+fagus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), fagus_mod_glm)
+plot(fagus_mod_glm_predict, main = "Predicted Fagus Pollen Percentage, Modern")
+
+fagus_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_yd)
+fagus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), fagus_yd_glm)
+plot(fagus_yd_glm_predict, main = "Predicted Fagus Pollen Percentage, Younger Dryas")
+
+fagus_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_lgm)
+fagus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_lgm_glm)
+plot(fagus_lgm_glm_predict, main = "Predicted Fagus Pollen Percentage, LGM")
+
+# Using Presence Only data
+fagus_mod_glm <- glm(presence ~ bio_1 + bio_12, data = fagus_mod)
+fagus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), fagus_mod_glm)
+plot(fagus_mod_glm_predict, main = "Predicted Fagus Presence, Modern")
+
+fagus_yd_glm <- glm(presence ~ bio_1 + bio_12, data = fagus_yd)
+fagus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), fagus_yd_glm)
+plot(fagus_yd_glm_predict, main = "Predicted Fagus Presence, Younger Dryas")
+
+fagus_lgm_glm <- glm(presence ~ bio_1 + bio_12, data = fagus_lgm)
+fagus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_lgm_glm)
+plot(fagus_lgm_glm_predict, main = "Predicted Fagus Presence, LGM")
+
+```
+
+#### Picea 
+```{r piceasdm, message = FALSE, eval = TRUE}
+par(mfrow = c(1,3))
+
+picea_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_mod)
+picea_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), picea_mod_glm)
+plot(picea_mod_glm_predict, main = "Predicted picea Pollen Percentage, Modern")
+
+picea_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_yd)
+picea_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), picea_yd_glm)
+plot(picea_yd_glm_predict, main = "Predicted picea Pollen Percentage, Younger Dryas")
+
+picea_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_lgm)
+picea_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), picea_lgm_glm)
+plot(picea_lgm_glm_predict, main = "Predicted picea Pollen Percentage, LGM")
+
+# Using Presence Only data
+picea_mod_glm <- glm(presence ~ bio_1 + bio_12, data = picea_mod)
+picea_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), picea_mod_glm)
+plot(picea_mod_glm_predict, main = "Predicted Picea Presence, Modern")
+
+picea_yd_glm <- glm(presence ~ bio_1 + bio_12, data = picea_yd)
+picea_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), picea_yd_glm)
+plot(picea_yd_glm_predict, main = "Predicted Picea Presence, Younger Dryas")
+
+picea_lgm_glm <- glm(presence ~ bio_1 + bio_12, data = picea_lgm)
+picea_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), picea_lgm_glm)
+plot(picea_lgm_glm_predict, main = "Predicted Picea Presence, LGM")
+
+```
 
 ## Summary
 
