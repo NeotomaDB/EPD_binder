@@ -22,7 +22,7 @@ pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, DT, readr, stri
 ```
 
 ## 1. Introduction
- 
+
 This document is intended to act as a primer for the use of the new Neotoma R package, `neotoma2`.  Some users may be working with this document as part of a workshop for which there is a Binder instance. The Binder instance will run RStudio in your browser, with all the required packages installed.
 
 If you are using this workflow on its own, or want to use the package directly, [the `neotoma2` package](https://github.com/NeotomaDB/neotoma2) is available on CRAN by running:
@@ -32,7 +32,9 @@ install.packages('neotoma2')
 library(neotoma2)
 ```
 
-This workshop will also require other packages. To maintain the flow of this document we've placed instructions at the end of the document in the section labelled "[Installing packages on your own](#localinstall)".
+Your version should be at or above `r packageVersion("neotoma2")`.
+
+This workshop will also require other packages. To maintain the flow of this document we've placed instructions at the end of the document in the section labelled "[Installing packages on your own](#localinstall)". Please install these packages, and make sure they are at the lastest version.
 
 ## 2. Learning Goals
 
@@ -60,12 +62,26 @@ In this workshop we want to highlight two key structural concepts:
 
 ![**Figure**. *The structure of sites, collection units, samples, and datasets within Neotoma. A site contains one or more collection units. Chronologies are associated with collection units. Samples with data of a common type (pollen, diatoms, vertebrate fauna) are assigned to a dataset.*](images/site_collunit_dataset_rev.png){width=50%}  
   
-  
-Data in Neotoma is associated with sites -- specific locations with lat/long coordinates.
+Data in Neotoma is associated with **sites** -- specific locations with latitude and longitude coordinates.
 
-Within a **site**, there may be one or more [**collection units**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#CollectionUnits) -- locations at which samples are physically collected within the site. For example, an archaeological **site** may have one or more **collection units**, pits within a broader dig site; a pollen sampling **site** on a lake may have multiple **collection units** -- core sites within the lake basin. Collection units may have higher resolution GPS locations than the site location, but are considered to be part of the broader site.
+Within a **site**, there may be one or more [**collection units**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#CollectionUnits) -- locations at which samples are physically collected within the site:
 
-Data within a **collection unit** is collected at various [**analysis units**](https://open.neotomadb.org/manual/sample-related-tables-1.html#AnalysisUnits). Any data sampled within an analysis unit is grouped by the dataset type (charcoal, diatom, dinoflagellate, etc.) and aggregated into a [**sample**](https://open.neotomadb.org/manual/sample-related-tables-1.html#Samples). The set of samples for a collection unit of a particular dataset type is then assigned to a [**dataset**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#Datasets).
+* an archaeological **site** may have one or more **collection units**, pits within a broader dig site
+* a pollen sampling **site** on a lake may have multiple **collection units** -- core sites within the lake basin.
+* A bog sample **site** may have multiple **collection units** -- a transect of surface samples within the bog.
+
+Collection units may have higher resolution GPS locations than the site location, but are considered to be part of the broader site.
+
+Data within a **collection unit** is collected at various [**analysis units**](https://open.neotomadb.org/manual/sample-related-tables-1.html#AnalysisUnits).
+
+* All sediment at 10cm depth in the depth profile of a cutbank (the collection unit) along an oxbow lake (the site) is one analysis unit.
+* All material in a single surface sample (the collection unit) from a bog (the site) is an analysis unit.
+* All fossil remains in a buried layer from a bone pile (the collection unit) in a cave (the site) is an analysis unit.
+
+Any data sampled within an analysis unit is grouped by the dataset type (charcoal, diatom, dinoflagellate, etc.) and aggregated into a [**sample**](https://open.neotomadb.org/manual/sample-related-tables-1.html#Samples). The set of samples for a collection unit of a particular dataset type is then assigned to a [**dataset**](https://open.neotomadb.org/manual/dataset-collection-related-tables-1.html#Datasets).
+
+* A sample would be all diatoms (the dataset type) extracted from sediment at 12cm (the analysis unit) in a core (the collection unit) obtained from a lake (the site).
+* A sample would be the record of a single mammoth bone (sample and analysis unit, dataset type is vertebrate fauna) embeded in a riverbank (here the site, and collection unit).
 
 ### 2.2.2 Data Structures in `neotoma2` {#222-data-structures-in-neotoma2}
 
@@ -141,20 +157,20 @@ We may know exactly what site we're looking for ("Lake Solsø"), or have an appr
 
 We use the general format: `get_sites(sitename="%ø%")` for searching by name.
 
-PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%ø%"` would pick up ["Lake Solsø"](https://data.neotomadb.org/4445) for us (and picks up "Isbenttjønn" and "	Lake Flåfattjønna").  Note that the search query is also case insensitive.
+PostgreSQL (and the API) uses the percent sign as a wildcard.  So `"%ø%"` would pick up ["Lake Solsø"](https://data.neotomadb.org/4445) for us (and picks up "Isbenttjønn" and "Lake Flåfattjønna").  Note that the search query is also case insensitive.
 
 ##### 3.1.1.1. Code
 
 ```{r sitename, eval=FALSE}
-lac_sites <- neotoma2::get_sites(sitename = "%ø%")
-plotLeaflet(lac_sites)
+denmark_sites <- neotoma2::get_sites(sitename = "%ø%")
+plotLeaflet(denmark_sites)
 ```
 
 ##### 3.1.1.2. Result
 
 ```{r sitenamePlot, echo=FALSE}
-lac_sites <- neotoma2::get_sites(sitename = "%ø%")
-plotLeaflet(lac_sites)
+denmark_sites <- neotoma2::get_sites(sitename = "%ø%")
+plotLeaflet(denmark_sites)
 ```
 
 #### 3.1.2. Location: `loc=c()` {.tabset}
@@ -223,7 +239,7 @@ neotoma2::getids(denmark_sites)
 ##### 3.1.3.2. Result
 
 ```{r summarySitesTable, eval=TRUE, echo=FALSE}
-neotoma2::summary(lac_sites) %>%
+neotoma2::summary(denmark_sites) %>%
   DT::datatable(data = ., rownames = FALSE, 
                 options = list(scrollX = "100%", dom = 't'))
 ```
@@ -341,12 +357,12 @@ We use the unique identifiers (*e.g.*, `taxonid`, `siteid`, `analysisunitid`) th
 
 #### 3.4.3. Simple Harmonization {.tabset}
 
-Let's say we want all samples from which *Pinus* taxa have been reported to be grouped together into one pseudo-taxon called *Pinus-undiff*. **NOTE**, this is not an ecologically useful grouping, but used for illustration.
+Let's say we want all samples from which *Poaceae* (grass) taxa have been reported to be grouped together into one pseudo-taxon called *Poaceae-undiff*. **NOTE**, this is may not be an ecologically useful grouping, but is used here for illustration.
 
-There are several ways of grouping taxa, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).  First, lets look for how many different ways *Pinus* appears in these records. We can use the function `str_detect()` from the `stringr` package to look for patterns, and then return either `TRUE` or `FALSE` when the string is detected:
+There are several ways of grouping taxa, either directly by exporting the file and editing each individual cell, or by creating an external "harmonization" table (which we did in the prior `neotoma` package).  First, lets look for how many different ways *Poaceae* appears in these records. We can use the function `str_detect()` from the `stringr` package to look for patterns, and then return either `TRUE` or `FALSE` when the string is detected:
 
 ```{r echo = FALSE}
-# How many different "Poaceae" taxa have been identified?
+# How many different identifications have "Poaceae" been given in these records?
 neotomatx %>%
   filter(stringr::str_detect(variablename, "Poaceae"))
 ```
@@ -358,7 +374,7 @@ We can harmonize taxon by taxon a number of different ways. One way would be to 
 allSamp$variablename[stringr::str_detect(allSamp$variablename, "Poaceae")] <- "Poaceae undiff."
 ```
 
-There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Pinus.*"))` different taxa identified as being within the genus *Poaceae* (including *Poaceae*., *Poaceae (>40 µm)*, and *Poaceae undiff. (<40 µm)*). The above code reduces them all to a single taxonomic group *Poaceae undiff*.
+There were originally `r sum(stringr::str_detect(neotomatx$variablename, "Poaceae.*"))` different taxa identified as being within the genus *Poaceae* (including *Poaceae*., *Poaceae (>40 µm)*, and *Poaceae undiff. (<40 µm)*). The above code reduces them all to a single taxonomic group *Poaceae undiff*.
 
 Note that this changes *Poaceae* in the `allSamp` object _only_, not in any of the downloaded objects. If we were to call `samples()` again, the taxonomy would return to its original form.
 
@@ -383,6 +399,8 @@ readr::write_csv(taxaplots, "data/mytaxontable.csv")
 #### Looking at the Taxonomic Structure {.tabset}
 
 The `taxa` function returns all our taxonomic information, and it provides some additional information, the columns `samples` and `sites` which record the number of samples across all datasets that contain the taxon, and the number of sites with the taxon. The plot below shows the relationship between samples and sites, which we would expect to be somewhat skewed, as it is.
+
+This is effectively a rarefaction curve, the more sites a taxon is found at, the more samples it is found at.
 
 ##### 3.4.3.1. Code
 
