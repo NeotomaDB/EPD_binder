@@ -255,7 +255,7 @@ With a `sites` object we can directly call `get_datasets()` to pull in more meta
 #### 3.2.1. Code
 
 ```{r datasetsFromSites, eval=FALSE}
-# This is slow, because there's a lot of sites!
+# This may be slow, because there's a lot of sites!
 # denmark_datasets <- neotoma2::get_datasets(denmark_sites, all_data = TRUE)
 
 denmark_datasets <- neotoma2::get_datasets(loc = denmark_sf, datasettype = "pollen", all_data = TRUE)
