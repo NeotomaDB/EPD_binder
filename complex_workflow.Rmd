@@ -22,82 +22,105 @@ highlight: tango
 
 This RMarkdown document will walk you through the process of:
 
-1.  Downloading pollen records from multiple sites
-2.  Filtering for specific taxa and taxonomic harmonization
-3.  Filtering and binning for specific time periods
-4.  Linking to environmental data
-5.  Performing simple SDMs for different time periods
+1. Downloading pollen records from multiple sites -- [Loading Datasets](#loading-datasets)
+2. Filtering for specific taxa and taxonomic harmonization -- [Data Filtering](#data-filtering)
+3. Filtering and binning for specific time periods
+4. Linking to environmental data
+5. Performing simple SDMs for different time periods
 
-Before we start we must touch on some considerations that you need take into account when doing analysis with pollen data that we will largely ignore in this walk through for the sake of simplicity and time. This work through is the companion to the Introduction to Neotoma [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing). 
+This work-through is the companion to the Introduction to Neotoma [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing).
 
-__*Taxon Harmonization*__
+### Disciplinary Knowledge
 
-The level of taxonomic resolution (e.g. species, genera, family) in pollen data varies depending on a number of factors:
+Before we start any analysis, we need to recognize that paleoecological data has some important considerations that need to be taken into account. Our "complex" workflow has been simplified to some degree, but, were we to work towards published results, these concepts need to be considered in our work.
 
- * Ability to identify pollen to a fine level. Many pollen taxa can only be identify to family or genus level due to similarity of pollen at finer taxonomic levels. An additional consideration is that although some pollen that can only be identify to a genus level may be able to be classified to a finer scale based if it is the only species within that genus within a geographic area, however, the pollen may only be identified to the genus level. 
- * Technology and skill available to the pollen counter. Depending on the skill and technology of pollen counters some records may be able to get to a finer taxonomic scale than other
- * Variation in how pollen are recorded. There are differences between sites of how the same pollen is recorded. For example, "Poaceae" and "Poaceae undiff." are referring to the same pollen type but are recorded differently 
+#### Taxonomies and Morphotaxa
 
-Due to this, a required step of working with pollen data is to harmonize taxon across sites. The level of resolution of your final taxon harmonization will depend on your research question and location of study.  
+Pollen "taxa" are identified by the structures of the pollen grains themselves, identified on microscope slides. The level of taxonomic resolution (e.g. species, genera, family) in pollen data varies depending on a number of factors, and, in some cases, does not directly align with standard taxonomies (such as the GBIF Backbone). These taxonomic issues generally fall along several main topics:
 
-__*Chronology re-analysis*__
+* **Taxonomic Resolution**: Many pollen taxa can only be identify to family or genus level due to similarity of pollen at finer taxonomic levels. An additional consideration is that although some pollen that can only be identify to a genus level may be able to be classified to a finer scale based if it is the only species within that genus within a geographic area, however, the pollen may only be identified to the genus level.
+* **Analyst Experience**: The technology and skill available to the pollen counter can vary, both as a result of the overall experience and quality of equipment, but also based on where and what kinds of pollen they have identified in the past. An expert in western North American pollen taxa may have skill in this region, but might identify pollen to a lower taxonomic resolution when identifying pollen from Australia.
+* **Naming conventions**: Just as analysts have differences in identification, the ways taxa are named varies by analyst and over time. For example, "Poaceae" and "Poaceae undiff." generally refer to the same pollen type but are recorded as different taxa within the database.
+* **Uncertainty**: Neotoma uses a [well-documented system for indicating uncertainty](https://open.neotomadb.org/manual/taxonomy-related-tables-1.html#Taxa) in identification. Depending on the research question, we may accept more or less taxonomic uncertainty in our identification.
 
-Most age-depth models contained within Neotoma are the original age-depth models from the time of publication. This mean that some age depth models may be outdated and should be updated with the latest calibration curve and statisitcal methods before use in meta-analysis. 
+Due to this, a required step of working with pollen data is to harmonize taxon across sites. The level of resolution of your final taxon harmonization will depend on your research question and location of study.
 
-__*Uncertainty in Chronologies*__
+#### Chronologies and Ages
 
-Although each pollen sample is associated with an age (based on the age-depth model) it is also associated with uncertainty around that age. The amount of uncertainty varies depending on the number and type of dated material (i.e. radiocarbon from macrofossils vs. bulk carbon). This means that if a pollen samples from two sites have the same estimated age it does not necessarily mean they are from the same moment in time and to determine similarity in timing you must use statistical analysis. 
+Chronologies underpin all of our paleoenvironmental analysis and interpretation. Neotoma's data model recognizes the importance of chronologies by providing a data model that supports multiple chronologies per record, and allows new analysts to add their own chronologies to existing records.
+
+Some records in Neotoma are from the 1980s or earlier, and these records may have weak chronologies, relative to modern chronologies. They are built using linear interpolation, the radiocarbon dates are uncalibrated, and often, there is no uncertainty in the age predictions.
+
+Our understanding of the relationship between ^14^C production in the upper atmosphere and its incorporation into organic material has improved over time, resulting in updates to the INTCAL curve. In addition, our chronology construction models have improved, fom simple linear interpolation to more complex Baysian models like BACON.
+
+For this reason, researchers will often undertake chronology re-construction early on in their analysis to ensure there is a standardized approach to building the models.
+
+#### Age Uncertainty
+
+Although each pollen sample is associated with an age (based on the age-depth model/chronology) it is also associated with uncertainty around that age. The amount of uncertainty varies depending on the number and type of dated material (i.e. radiocarbon from macrofossils vs. bulk carbon), the distance of a sample from dated material along the core, and the quality of the overall chronology. Age uncertainty means that pollen samples from two sites with the same estimated age do not neccessarily represent the same moment in time.
+
+ As statistical modelling has improved in the sciences, we have seen more rigorous methods for managing age uncertainty in analysis.
 
 ## Load Libraries
 
 For this workshop we only need a few packages. We will download multiple records from Neotoma, filter by taxa and time period, and preform simple species distribution models.
 
-We'll be using the R package `pacman` here, to automatically load and install packages. Note that we also use the package rpaleoclim to download the climate data, but since we have pre-downloaded the climate rasters for you, you will not need that package today. 
+We'll be using the R package `pacman` here, to automatically load and install packages. Note that we also use the package rpaleoclim to download the climate data, but since we have pre-downloaded the climate rasters for you, you will not need that package today.
 
 ```{r setup}
 pacman::p_load(neotoma2, tidyverse, remotes, terra, sf)
 ```
 
-## Loading Datasets {.tabset}
+## Loading Datasets
 
-We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). For this exercise we will be pulling pollen records from all of Europe to construct species distribution models for select species for different time periods. The following code defines our region of interest (a simple polygon of Europe) and downloads the sites, datasets, and downloads for all pollen records that are not missing an age depth model. This is the same workflow as the simple workflow we completed in the morning session but condensed to a few lines of code. Downloading this volume of data from Neotoma can take a long time and is computationally expensive for the database itself so we have already completed the data download and here you will read in the data from our data folder. Under the results you can take a look at all the sites we downloaded. 
+We worked through the process for finding and downloading records using `neotoma2` in the [previous workshop](https://open.neotomadb.org/Current_Workshop/simple_workflow.html). For this exercise we will be pulling European pollen records from Neotoma to build species distribution models (SDMs) for taxa at multiple time periods in the past.
 
-### Code 
+To undertake this analysis we need to:
+
+* Define a region of interest
+* Download full records (sites, datasets & samples)
+* Filter records for data quality (presence of chronologies, taxa, etc.)
+
+### Define Spatial Domain
+
+There are a large number of records in Europe. Downloading this volume of data from Neotoma can take a long time and is computationally expensive for the database itself. We have already completed the data download saved it to our data folder. Under the results you can take a look at all the sites we downloaded. As with the previous example, we can use `loc` parameter along with  [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html) or [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects, and native `sf` objects.
+
+#### Code
+
 ```{r geteurope, message = FALSE, eval = TRUE}
 europe <-  '{"type": "Polygon",
-"coordinates": [[
- [ -32.13,66.46],
- [-14.09,36.93],
- [30.16,34.71],
- [35.79,69.17],
- [-32.13,66.46]]]}'
+             "coordinates": [[
+              [ -32.13,66.46],
+              [-14.09,36.93],
+              [30.16,34.71],
+              [35.79,69.17],
+              [-32.13,66.46]]]}'
 europe_sf <- geojsonsf::geojson_sf(europe)
 
-## The following lines of code are commented out because we've already run it for you to speed up the process. 
-# Downloading large amounts of data can take a long time.
-# europe_sites <- neotoma2::get_sites(loc = europe, datasettype = "pollen", all_data = TRUE)
-# europe_datasets <- neotoma2::get_datasets(loc = europe, datasettype = "pollen", all_data = TRUE)
-# europe_records <- europe_datasets %>% 
-#   neotoma2::filter(!is.na(age_range_young))
-# europe_downloads <- europe_records %>% get_downloads(all_data = TRUE)
+## The following lines of code are commented out because 
+#  we've already run it for you to speed up the process. 
+#  Downloading large amounts of data can take a long time.
+#
+# europe_downloads <- neotoma2::get_datasets(loc = europe,
+#      datasettype = "pollen",
+#      all_data = TRUE) %>%
+#   neotoma2::filter(!is.na(age_range_young)) %>% 
+#   get_downloads(all_data = TRUE)
 # europe_samples <- samples(europe_downloads)
-# 
-# saveRDS(europe_sites, "data/europe_sites.RDS")
-# saveRDS(europe_datasets, "data/europe_datasets.RDS")
+
 # saveRDS(europe_downloads, "data/europe_downloads.RDS")
 # saveRDS(europe_samples, "data/europe_samples.RDS")
 
-europe_sites <- readRDS("data/europe_sites.RDS")
-europe_datasets <- readRDS("data/europe_datasets.RDS")
 europe_downloads <- readRDS("data/europe_downloads.RDS")
 europe_samples <- readRDS("data/europe_samples.RDS")
 
 ```
 
-### Sites Map
+#### Sites Map
+
 ```{r geteuropeshow, eval=TRUE, echo = FALSE}
 
-neotoma2::plotLeaflet(europe_sites) %>% 
+neotoma2::plotLeaflet(europe_downloads) %>% 
   leaflet::addPolygons(map = ., 
                        data = europe_sf, 
                        color = "green")
@@ -107,15 +130,30 @@ neotoma2::plotLeaflet(europe_sites) %>%
 ### Data table
 
 ```{r downloadsCode, echo = FALSE}
-europe_samples[1:10,] %>% dplyr::select(age, variablename, ecologicalgroup, value, units, sitename, lat, long) %>% 
+head(europe_samples, n = 10) %>%
+  dplyr::select(age,
+    variablename,
+    ecologicalgroup,
+    value,
+    units,
+    sitename,
+    lat,
+    long) %>%
   DT::datatable(data = ., 
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-## Data Filtering {.tabset}
-Taxon filtering and harmonization, pollen percent calculations, and data exploration 
+### Data Filtering
 
-Before we can start looking at our focal species we need to do some work with our sample table so that we have all the information we want. We need to do three things at this step: filtering the data to only include our focal taxa, doing taxon harmonization on our focal taxa, and calculating the pollen percent for each focal taxa for each pollen sample. 
+#### Sample Filtering
+
+When we look at pollen data we are looking at counts of pollen data, from a slide, for a particular analysis unit. Along with pollen there can also be measurements of charcoal, records of algal cycts, and other lab-based measurements. In addition, we often look only at terrestrial pollen types, since they generally reflect regional vegetation, as opposed to the pollen of aquatic types that would represent local site conditions.
+
+The `europe_samples` `data.frame` 
+
+Taxon filtering and harmonization, pollen percent calculations, and data exploration
+
+Before we can start looking at our focal species we need to do some work with our sample table so that we have all the information we want. We need to do three things at this step: filtering the data to only include our focal taxa, doing taxon harmonization on our focal taxa, and calculating the pollen percent for each focal taxa for each pollen sample.
 
 *Note:* Our taxon harmonization here is very simple and more thought should be put into taxon harmonization.
 
@@ -123,7 +161,8 @@ Our first task is to make a table that we will join with our samples table that 
 
 Then we can combine taxon filtering and harmonization and pollen percent calculation all in one segment of code. Here we are selecting the taxa *Fagus*, *Picea*, and *Corylus* and harmonizing all variations of those taxa to the genus level. 
 
-### Code
+#### Code
+
 ```{r filtertaxa, message = FALSE, eval = TRUE}
 poll_total <- europe_samples %>%
   filter(ecologicalgroup == "TRSH" | ecologicalgroup == "UPHE") %>% 
@@ -151,7 +190,8 @@ europe_subset <- europe_samples %>%
                               .default = 0))
 ```
 
-### Results
+#### Results
+
 ```{r filtertaxaShow, eval = TRUE, message = FALSE, echo = FALSE}
 europe_subset[1:10,] %>% 
   DT::datatable(data = ., 
@@ -160,7 +200,8 @@ europe_subset[1:10,] %>%
 ggplot(europe_subset, aes(age)) + geom_histogram() + ylab("Count of Samples") + xlab("Age (years before present)") + theme_minimal()
 ```
 
-## Bin and filter data by time {.tabset}
+### Bin and filter data by time
+
 Now that we have a dataset with our three focal taxa we now want to filter these taxa into time periods of interest. For this exercise we will be looking at modern samples (1950 to present), the Younger Drays (12.9 to 11.7 thousand years ago), and the Last Glacial Maximum (LGM; 21 thousand years ago). 
 
 *Note:* We do not attempt to update age-depth models and we filter out all samples that do not have age estimates when some of them may be able to be included under closer inspection. Additionally, we do not take into account time uncertainty which is another aspect that should be considered when filtering by time.
@@ -175,7 +216,8 @@ europe_binned <- europe_subset %>%
   filter(!is.na(timebins))
 ```
 
-### Results
+#### Results
+
 ```{r binbyageShow, eval = TRUE, message = FALSE, echo = FALSE}
 europe_binned %>% 
   mutate(timebins = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
@@ -189,10 +231,8 @@ europe_binned %>%
 ## Loading Climate Data {.tabset}
 There is no climate data associated with pollen data downloaded from Neotoma but you can utilize climate data that is available online to intersect with the locations of pollen samples. For this we will be using climate data from [Paleoclim](http://www.paleoclim.org/) which compiles climate data from present to the Pliocene from various sources. We will be using their modern and LGM climate data from CHELSA and Younger Dryas climate data from [Fordham  et al., 2017](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/ecog.03031). There are a few options for choosing climate reconstructions for use with paleodata:
 
-* Downscaled and debiased climate simulations for North America from 21,000 years ago to 2100AD - [Lorenz et al., 2016](https://www.nature.com/articles/sdata201648)
-* PaleoView: a tool for generating continuous climate projections spanning the last 21 000 years at regional and global scales - [Fordham  et al., 2017](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/ecog.03031)
+#### Code
 
-### Code
 ```{r downloadclims, message = FALSE, eval = TRUE}
 # europe_clim_mod <- paleoclim("cur", "5m", region = terra::ext(europe_sf))
 # europe_clim_yd <- paleoclim("yds", "5m", region = terra::ext(europe_sf))
@@ -207,8 +247,10 @@ europe_clim_yd <- readRDS("data/europe_clim_yd.RDS")
 europe_clim_lgm <- readRDS("data/europe_clim_lgm.RDS")
 
 ```
-### Modern
-```{r downloadclimsShow1, echo = FALSE, message = FALSE, eval = TRUE}
+
+#### Results
+
+```{r downloadclimsShow, echo = FALSE, message = FALSE, eval = TRUE}
 plot(europe_clim_mod[["bio_1"]]/10, main = "Modern Mean Annual Temp, Europe")
 
 ```
@@ -225,12 +267,12 @@ plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
 
 ```
 
-## Species Distribution Models 
-Now that we have our taxa data and our climate data ready to go we will now extract climate data for each sample, create SDMs, and predict species distributions for all three taxa in all three time periods.  
+## Species Distribution Models
 
 ### Extracting environmental varliables {.tabset}
 
-#### Code
+#### Extracting Environmental Variables
+
 ```{r extractclims, message = FALSE, eval = TRUE}
 #First lets save the projection information from our climate data to use later when creating our species points data
 proj_data <- crs(europe_clim_mod)
@@ -246,33 +288,18 @@ extract_clims <- function(taxa_data, clim_data, time_text, taxa_text, projection
 
 }
 
-#Corylus
-corylus_mod <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_mod, 
-                             time_text = "Modern", taxa_text = "Corylus", projection = proj_data)
-corylus_yd <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_yd, 
-                             time_text = "YD", taxa_text = "Corylus", projection = proj_data)
-corylus_lgm <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_lgm, 
-                             time_text = "LGM", taxa_text = "Corylus", projection = proj_data)
-
-#Fagus
-fagus_mod <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_mod, 
-                             time_text = "Modern", taxa_text = "Fagus", projection = proj_data)
-fagus_yd <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_yd, 
-                             time_text = "YD", taxa_text = "Fagus", projection = proj_data)
-fagus_lgm <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_lgm, 
-                             time_text = "LGM", taxa_text = "Fagus", projection = proj_data)
-
-#Picea
-picea_mod <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_mod, 
-                             time_text = "Modern", taxa_text = "Corylus", projection = proj_data)
-picea_yd <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_yd, 
-                             time_text = "YD", taxa_text = "Corylus", projection = proj_data)
-picea_lgm <- extract_clims(taxa_data = europe_binned, clim_data = europe_clim_lgm, 
-                             time_text = "LGM", taxa_text = "Corylus", projection = proj_data)
-
+## Last Glacial Maximum 
+taxa_lgm <- st_as_sf(taxa_lgm, coords = c("long", "lat"), crs = proj_data)
+taxa_lgm_vect <- vect(taxa_lgm$geometry)
+taxa_lgm_clims <- terra::extract(europe_clim_lgm, taxa_lgm_vect)
+taxa_lgm <- cbind(taxa_lgm, taxa_lgm_clims)
+corylus_lgm <- filter(taxa_lgm, variablename == "Corylus")
+fagus_lgm <- filter(taxa_lgm, variablename == "Fagus")
+picea_lgm <- filter(taxa_lgm, variablename == "Picea")
 ```
 
 #### Corylus
+
 ```{r extractclimsshow1, echo = FALSE, message = FALSE, eval = TRUE, warnings = FALSE}
 
 rbind(corylus_mod, corylus_yd, corylus_lgm) %>%
@@ -289,6 +316,7 @@ rbind(corylus_mod, corylus_yd, corylus_lgm) %>%
 ```
 
 #### Fagus
+
 ```{r extractclimsshow2, echo = FALSE, message = FALSE, eval = TRUE, warning = FALSE}
 
 rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
@@ -305,6 +333,7 @@ rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
 ```
 
 #### Picea
+
 ```{r extractclimsshow3, echo = FALSE, message = FALSE, eval = TRUE, warning = FALSE}
 
 rbind(picea_mod, picea_yd, picea_lgm) %>%
@@ -321,8 +350,8 @@ rbind(picea_mod, picea_yd, picea_lgm) %>%
 ```
 
 ### Predicting Species Distributions
-Next we are going to set up the species distribution models
 
+Next we are going to set up the species distribution models
 
 #### Corylus {.tabset}
 
@@ -448,7 +477,8 @@ plot(picea_lgm_glm_pres_predict, main = "Predicted Picea Presence, LGM")
 ####
 ###
 
-## Exercise 
+## Exercise
+
 Now that we have walked through getting your data into a format that can used for Species Distribution Models you can now answer a number of questions, such as:
 
 * How do SDMs created using modern pollen and hindcast compare to models created from data of that time period?
@@ -461,13 +491,13 @@ Now it is your turn to come up with a question that can be answered by our data 
 
 From this notebook we have learned how to:
 
-1.  Downloading pollen records from multiple sites
-2.  Filtering for specific taxa and taxonomic harmonization
-3.  Filtering and binning for specific time periods
-4.  Linking to environmental data
-5.  Performing simple SDMs for different time periods
+1. Downloading pollen records from multiple sites
+2. Filtering for specific taxa and taxonomic harmonization
+3. Filtering and binning for specific time periods
+4. Linking to environmental data
+5. Performing simple SDMs for different time periods
 
-This approach is very simple workflow for taking records from many sites and combining them into species distribution models to compare species distributions at different periods of time. 
+This approach is very simple workflow for taking records from many sites and combining them into species distribution models to compare species distributions at different periods of time.
 
 ### Other Helpful R Packages
 
