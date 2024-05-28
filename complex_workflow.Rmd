@@ -1,5 +1,6 @@
 ---
 title: "A Not so Simple Workflow - SDM Version"
+author:
   - name: "Nora Schlenker"
     institute: [uwiscgeog]
     correspondence: false
@@ -40,7 +41,7 @@ highlight: tango
 csl: 'https://bit.ly/3khj0ZL'
 ---
 
-# Building Species Distribution Models from Pollen Data
+## Building Species Distribution Models from Pollen Data
 
 This RMarkdown document will walk you through the process of:
 
@@ -81,7 +82,7 @@ For this reason, researchers will often undertake chronology re-construction ear
 
 Although each pollen sample is associated with an age (based on the age-depth model/chronology) it is also associated with uncertainty around that age. The amount of uncertainty varies depending on the number and type of dated material (i.e. radiocarbon from macrofossils vs. bulk carbon), the distance of a sample from dated material along the core, and the quality of the overall chronology. Age uncertainty means that pollen samples from two sites with the same estimated age do not neccessarily represent the same moment in time.
 
- As statistical modelling has improved in the sciences, we have seen more rigorous methods for managing age uncertainty in analysis.
+As statistical modelling has improved in the sciences, we have seen more rigorous methods for managing age uncertainty in analysis.
 
 ## Load Libraries
 
