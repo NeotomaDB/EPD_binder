@@ -18,7 +18,7 @@ dev: svg
 highlight: tango
 ---
 
-## Building Species Distribution Models from Pollen Data
+# Building Species Distribution Models from Pollen Data
 
 This RMarkdown document will walk you through the process of:
 
@@ -30,11 +30,11 @@ This RMarkdown document will walk you through the process of:
 
 This work-through is the companion to the Introduction to Neotoma [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing).
 
-### Disciplinary Knowledge
+## Disciplinary Knowledge
 
 Before we start any analysis, we need to recognize that paleoecological data has some important considerations that need to be taken into account. Our "complex" workflow has been simplified to some degree, but, were we to work towards published results, these concepts need to be considered in our work.
 
-#### Taxonomies and Morphotaxa
+### Taxonomies and Morphotaxa
 
 Pollen "taxa" are identified by the structures of the pollen grains themselves, identified on microscope slides. The level of taxonomic resolution (e.g. species, genera, family) in pollen data varies depending on a number of factors, and, in some cases, does not directly align with standard taxonomies (such as the GBIF Backbone). These taxonomic issues generally fall along several main topics:
 
@@ -45,7 +45,7 @@ Pollen "taxa" are identified by the structures of the pollen grains themselves, 
 
 Due to this, a required step of working with pollen data is to harmonize taxon across sites. The level of resolution of your final taxon harmonization will depend on your research question and location of study.
 
-#### Chronologies and Ages
+### Chronologies and Ages
 
 Chronologies underpin all of our paleoenvironmental analysis and interpretation. Neotoma's data model recognizes the importance of chronologies by providing a data model that supports multiple chronologies per record, and allows new analysts to add their own chronologies to existing records.
 
@@ -55,7 +55,7 @@ Our understanding of the relationship between ^14^C production in the upper atmo
 
 For this reason, researchers will often undertake chronology re-construction early on in their analysis to ensure there is a standardized approach to building the models.
 
-#### Age Uncertainty
+### Age Uncertainty
 
 Although each pollen sample is associated with an age (based on the age-depth model/chronology) it is also associated with uncertainty around that age. The amount of uncertainty varies depending on the number and type of dated material (i.e. radiocarbon from macrofossils vs. bulk carbon), the distance of a sample from dated material along the core, and the quality of the overall chronology. Age uncertainty means that pollen samples from two sites with the same estimated age do not neccessarily represent the same moment in time.
 
@@ -81,7 +81,7 @@ To undertake this analysis we need to:
 * Download full records (sites, datasets & samples)
 * Filter records for data quality (presence of chronologies, taxa, etc.)
 
-### Define Spatial Domain
+### Define Spatial Domain {.tabset}
 
 There are a large number of records in Europe. Downloading this volume of data from Neotoma can take a long time (~2hrs total) and is computationally expensive for the database itself. We have already completed the data download saved it to our data folder. Under the results you can take a look at all the sites we downloaded. As with the previous example, we can use `loc` parameter along with  [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html) or [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects, and native `sf` objects.
 
@@ -127,7 +127,7 @@ neotoma2::plotLeaflet(europe_downloads) %>%
 
 ```
 
-### Data table
+#### Data table
 
 ```{r downloadsCode, echo = FALSE}
 
@@ -144,15 +144,15 @@ head(europe_samples, n = 10) %>%
                 options = list(scrollX = "100%", dom = 't'))
 ```
 
-### Data Filtering
+## Data Filtering
 
-#### Sample Filtering
+### Sample Filtering
 
 When we look at pollen data we are looking at counts of pollen data, from a slide, for a particular analysis unit. Along with pollen there can also be measurements of charcoal, records of algal cycts, and other lab-based measurements. In addition, we often look only at terrestrial pollen types, since they generally reflect regional vegetation, as opposed to the pollen of aquatic types that would represent local site conditions.
 
 Even though the datasets are pollen datasets, the `europe_samples` `data.frame` contains data for a number of different measured elements, including things like mandibles, scales and sporangia. In addition, these elements are measured using `r length(unique(europe_samples$units))` different measurement units (`unique(europe_samples$units)`) across `r length(unique(europe_samples$ecologicalgroup))` ecological groups (`unique(europe_samples$ecologicalgroup)`) including diatoms, trees and shrubs, rotifers and insects.
 
-##### Standard Units and Elements
+#### Standard Units and Elements
 
 We often use pollen proportions in our analysis, and for this we need to find out how many total pollen grains were counted in each sample.  We also want to make sure we're looking at a common set of taxa across all sites. In this case we will filter for trees and shrubs (ecological group `TRSH`) and upland herbs (ecological group `UPHE`). We will also look for pollen (element type `pollen`) that is measured using the Number of Identified Specimens (units `NISP`).
 
@@ -167,7 +167,7 @@ europe_cleaner <- europe_samples %>%
 
 This initial filtering removes about `r round(nrow(europe_samples) - nrow(europe_cleaner), -3)` rows from our original dataset.
 
-##### Standardizing Taxa
+#### Standardizing Taxa
 
 For the purposes of this analysis we will only be focusing on building models for *Corylus*, *Fagus* and *Picea*.  
 
@@ -185,11 +185,11 @@ europe_cleaner %>%
   select(variablename) %>% distinct()
 ```
 
-For our purposes it will be enough to simply standardize all taxa idenfied as some form of *Picea* to *Picea*, and the same for the *Corylus* and *Fagus* types.  This then lets us right some fairly clean code as follows:
+For our purposes it will be enough to simply standardize all taxa identified as some form of *Picea* to *Picea*, and the same for the *Corylus* and *Fagus* types.  This then lets us right some fairly clean code as follows:
 
-###### Code
+##### Code
 
-```{r replacetaxa}
+```{r replacetaxa, warning = FALSE, message = FALSE}
 europe_cleaner <- europe_cleaner %>%
   mutate(variablename = replace(variablename, 
                                 stringr::str_detect(variablename, "Fagus"),
@@ -198,8 +198,7 @@ europe_cleaner <- europe_cleaner %>%
                                 stringr::str_detect(variablename, "Picea"),
                                 "Picea"),
          variablename = replace(variablename,
-                                stringr::str_detect(variablename,
-                                "Corylus"),
+                                stringr::str_detect(variablename, "Corylus"),
                                 "Corylus")) %>%
     group_by(datasetid, age, variablename, units, ecologicalgroup, sitename, lat, long) %>%
     summarise(value = sum(value)) %>% as.data.frame()
@@ -209,7 +208,7 @@ We have to `summarise` at the end to make sure that counts of taxon name variant
 
 **Note**: We're using `as.data.frame()` here to speed up operations below. Leaving this object as a `grouped_df` seem to seriously impact performance.
 
-##### Age Filtering
+### Age Filtering
 
 The age ranges for these records may be broad. Some European records go back over 100,000 years before present, and some samples (and datasets) appear to have no chronologies. We can check the ages using the columns `age`, `ageolder` and `ageyounger`. Note that many chronologies have been entered without uncertainty measures, in which case `ageolder` and `ageyounger` would be unreported. Otherwise these values represent ±1 standard deviation.
 
@@ -217,12 +216,13 @@ We will be building our SDMs for three critical time periods in the time since t
 
 | time period | age range (ybp) | label |
 | ----------- | --------------- | ----- |
-| Modern      |  -76 - 150      | `modern` |
-| Younger Dryas | 11,700 - 12,900 | `yd` |
-| Last Glacial Maximum | > 21,000 | `lgm` |
+| Modern      |  -76 - 150      | `Modern` |
+| Younger Dryas | 11,700 - 12,900 | `YD` |
+| Last Glacial Maximum | > 21,000 | `LGM` |
 
 To prepare the data for analysis we will create a new column using `mutate`, based on our time bins, and filter out any records that are not within our defined periods of study:
 
+#### Code
 ```{r agecleaning}
 europe_ready <- europe_cleaner %>%
   mutate(timebins = case_when(age >= -72 & age <= 150 ~ "Modern",
@@ -233,11 +233,14 @@ europe_ready <- europe_cleaner %>%
   as.data.frame()
 ```
 
-Our data is now ready for further analysis. We've cleaned the taxonomy, ensured all data are of a similar type and measured with similar units, and we've made sure that our time bins are clearly defined.
+
+###
+
+Our data is now ready for further analysis. We've cleaned the taxonomy for our three focal taxa, ensured all data are of a similar type and measured with similar units, and we've made sure that our time bins are clearly defined.
 
 *Note:* We do not attempt to update age-depth models and we filter out all samples that do not have age estimates when some of them may be able to be included under closer inspection. Additionally, we do not take into account time uncertainty which is another aspect that should be considered when filtering by time.
 
-#### Calculating Pollen Sums & Percentages
+### Calculating Pollen Sums, Percentages, and Presence {.tabset}
 
 From here we need to calculate the pollen sum for each sample in our set of samples. This means that we will get the total number of pollen grains counted for e.g., Kansjön at depth 445cm in the core. We can calculate both the pollen sum and the proportion at the same time by using `group_by()` and `ungroup()` to first sum the `value` fields (the counts) and then calculate the proportion from our new `totalpollen` field:
 
@@ -246,23 +249,39 @@ europe_subset <- europe_ready %>%
   group_by(datasetid, age, sitename, lat, long, timebins) %>%
   mutate(totalpollen = sum(value)) %>%
   ungroup() %>%
-  mutate(polprop = round(value / totalpollen, 2)) %>%
+  mutate(polprop = round(value / totalpollen, 2)) %>% #calculates pollen proportion of total pollen counted per sample
+  mutate(presence =  case_when(polprop > .01 ~ 1,
+                              .default = 0)) %>% #calculates presence of a taxa when it has >1% pollen proportion 
   as.data.frame()
 ```
 
-#### Results
+#### Data Table
 
 ```{r filtertaxaShow, eval = TRUE, message = FALSE, echo = FALSE}
 europe_subset[1:10,] %>% 
   DT::datatable(data = ., 
                 options = list(scrollX = "100%", dom = 't'))
-
-ggplot(europe_subset, aes(age)) + geom_histogram() + ylab("Count of Samples") + xlab("Age (years before present)") + theme_minimal()
 ```
+
+#### Samples by Time Period
+
+```{r agecleaningshow, echo=FALSE, warning=FALSE, message=FALSE}
+europe_ready %>% 
+  select(variablename, timebins) %>%
+  filter(variablename %in% c("Fagus", "Corylus", "Picea")) %>%
+  mutate(timebins = factor(timebins, levels = c("Modern", "YD", "LGM")), 
+         taxa = factor(variablename, levels = c("Fagus", "Corylus", "Picea"))) %>%
+  ggplot(aes(timebins)) + geom_bar(stat = "count") + 
+  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
+  facet_wrap(~taxa, ncol = 3) +
+  ylab("Count of Samples") + xlab("Time Bins") + theme_minimal()
+```
+
+###
 
 ## Loading Climate Data {.tabset}
 
-There is no climate data associated with pollen data downloaded from Neotoma but you can utilize climate data that is available online to intersect with the locations of pollen samples. For this we will be using climate data from [Paleoclim](http://www.paleoclim.org/) which compiles climate data from present to the Pliocene from various sources. We will be using their modern and LGM climate data from CHELSA and Younger Dryas climate data from [Fordham  et al., 2017](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/ecog.03031). There are a few options for choosing climate reconstructions for use with paleodata:
+There is no climate data associated with pollen data downloaded from Neotoma but you can utilize climate data that is available online to intersect with the locations of pollen samples. For this we will be using climate data from [Paleoclim](http://www.paleoclim.org/) which compiles climate data from present to the Pliocene from various sources. We will be using their modern and LGM climate data from [CHELSA](https://chelsa-climate.org/) and Younger Dryas climate data from [Fordham  et al., 2017](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/ecog.03031). 
 
 ### Code
 
@@ -281,7 +300,7 @@ europe_clim_lgm <- readRDS("data/europe_clim_lgm.RDS")
 
 ```
 
-### Results
+### Modern
 
 ```{r downloadclimsShow, echo = FALSE, message = FALSE, eval = TRUE}
 plot(europe_clim_mod[["bio_1"]]/10, main = "Modern Mean Annual Temp, Europe")
@@ -302,11 +321,11 @@ plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
 
 ```
 
-## Species Distribution Models
+## Extracting Environmental Variables {.tabset}
 
-### Extracting environmental varliables {.tabset}
+Now that we have cleaned taxa data and have loaded in climate data we can extract environmental variables for each pollen sample based on the lat/long of the collection unit. Below is a function that will extract the [19 biocliamte variables](https://chelsa-climate.org/bioclim/) from the climate rasters. 
 
-#### Extracting Environmental Variables
+### Extracting 
 
 ```{r extractclims, message = FALSE, eval = TRUE}
 #First lets save the projection information from our climate data to use later when creating our species points data
@@ -322,25 +341,24 @@ extract_clims <- function(taxa_data, clim_data, time_text, taxa_text, projection
 
 }
 
-## Last Glacial Maximum 
-taxa_lgm <- st_as_sf(taxa_lgm, coords = c("long", "lat"), crs = proj_data)
-taxa_lgm_vect <- vect(taxa_lgm$geometry)
-taxa_lgm_clims <- terra::extract(europe_clim_lgm, taxa_lgm_vect)
-taxa_lgm <- cbind(taxa_lgm, taxa_lgm_clims)
-corylus_lgm <- filter(taxa_lgm, variablename == "Corylus")
-fagus_lgm <- filter(taxa_lgm, variablename == "Fagus")
-picea_lgm <- filter(taxa_lgm, variablename == "Picea")
+## Fagus
+fagus_mod <- extract_clims(taxa_data = europe_subset, clim_data = europe_clim_mod, 
+                             time_text = "Modern", taxa_text = "Fagus", projection = proj_data)
+fagus_yd <- extract_clims(taxa_data = europe_subset, clim_data = europe_clim_yd, 
+                             time_text = "YD", taxa_text = "Fagus", projection = proj_data)
+fagus_lgm <- extract_clims(taxa_data = europe_subset, clim_data = europe_clim_lgm, 
+                             time_text = "LGM", taxa_text = "Fagus", projection = proj_data)
 ```
 
-#### Corylus
+### Fagus E-Space 1D
 
-```{r extractclimsshow1, echo = FALSE, message = FALSE, eval = TRUE, warnings = FALSE}
+```{r extractclimsshow1, echo = FALSE, message = FALSE, eval = TRUE, warning = FALSE}
 
-rbind(corylus_mod, corylus_yd, corylus_lgm) %>%
-  select(timebins, pollen_percent, bio_1, bio_12, bio_4, bio_15, geometry) %>%
-  pivot_longer(-c(timebins, pollen_percent, geometry)) %>%
+rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
+  select(timebins, polprop, bio_1, bio_12, bio_4, bio_15, geometry) %>%
+  pivot_longer(-c(timebins, polprop, geometry)) %>%
   mutate(timebins_fact = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
-  ggplot(aes(value, pollen_percent)) + geom_point() +
+  ggplot(aes(value, polprop)) + geom_point() +
   facet_grid(timebins_fact~name, scales = "free", switch = "x") +
   xlab("") +
   ylab("Pollen Percent")+
@@ -349,177 +367,125 @@ rbind(corylus_mod, corylus_yd, corylus_lgm) %>%
 
 ```
 
-#### Fagus
+### Fagus E-Space 2D
 
 ```{r extractclimsshow2, echo = FALSE, message = FALSE, eval = TRUE, warning = FALSE}
 
 rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
-  select(timebins, pollen_percent, bio_1, bio_12, bio_4, bio_15, geometry) %>%
-  pivot_longer(-c(timebins, pollen_percent, geometry)) %>%
+  select(timebins, polprop, bio_1, bio_12, bio_4, bio_15, geometry) %>%
   mutate(timebins_fact = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
-  ggplot(aes(value, pollen_percent)) + geom_point() +
-  facet_grid(timebins_fact~name, scales = "free", switch = "x") +
-  xlab("") +
-  ylab("Pollen Percent")+
+  ggplot(aes(bio_1, bio_12, size = polprop)) + geom_point() +
+  facet_wrap(~timebins_fact, ncol = 3, scales = "free", switch = "x") +
+  xlab("Mean Annual Temperature") +
+  ylab("Annual Precipitation")+
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45))
 
 ```
 
-#### Picea
+## Exercise 1 - Predicting Modern Presence {.tabset}
 
-```{r extractclimsshow3, echo = FALSE, message = FALSE, eval = TRUE, warning = FALSE}
+For our first exercise we will be exploring how pollen data can be used to predict suitable climates for taxa under current conditions. For this first example we will compare two models, one which uses pollen proportion as input to predict pollen abundance and another which uses the presence only data to predict likelihood of occurrence using a binomial distribution. 
 
-rbind(picea_mod, picea_yd, picea_lgm) %>%
-  select(timebins, pollen_percent, bio_1, bio_12, bio_4, bio_15, geometry) %>%
-  pivot_longer(-c(timebins, pollen_percent, geometry)) %>%
-  mutate(timebins_fact = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
-  ggplot(aes(value, pollen_percent)) + geom_point() +
-  facet_grid(timebins_fact~name, scales = "free", switch = "x") +
-  xlab("") +
-  ylab("Pollen Percent")+
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45))
+### Code
 
-```
-
-### Predicting Species Distributions
-
-Next we are going to set up the species distribution models
-
-#### Corylus {.tabset}
-
-##### Code
-
-```{r corylussdm, message = FALSE, eval = TRUE}
-corylus_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_mod, family = gaussian)
-corylus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), corylus_mod_glm)
-
-corylus_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_yd, family = gaussian)
-corylus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), corylus_yd_glm)
-
-corylus_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = corylus_lgm, family = gaussian)
-corylus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), corylus_lgm_glm)
-
-# Using Presence Only data
-corylus_mod_glm_pres <- glm(presence ~ bio_1 + bio_12, data = corylus_mod, family = binomial)
-corylus_mod_glm_pres_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), corylus_mod_glm_pres)
-
-corylus_yd_glm_pres <- glm(presence ~ bio_1 + bio_12, data = corylus_yd, family = binomial)
-corylus_yd_glm_pres_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), corylus_yd_glm_pres)
-
-corylus_lgm_glm_pres <- glm(presence ~ bio_1 + bio_12, data = corylus_lgm, family = binomial)
-corylus_lgm_glm_pres_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), corylus_lgm_glm_pres)
-
-```
-
-##### Results
-```{r corylussdmshow, echo = FALSE, message = FALSE, eval = TRUE}
-par(mfrow = c(2,3))
-
-plot(corylus_mod_glm_predict, main = "Predicted Corylus Pollen Percent, Modern")
-plot(corylus_yd_glm_predict, main = "Predicted Corylus Pollen Percent, Younger Dryas")
-plot(corylus_lgm_glm_predict, main = "Predicted Corylus Pollen Percent, LGM")
-
-# Using Presence Only data
-plot(corylus_mod_glm_pres_predict, main = "Predicted Corylus Presence, Modern")
-plot(corylus_yd_glm_pres_predict, main = "Predicted Corylus Presence, Younger Dryas")
-plot(corylus_lgm_glm_pres_predict, main = "Predicted Corylus Presence, LGM")
-
-```
-
-#### Fagus {.tabset}
-
-##### Code
-```{r fagussdm, message = FALSE, eval = TRUE}
-fagus_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_mod)
+```{r exercise1, message = FALSE, eval = TRUE}
+# Create a GLM using pollen proportion data using the gaussian distribution 
+fagus_mod_glm <- glm(polprop ~ bio_1 + bio_12, data = fagus_mod, family = gaussian)
 fagus_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), fagus_mod_glm)
 
-fagus_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_yd)
-fagus_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), fagus_yd_glm)
-
-fagus_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = fagus_lgm)
-fagus_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_lgm_glm)
-
-# Using Presence Only data
-fagus_mod_glm_pres <- glm(presence ~ bio_1 + bio_12, data = fagus_mod)
+# Create a GLM using presence only data using the binomial distribution 
+fagus_mod_glm_pres <- glm(presence ~ bio_1 + bio_12, data = fagus_mod, family = binomial)
 fagus_mod_glm_pres_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), fagus_mod_glm_pres)
 
-fagus_yd_glm_pres <- glm(presence ~ bio_1 + bio_12, data = fagus_yd)
-fagus_yd_glm_pres_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), fagus_yd_glm_pres)
+```
 
-fagus_lgm_glm_pres <- glm(presence ~ bio_1 + bio_12, data = fagus_lgm)
-fagus_lgm_glm_pres_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_lgm_glm_pres)
+### Proportion Model Fit
+```{r excersise1show1, echo = FALSE, message = FALSE, eval = TRUE}
+
+summary(fagus_mod_glm)
+
 
 ```
 
-##### Results
-```{r fagussdmshow, echo = FALSE, message = FALSE, eval = TRUE}
-par(mfrow = c(2,3))
+### Presence Model Fit
+```{r excersise1show2, echo = FALSE, message = FALSE, eval = TRUE}
 
-plot(fagus_mod_glm_predict, main = "Predicted Fagus Pollen Percentage, Modern")
-plot(fagus_yd_glm_predict, main = "Predicted Fagus Pollen Percentage, Younger Dryas")
-plot(fagus_lgm_glm_predict, main = "Predicted Fagus Pollen Percentage, LGM")
+summary(fagus_mod_glm_pres)
 
-# Using Presence Only data
+```
+
+### Maps
+```{r excersise1show3, echo = FALSE, message = FALSE, eval = TRUE, out.width = "50%"}
+
+plot(fagus_mod_glm_predict, main = "Predicted Fagus Pollen Percent, Modern")
+plot(fagus_mod$geometry, add = TRUE)
+
 plot(fagus_mod_glm_pres_predict, main = "Predicted Fagus Presence, Modern")
-plot(fagus_yd_glm_pres_predict, main = "Predicted Fagus Presence, Younger Dryas")
-plot(fagus_lgm_glm_pres_predict, main = "Predicted Fagus Presence, LGM")
+plot(fagus_mod$geometry[which(fagus_mod$presence == 1)], add = TRUE)
+
 
 ```
 
-#### Picea {.tabset}
+##
 
-##### Code
-```{r piceasdm, message = FALSE, eval = TRUE}
-picea_mod_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_mod)
-picea_mod_glm_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), picea_mod_glm)
+### Your Task
+Using the example above create your own model of modern species presence either using one of our other taxa (*Corylus* or *Picea*), You can also experiment with using different combinations of environmental variables (we have all 19 bioclimatic variables) or even use a different model type!  
 
-picea_yd_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_yd)
-picea_yd_glm_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), picea_yd_glm)
+When you are finished you can share your results by pasting a screenshot of a figure to our [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing) on the Exercise 1 slides. 
 
-picea_lgm_glm <- glm(pollen_percent ~ bio_1 + bio_12, data = picea_lgm)
-picea_lgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), picea_lgm_glm)
+## Exercise 2 - Hindcasting Species Presence {.tabset}
 
-# Using Presence Only data
-picea_mod_glm_pres <- glm(presence ~ bio_1 + bio_12, data = picea_mod)
-picea_mod_glm_pres_predict <- predict(c(europe_clim_mod[["bio_1"]], europe_clim_mod[["bio_12"]]), picea_mod_glm_pres)
+Now lets take a look at how we can utilize the power of paleoecological data to create and/or validate distribution models. Here we will use the same model created above for Fagus presence during modern times and hindcast it using the climate data from the LGM. We will then create a new model using the pollon proportion data of pollen at the LGM and predict species presence at the LGM. We can then compare the two models. Although we are not doing this formally here you can also use taxa pollen presence in the past to formally validate models created with modern species-environment relationships. 
 
-picea_yd_glm_pres <- glm(presence ~ bio_1 + bio_12, data = picea_yd)
-picea_yd_glm_pres_predict <- predict(c(europe_clim_yd[["bio_1"]], europe_clim_yd[["bio_12"]]), picea_yd_glm_pres)
+### Code
 
-picea_lgm_glm_pres <- glm(presence ~ bio_1 + bio_12, data = picea_lgm)
-picea_lgm_glm_pres_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), picea_lgm_glm_pres)
+```{r exercise2, message = FALSE, eval = TRUE}
+# Create a GLM using pollen proportion data using the gaussian distribution 
+fagus_modtolgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_mod_glm)
+
+# Create a GLM using presence only data using the binomial distribution 
+fagus_lgm_glm <- glm(polprop ~ bio_1 + bio_12, data = fagus_lgm, family = gaussian)
+fagus_lgmtolgm_glm_predict <- predict(c(europe_clim_lgm[["bio_1"]], europe_clim_lgm[["bio_12"]]), fagus_lgm_glm)
 
 ```
 
-##### Results
-```{r piceasdmshow, echo = FALSE, message = FALSE, eval = TRUE}
-par(mfrow = c(2,3))
+### LGM Model Fit
+```{r excersise2show1, echo = FALSE, message = FALSE, eval = TRUE}
 
-plot(picea_mod_glm_predict, main = "Predicted picea Pollen Percentage, Modern")
-plot(picea_yd_glm_predict, main = "Predicted picea Pollen Percentage, Younger Dryas")
-plot(picea_lgm_glm_predict, main = "Predicted picea Pollen Percentage, LGM")
-
-# Using Presence Only data
-plot(picea_mod_glm_pres_predict, main = "Predicted Picea Presence, Modern")
-plot(picea_yd_glm_pres_predict, main = "Predicted Picea Presence, Younger Dryas")
-plot(picea_lgm_glm_pres_predict, main = "Predicted Picea Presence, LGM")
+summary(fagus_lgm_glm)
 
 ```
 
-####
-###
+### Maps
+```{r excersise2show3, echo = FALSE, message = FALSE, eval = TRUE, out.width = "50%"}
 
-## Exercise
+plot(fagus_modtolgm_glm_predict, main = "Predicted Fagus Pollen Proportion, Modern to LGM")
+plot(fagus_lgm$geometry, add = TRUE)
 
-Now that we have walked through getting your data into a format that can used for Species Distribution Models you can now answer a number of questions, such as:
+plot(fagus_lgmtolgm_glm_predict, main = "Predicted Fagus Pollen Proportion, LGM to LGM")
+plot(fagus_lgm$geometry, add = TRUE)
 
-* How do SDMs created using modern pollen and hindcast compare to models created from data of that time period?
-* Do occurrences of taxa occupy different portions of climate space through time? 
+
+```
+
+##
+
+### Your Task
+Using the example above create your own model of pollen proportions of one of our other taxa (*Corylus* or *Picea*) in one of our past time periods (Younger Dryas and Last Glacial Maximum). You can also experiment with using different combinations of environmental variables (we have all 19 bioclimatic variables) or even use a different model type! 
+
+When you are finished you can share your results by pasting a screenshot of a figure to our [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing) on the Exercise 2 slides. 
+
+
+## Exercise 3 - Choose your own adventure!
+
+Now that we have walked through getting your data from the Neotoma Paleoecology Database, correlating pollen samples with environmental variables, and explored a few ways that you can use the data you can now experiment with out types of questions we can answer with this data:
+
+* Do SDMs created for past climates accurately predict where species are today?
+* Do pollen percent or presence of taxa occupy different portions of climate space through time? 
 * Many more!
 
-Now it is your turn to come up with a question that can be answered by our data and create code to answer your question. When you are finished you can share your results by pasting a screenshot of a figure to our [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing).
+Now it is your turn to come up with a question that can be answered by our data and create code to answer your question. When you are finished you can share your results by pasting a screenshot of a figure to our [presentation](https://docs.google.com/presentation/d/1Fwp5yMAvIdgYpiC04xhgV7OQZ-olZIcUiGnLfyLPUt4/edit?usp=sharing) on the Exercise 3 slides.
 
 ## Summary
 
@@ -535,7 +501,7 @@ This approach is very simple workflow for taking records from many sites and com
 
 ### Other Helpful R Packages
 
-These packages may be helpful to your for future paleoecological analysis:
+These packages may be helpful to you for future paleoecological analysis:
 
 * [RFossilpoll](https://hope-uib-bio.github.io/FOSSILPOL-website/) - package to help streamline the data downloading and filtering of paleoecological data from Neotoma and other resources
 
