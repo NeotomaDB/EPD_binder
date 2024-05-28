@@ -1,6 +1,27 @@
 ---
 title: "A Not so Simple Workflow - SDM Version"
-author: "Nora Schlenker, Simon Goring, Socorro Dominguez Vidaña"
+  - name: "Nora Schlenker"
+    institute: [uwiscgeog]
+    correspondence: false
+    email: nschlenker@wisc.edu
+    orcid_id: 0000-0002-3693-5946
+  - name: "Simon Goring"
+    institute: [uwiscgeog,uwiscdsi]
+    correspondence: true
+    email: goring@wisc.edu
+    orcid_id: 0000-0002-2700-4605
+  - name: "Socorro Dominguez Vidaña"
+    institute: [rhtdata]
+    correspondence: false
+    email: s.dominguez@ht-data.com
+    orcid_id: 0000-0002-7926-4935
+institute:
+  - htdata:
+    name: "HT Data"
+  - uwiscgeog:
+    name: "University of Wisconsin -- Madison: Department of Geography"
+  - uwiscdsi:
+    name: "University of Wisconsin -- Data Science Institute"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -16,6 +37,7 @@ output:
     pandoc_args: "-V geometry:vmargin=1in -V geometry:hmargin=1in"
 dev: svg
 highlight: tango
+csl: 'https://bit.ly/3khj0ZL'
 ---
 
 # Building Species Distribution Models from Pollen Data
