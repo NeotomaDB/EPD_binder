@@ -83,7 +83,7 @@ To undertake this analysis we need to:
 
 ### Define Spatial Domain
 
-There are a large number of records in Europe. Downloading this volume of data from Neotoma can take a long time and is computationally expensive for the database itself. We have already completed the data download saved it to our data folder. Under the results you can take a look at all the sites we downloaded. As with the previous example, we can use `loc` parameter along with  [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html) or [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects, and native `sf` objects.
+There are a large number of records in Europe. Downloading this volume of data from Neotoma can take a long time (~2hrs total) and is computationally expensive for the database itself. We have already completed the data download saved it to our data folder. Under the results you can take a look at all the sites we downloaded. As with the previous example, we can use `loc` parameter along with  [WKT](https://arthur-e.github.io/Wicket/sandbox-gmaps3.html) or [geoJSON](http://geojson.io/#map=2/20.0/0.0) objects, and native `sf` objects.
 
 #### Code
 
@@ -130,6 +130,7 @@ neotoma2::plotLeaflet(europe_downloads) %>%
 ### Data table
 
 ```{r downloadsCode, echo = FALSE}
+
 head(europe_samples, n = 10) %>%
   dplyr::select(age,
     variablename,
@@ -149,9 +150,26 @@ head(europe_samples, n = 10) %>%
 
 When we look at pollen data we are looking at counts of pollen data, from a slide, for a particular analysis unit. Along with pollen there can also be measurements of charcoal, records of algal cycts, and other lab-based measurements. In addition, we often look only at terrestrial pollen types, since they generally reflect regional vegetation, as opposed to the pollen of aquatic types that would represent local site conditions.
 
-The `europe_samples` `data.frame` 
+Even though the datasets are pollen datasets, the `europe_samples` `data.frame` contains data for a number of different measured elements, including things like mandibles, scales and sporangia. In addition, these elements are measured using `r length(unique(europe_samples$units))` different measurement units (`unique(europe_samples$units)`) across `r length(unique(europe_samples$ecologicalgroup))` ecological groups (`unique(europe_samples$ecologicalgroup)`) including diatoms, trees and shrubs, rotifers and insects.
 
-Taxon filtering and harmonization, pollen percent calculations, and data exploration
+##### Standard Units and Elements
+
+We often use pollen proportions in our analysis, and for this we need to find out how many total pollen grains were counted in each sample.  We also want to make sure we're looking at a common set of taxa across all sites. In this case we will filter for trees and shrubs (ecological group `TRSH`) and upland herbs (ecological group `UPHE`). We will also look for pollen (element type `pollen`) that is measured using the Number of Identified Specimens (units `NISP`).
+
+This makes the filtering rather straightforward:
+
+```{r cutsamples}
+europe_cleaner <- europe_samples %>%
+  filter(units == 'NISP' & 
+         elementtype == 'pollen' &
+         (ecologicalgroup %in% c('TRSH', 'UPHE')))
+```
+
+This initial filtering removes about `r round(nrow(europe_samples) - nrow(europe_cleaner), -3)` rows from our original dataset.
+
+##### Standardizing Taxa
+
+For the purposes of this analysis we will only be focusing on building models for *Corylus*, *Fagus* and *Picea*.  
 
 Before we can start looking at our focal species we need to do some work with our sample table so that we have all the information we want. We need to do three things at this step: filtering the data to only include our focal taxa, doing taxon harmonization on our focal taxa, and calculating the pollen percent for each focal taxa for each pollen sample.
 
@@ -159,35 +177,77 @@ Before we can start looking at our focal species we need to do some work with ou
 
 Our first task is to make a table that we will join with our samples table that tells us the total number of pollen per sample which we will use in our pollen percentage calculations. There are many decisions you can make at this step depending on your research question but here we are going to calculate pollen percent based on the total number of trees, shrubs, and herbaceous groups (ecologicalgroup = TRSH and UPHE). This is common for may studies that focus on these ecological groups but know that you can choose other combinations and this will effect how you interpret your results.  
 
-Then we can combine taxon filtering and harmonization and pollen percent calculation all in one segment of code. Here we are selecting the taxa *Fagus*, *Picea*, and *Corylus* and harmonizing all variations of those taxa to the genus level. 
+Then we can combine taxon filtering and harmonization and pollen percent calculation all in one segment of code. Here we are selecting the taxa *Fagus*, *Picea*, and *Corylus* and harmonizing all variations of those taxa to the genus level. We can use the code below to look at the diversity of identifiers for these three taxa:
 
-#### Code
+```r
+europe_cleaner %>%
+  filter(stringr::str_detect(variablename, "Fagus|Corylus|Picea")) %>%
+  select(variablename) %>% distinct()
+```
 
-```{r filtertaxa, message = FALSE, eval = TRUE}
-poll_total <- europe_samples %>%
-  filter(ecologicalgroup == "TRSH" | ecologicalgroup == "UPHE") %>% 
-  group_by(datasetid, age) %>%
-  summarise(totalpollen = sum(value)) %>%
-  ungroup() 
+For our purposes it will be enough to simply standardize all taxa idenfied as some form of *Picea* to *Picea*, and the same for the *Corylus* and *Fagus* types.  This then lets us right some fairly clean code as follows:
 
-europe_subset <- europe_samples %>%
-  inner_join(poll_total, by = c("datasetid" = "datasetid", "age" = "age")) %>%
-  mutate(poll_perc = round(value/totalpollen*100, 2)) %>%
-  #filter to only taxa with the genera of our focal species
-  filter(stringr::str_detect(variablename, "Fagus*") | 
-           stringr::str_detect(variablename, "Picea*") | 
-           stringr::str_detect(variablename, "Corylus*")) %>%
-  #limiting the age to the range of ages we are interesting in. Here -74 is present since "radiocarbon years before present" starts at 1950
-  filter(age >= -74 & age <= 23000) %>% 
-  #rename our focal species to just their genera
-  mutate(variablename = replace(variablename, stringr::str_detect(variablename, "Fagus*"), "Fagus"), 
-         variablename = replace(variablename, stringr::str_detect(variablename, "Picea*"), "Picea"), 
-         variablename = replace(variablename, stringr::str_detect(variablename, "Corylus*"), "Corylus")) %>%
-  #group taxa of the same dataset and age to combine all renamed versions of taxa to get one pollen percent value for a harmonized record 
-  group_by(datasetid, age, variablename, units, ecologicalgroup, sitename, lat, long) %>%
-  summarise(pollen_percent = sum(poll_perc)) %>%
-  mutate(presence = case_when(pollen_percent > 1 ~ 1,
-                              .default = 0))
+###### Code
+
+```{r replacetaxa}
+europe_cleaner <- europe_cleaner %>%
+  mutate(variablename = replace(variablename, 
+                                stringr::str_detect(variablename, "Fagus"),
+                                "Fagus"),
+         variablename = replace(variablename,
+                                stringr::str_detect(variablename, "Picea"),
+                                "Picea"),
+         variablename = replace(variablename,
+                                stringr::str_detect(variablename,
+                                "Corylus"),
+                                "Corylus")) %>%
+    group_by(datasetid, age, variablename, units, ecologicalgroup, sitename, lat, long) %>%
+    summarise(value = sum(value)) %>% as.data.frame()
+```
+
+We have to `summarise` at the end to make sure that counts of taxon name variants within a single sample get lumped together properly.  Once we've run this code, we can test out the earlier code block to see if we are now down to three distinct taxa (and we ought to be).
+
+**Note**: We're using `as.data.frame()` here to speed up operations below. Leaving this object as a `grouped_df` seem to seriously impact performance.
+
+##### Age Filtering
+
+The age ranges for these records may be broad. Some European records go back over 100,000 years before present, and some samples (and datasets) appear to have no chronologies. We can check the ages using the columns `age`, `ageolder` and `ageyounger`. Note that many chronologies have been entered without uncertainty measures, in which case `ageolder` and `ageyounger` would be unreported. Otherwise these values represent ±1 standard deviation.
+
+We will be building our SDMs for three critical time periods in the time since the last glaciation:
+
+| time period | age range (ybp) | label |
+| ----------- | --------------- | ----- |
+| Modern      |  -76 - 150      | `modern` |
+| Younger Dryas | 11,700 - 12,900 | `yd` |
+| Last Glacial Maximum | > 21,000 | `lgm` |
+
+To prepare the data for analysis we will create a new column using `mutate`, based on our time bins, and filter out any records that are not within our defined periods of study:
+
+```{r agecleaning}
+europe_ready <- europe_cleaner %>%
+  mutate(timebins = case_when(age >= -72 & age <= 150 ~ "Modern",
+                              age >= 11700 & age <= 12900 ~ "YD", 
+                              age >= 20000 & age <= 22000 ~ "LGM",
+                              .default = NA)) %>%
+    filter(!is.na(timebins)) %>%
+  as.data.frame()
+```
+
+Our data is now ready for further analysis. We've cleaned the taxonomy, ensured all data are of a similar type and measured with similar units, and we've made sure that our time bins are clearly defined.
+
+*Note:* We do not attempt to update age-depth models and we filter out all samples that do not have age estimates when some of them may be able to be included under closer inspection. Additionally, we do not take into account time uncertainty which is another aspect that should be considered when filtering by time.
+
+#### Calculating Pollen Sums & Percentages
+
+From here we need to calculate the pollen sum for each sample in our set of samples. This means that we will get the total number of pollen grains counted for e.g., Kansjön at depth 445cm in the core. We can calculate both the pollen sum and the proportion at the same time by using `group_by()` and `ungroup()` to first sum the `value` fields (the counts) and then calculate the proportion from our new `totalpollen` field:
+
+```{r}
+europe_subset <- europe_ready %>%
+  group_by(datasetid, age, sitename, lat, long, timebins) %>%
+  mutate(totalpollen = sum(value)) %>%
+  ungroup() %>%
+  mutate(polprop = round(value / totalpollen, 2)) %>%
+  as.data.frame()
 ```
 
 #### Results
@@ -200,38 +260,11 @@ europe_subset[1:10,] %>%
 ggplot(europe_subset, aes(age)) + geom_histogram() + ylab("Count of Samples") + xlab("Age (years before present)") + theme_minimal()
 ```
 
-### Bin and filter data by time
-
-Now that we have a dataset with our three focal taxa we now want to filter these taxa into time periods of interest. For this exercise we will be looking at modern samples (1950 to present), the Younger Drays (12.9 to 11.7 thousand years ago), and the Last Glacial Maximum (LGM; 21 thousand years ago). 
-
-*Note:* We do not attempt to update age-depth models and we filter out all samples that do not have age estimates when some of them may be able to be included under closer inspection. Additionally, we do not take into account time uncertainty which is another aspect that should be considered when filtering by time.
-
-### Code
-```{r binbyage, message = FALSE, eval = TRUE}
-europe_binned <- europe_subset %>% 
-  mutate(timebins = case_when(age <= 0 ~ "Modern",
-                             age >= 11700 & age <= 12900 ~ "YD", 
-                             age >= 20000 & age <= 22000 ~ "LGM",
-                             .default = NA)) %>%
-  filter(!is.na(timebins))
-```
-
-#### Results
-
-```{r binbyageShow, eval = TRUE, message = FALSE, echo = FALSE}
-europe_binned %>% 
-  mutate(timebins = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
-  ggplot(aes(timebins)) + geom_bar(stat = "count") + 
-  geom_text(stat='count', aes(label=after_stat(count)), vjust=-.5) +
-  facet_wrap(~variablename, ncol = 3) +
-  ylab("Count of Samples") + xlab("Time Bins") + theme_minimal()
-
-```
-
 ## Loading Climate Data {.tabset}
+
 There is no climate data associated with pollen data downloaded from Neotoma but you can utilize climate data that is available online to intersect with the locations of pollen samples. For this we will be using climate data from [Paleoclim](http://www.paleoclim.org/) which compiles climate data from present to the Pliocene from various sources. We will be using their modern and LGM climate data from CHELSA and Younger Dryas climate data from [Fordham  et al., 2017](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/ecog.03031). There are a few options for choosing climate reconstructions for use with paleodata:
 
-#### Code
+### Code
 
 ```{r downloadclims, message = FALSE, eval = TRUE}
 # europe_clim_mod <- paleoclim("cur", "5m", region = terra::ext(europe_sf))
@@ -248,7 +281,7 @@ europe_clim_lgm <- readRDS("data/europe_clim_lgm.RDS")
 
 ```
 
-#### Results
+### Results
 
 ```{r downloadclimsShow, echo = FALSE, message = FALSE, eval = TRUE}
 plot(europe_clim_mod[["bio_1"]]/10, main = "Modern Mean Annual Temp, Europe")
@@ -256,12 +289,14 @@ plot(europe_clim_mod[["bio_1"]]/10, main = "Modern Mean Annual Temp, Europe")
 ```
 
 ### Younger Dryas
+
 ```{r downloadclimsShow2, echo = FALSE, message = FALSE, eval = TRUE}
 plot(europe_clim_yd[["bio_1"]]/10, main = "Younger Dryas Mean Annual Temp, Europe")
 
 ```
 
 ### Last Glacial Maximum
+
 ```{r downloadclimsShow3, echo = FALSE, message = FALSE, eval = TRUE}
 plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
 
@@ -276,7 +311,6 @@ plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
 ```{r extractclims, message = FALSE, eval = TRUE}
 #First lets save the projection information from our climate data to use later when creating our species points data
 proj_data <- crs(europe_clim_mod)
-
 
 extract_clims <- function(taxa_data, clim_data, time_text, taxa_text, projection = proj_data) {
   time_cut <- dplyr::filter(taxa_data, timebins == time_text)
