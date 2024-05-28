@@ -68,7 +68,7 @@ For this workshop we only need a few packages. We will download multiple records
 We'll be using the R package `pacman` here, to automatically load and install packages. Note that we also use the package rpaleoclim to download the climate data, but since we have pre-downloaded the climate rasters for you, you will not need that package today.
 
 ```{r setup}
-pacman::p_load(neotoma2, tidyverse, remotes, terra, sf)
+pacman::p_load(neotoma2, tidyverse, remotes, terra, sf, rpaleoclim)
 ```
 
 ## Loading Datasets
@@ -323,9 +323,9 @@ plot(europe_clim_lgm[["bio_1"]]/10, main = "LGM Mean Annual Temp, Europe")
 
 ## Extracting Environmental Variables {.tabset}
 
-Now that we have cleaned taxa data and have loaded in climate data we can extract environmental variables for each pollen sample based on the lat/long of the collection unit. Below is a function that will extract the [19 biocliamte variables](https://chelsa-climate.org/bioclim/) from the climate rasters. 
+Now that we have cleaned taxa data and have loaded in climate data we can extract environmental variables for each pollen sample based on the lat/long of the collection unit. Below is a function that will extract the [19 biocliamte variables](https://chelsa-climate.org/bioclim/) from the climate rasters.
 
-### Extracting 
+### Extracting
 
 ```{r extractclims, message = FALSE, eval = TRUE}
 #First lets save the projection information from our climate data to use later when creating our species points data
