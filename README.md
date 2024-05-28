@@ -3,14 +3,14 @@
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![NSF-1948926](https://img.shields.io/badge/NSF-1948926-blue.svg)](https://nsf.gov/awardsearch/showAward?AWD_ID=1948926)
- 
+
 # Neotoma Current R Workshop
 
 A repository to host interactive R workshops. This repository will always be set up for the most recent/current Neotoma Workshop. All past workshops will be archived in the [Neotoma Workshops](https://github.com/NeotomaDB/Workshops) repository.
 
 This repository is built with the structure required to serve the content through an interactive, online RStudio session using Binder (and Docker). Clicking the Binder link will open RStudio in the user's browser.
 
-**Currently, this repo hosts the Workshop to be delivered for the INQUA Rome 2023 workshop.**
+**Currently, this repo hosts the Workshop to be delivered in Aarhus about Species Distribution Modelling with pollen data.**
 
 To access the content for this Workshop, click the badge below:
 
@@ -24,6 +24,8 @@ This is an open project and contributions are welcome from any individual.  All 
 
 * [![orcid](https://img.shields.io/badge/orcid-0000--0002--2700--4605-brightgreen.svg)](https://orcid.org/0000-0002-2700-4605) [Simon Goring](http://goring.org)
 
+* [![orcid](https://img.shields.io/badge/orcid-0000--0002--3693--5946-brightgreen.svg)](https://orcid.org/0000-0002-3693-5946) [Nora Schlenker](https://geography.wisc.edu/staff/schlenker-nora/)
+
 ### Translations
 
 * Russian: [Arsenii Galimov](https://ipae.uran.ru/Galimov_AT)
@@ -36,5 +38,5 @@ This repository contains two different R workflows, a complex workflow that show
 
 Users may clone this workshop and modify the content, but be aware that the Binder links are specific to this repository, and must be modified through the users' own Binder setup.
 
-* `runtime.txt` is used to define the R environment to be used by Docker/Binder
 * `apt.txt` defines a set of packages required by Binder/Docker to enable the spatial tools in the `neotoma2` R package.
+* `install.R` defines the R packages that are to be loaded by the Binder environment at runtime.
