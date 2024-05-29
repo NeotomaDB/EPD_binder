@@ -385,8 +385,8 @@ rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
   facet_grid(timebins_fact~name, scales = "free", switch = "x") +
   xlab("") +
   ylab("Pollen Percent")+
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45))
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
 
@@ -398,10 +398,10 @@ rbind(fagus_mod, fagus_yd, fagus_lgm) %>%
   select(timebins, polprop, bio_1, bio_12, bio_4, bio_15, geometry) %>%
   mutate(timebins_fact = factor(timebins, levels = c("Modern", "YD", "LGM"))) %>%
   ggplot(aes(bio_1, bio_12, size = polprop)) + geom_point() +
-  facet_wrap(~timebins_fact, ncol = 3, scales = "free", switch = "x") +
+  facet_wrap(~timebins_fact, ncol = 3, scales = "fixed", switch = "x") +
   xlab("Mean Annual Temperature") +
   ylab("Annual Precipitation")+
-  theme_minimal() +
+  theme_bw() +
   theme(axis.text.x = element_text(angle = 45))
 
 ```
