@@ -41,7 +41,7 @@ csl: 'https://bit.ly/3khj0ZL'
 
 ```{r setup, echo=FALSE}
 options(warn = -1)
-pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, DT, readr, stringr, rioja)
+pacman::p_load(neotoma2, dplyr, ggplot2, sf, geojsonsf, leaflet, DT, readr, stringr, rioja, tidyr)
 ```
 
 ## Introduction
@@ -325,7 +325,7 @@ The following call can take some time, but we've frozen the object as an RDS dat
 denmark_dl <- readRDS("data/dkDownload.RDS")
 ```
 
-Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets.  To extract all the samples we can call:
+Once we've downloaded, we now have information for each site about all the associated collection units, the datasets, and, for each dataset, all the samples associated with the datasets. To extract samples all downloads we can call:
 
 ```{r allSamples}
 allSamp <- samples(denmark_dl)
@@ -505,11 +505,14 @@ ggplot(data = taxaplots, aes(x = sites, y = samples)) +
 
 ## Simple Analytics
 
-### Stratigraphic Plotting
+### Stratigraphic Plotting {.tabset}
 
-We can use packages like `rioja` to do stratigraphic plotting for a single record, but first we need to do some different data management.  Although we could do harmonization again we're going to simply take the taxa at a single site and plot them in a stratigraphic diagram.
+To plot at strategraphic diargram we are only interested in one site and in one dataset. By looking at the summary of downloads we can see that Lake Solsø has two collection units that both have a pollen record. Lets look at the SOLSOE81 collection unit, which is the second download. To get the samples from just that one collection unit by specifying that you want only the samples from the second download. 
 
-```{r stratiplot, message = FALSE}
+We can use packages like `rioja` to do stratigraphic plotting for a single record, but first we need to do some different data management.  Although we could do harmonization again we're going to simply take the taxa at a single site and plot them in a stratigraphic diagram. However, if you would like to plot multiple sites and you want them to have harmonized taxa we have provided examples on how to do both. 
+
+#### Raw Taxon
+```{r stratiplotraw, message = FALSE}
 # Get a particular site, in this case we are simply subsetting the
 # `denmark_dl` object to get Lake Solsø:
 plottingSite <- denmark_dl[[2]]
@@ -529,11 +532,42 @@ counts <- plottingSite %>%
 counts <- counts[, colSums(counts > 0.01, na.rm = TRUE) > 5]
 ```
 
+#### With Harmonization
+```{r stratiplotharm, message = FALSE}
+# Get a particular site, in this case we are simply subsetting the
+# `denmark_dl` object to get Lake Solsø:
+plottingSite <- denmark_dl[[2]]
+
+# Select only pollen measured using NISP and convert to a "wide"
+# table, using proportions. The first column will be "age".
+# This turns our "long" table into a "wide" table:
+counts_harmonized <- plottingSite %>%
+  samples() %>%
+  toWide(ecologicalgroup = c("TRSH"),
+         unit = c("NISP"),
+         elementtypes = c("pollen"),
+         groupby = "age",
+         operation = "prop") %>%
+  arrange(age) %>%
+  pivot_longer(-age) %>%
+  inner_join(translation, by = c("name" = "variablename")) %>% 
+  dplyr::select(!c("name", taxonid)) %>% 
+  group_by(harmonizedname, age) %>%
+  summarise(value = sum(value), .groups='keep')%>%
+  pivot_wider(names_from = harmonizedname, values_from = value)
+
+counts_harmonized <- counts_harmonized[, colSums(counts_harmonized > 0.01, na.rm = TRUE) > 5]
+```
+
+### {.tabset}
+
 Hopefully the code is pretty straightforward. The `toWide()` function provides you with significant control over the taxa, units and other elements of your data before you get them into the wide matrix (`depth` by `taxon`) that most statistical tools such as the `vegan` package or `rioja` use.
 
 To plot the data we can use `rioja`'s `strat.plot()`, sorting the taxa using weighted averaging scores (`wa.order`). I've also added a CONISS plot to the edge of the the plot, to show how the new *wide* data frame works with distance metric funcitons.
 
-```{r plotStrigraph, message=FALSE, warning=FALSE}
+#### Raw Taxon
+
+```{r plotStrigraphraw, message=FALSE, warning=FALSE, out.width='90%'}
 # Perform constrained clustering:
 clust <- rioja::chclust(dist(sqrt(counts)),
                         method = "coniss")
@@ -551,6 +585,28 @@ plot <- rioja::strat.plot(counts[,-1] * 100, yvar = counts$age,
 
 rioja::addClustZone(plot, clust, 4, col = "red")
 ```
+
+#### With Harmonization
+```{r plotStrigraphharm, message=FALSE, warning=FALSE, out.width='90%'}
+# Perform constrained clustering:
+clust <- rioja::chclust(dist(sqrt(counts_harmonized)),
+                        method = "coniss")
+
+# Plot the stratigraphic plot, converting proportions to percentages:
+plot <- rioja::strat.plot(counts_harmonized[,-1] * 100, yvar = counts_harmonized$age,
+                  title = denmark_dl[[1]]$sitename,
+                  ylabel = "Calibrated Years BP",
+                  xlabel = "Pollen (% of Trees and Shrubs)",
+                  srt.xlabel = 70,
+                  y.rev = TRUE,
+                  clust = clust,
+                  wa.order = "topleft",
+                  scale.percent = TRUE)
+
+rioja::addClustZone(plot, clust, 4, col = "red")
+```
+
+###
 
 ## Conclusion
 
